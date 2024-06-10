@@ -18,7 +18,10 @@ class AppStrings {
   static const resendOtp = "Resend OTP";
   static const setANewPassword = "Set a new password";
   static const updatePassword = "Update Password";
+  static const verifyCode = "Verify code";
   static const successfully = "Successfully";
+  static const dontHaveAnAccount = "Don't Have an Account?";
+  static const signUp = "Sign Up";
   static const continues = "Continue";
   static const yourPasswordHasBeenUpdated = "Your password has been updated, please change your password regularly to avoid this happening";
   static const createANewPasswordEnsureIt = "Create a new password. Ensure it differs from previous ones for security";
