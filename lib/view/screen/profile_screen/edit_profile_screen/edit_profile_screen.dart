@@ -7,6 +7,7 @@ import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -44,6 +45,13 @@ class EditProfileScreen extends StatelessWidget {
 
       ///<<<<========================================EditProfile AppBar======================================
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(Icons.arrow_back),
+          color: AppColors.lightWhite,
+        ),
         backgroundColor: AppColors.blackDeep,
         title: CustomText(
           text: AppStrings.editProfile,
