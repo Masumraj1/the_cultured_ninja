@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
@@ -10,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'inner_widgets/home_appbar.dart';
+import 'inner_widgets/side_drawer/side_drawer.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
       key: scaffoldKey,
 
       ///===================================Side Drawer=============================
-      // drawer: SideDrawer(),
+      drawer: SideDrawer(),
       // bottomNavigationBar: const NavBar(currentIndex: 0),
       body: Obx(() {
         return SingleChildScrollView(
