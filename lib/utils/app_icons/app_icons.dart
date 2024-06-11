@@ -16,6 +16,7 @@ class AppIcons {
   static const String lock = "$basePath/lock.svg";
   static const String remove = "$basePath/remove.svg";
   static const String x = "$basePath/x.svg";
+  static const String edit = "$basePath/edit.svg";
 
 
   ///===========================Nav bar==================

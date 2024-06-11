@@ -9,6 +9,7 @@ import 'package:final_movie/view/screen/history_screen/history_screen.dart';
 import 'package:final_movie/view/screen/home_screen/home_screen.dart';
 import 'package:final_movie/view/screen/notification_screen/notification_screen.dart';
 import 'package:final_movie/view/screen/onbording_screen/onbording_screen.dart';
+import 'package:final_movie/view/screen/profile_screen/edit_profile_screen/edit_profile_screen.dart';
 import 'package:final_movie/view/screen/setting_screen/change_password_screen/change_password_screen.dart';
 import 'package:final_movie/view/screen/setting_screen/setting_screen.dart';
 import 'package:final_movie/view/screen/splash_screen/splash_screen.dart';
@@ -37,8 +38,8 @@ class AppRoute {
   static const String notificationScreen = "/NotificationScreen";
   static const String historyScreen = "/HistoryScreen";
 
-  ///=======================FollowingScreen=====================
-
+  ///=======================EditProfile=====================
+static const String editProfileScreen = '/EditProfileScreen';
 
 
 
@@ -68,7 +69,8 @@ class AppRoute {
     GetPage(name: notificationScreen, page: () =>    const NotificationScreen()),
     GetPage(name: historyScreen, page: () =>    const HistoryScreen()),
 
-    ///==============================FollowingScreen=====================
+    ///==============================editProfile=====================
+    GetPage(name: editProfileScreen, page: () =>    const EditProfileScreen()),
 
   ];
 }

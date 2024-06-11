@@ -15,8 +15,9 @@ class AppColors {
   static const Color cancelButtonColor = Color(0xff7CC84E);
   static const Color searchHintText = Color(0xffA2A2A2);
   static const Color blackDeep = Color(0xff07090D);
+  static const Color textNormalPerPal = Color(0xffCEB0E6);
   static const Color fromRgb = Color.fromRGBO(118, 118, 128, 0.12);
-  static const Color navBarBackgroundColor = Color.fromRGBO(255, 255, 255, 0.6);
+  static const Color navBarBackgroundColor = Color.fromRGBO(32, 42, 61, 1);
   static const Color borderDrawer = Color.fromRGBO(141, 141, 141, 0.3);
 
 }

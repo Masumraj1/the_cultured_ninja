@@ -61,6 +61,7 @@ class AppStrings {
   static const emailProfile = "Email :";
   static const address = "Address :";
   static const save = "Save";
+  static const editProfile = "Edit Profile";
 
 
   ///===============================Following=============================
@@ -75,10 +76,10 @@ class AppStrings {
   static const favourite = 'Favourite';
 
 
-  ///==========================Profile===========================
 
-  ///====================================Temporary===========================
+  ///====================================Remove===========================
   static const welcomeBack = "Welcome back";
   static const williamson = "Williamson";
   static const mariaEmail = "deanna.curtis@example.com";
+  static const cameronWilliamson = "Cameron Williamson";
 }
