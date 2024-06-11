@@ -107,7 +107,9 @@ class SignInScreen extends StatelessWidget {
 
                       ///======================================Sign In Button==================
                       CustomButton(
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(AppRoute.homeScreen);
+                        },
                         title: AppStrings.signIn,
                         fillColor: AppColors.buttonColor,
                       ),

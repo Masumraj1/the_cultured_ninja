@@ -45,7 +45,7 @@ class AppRoute {
     GetPage(name: successfullyScreen, page: () =>  const SuccessfullyScreen()),
 
     ///=============================HomeScreen===================
-    GetPage(name: homeScreen, page: () =>   const HomeScreen()),
+    GetPage(name: homeScreen, page: () =>    HomeScreen()),
 
   ];
 }

@@ -64,6 +64,6 @@ class AppStrings {
 
   ///====================================Temporary===========================
   static const welcomeBack = "Welcome back";
-  static const maria = "Maria";
+  static const williamson = "Williamson";
   static const mariaEmail = "deanna.curtis@example.com";
 }

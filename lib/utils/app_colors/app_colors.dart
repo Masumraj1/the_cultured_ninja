@@ -13,4 +13,7 @@ class AppColors {
   static const Color backgroundColor = Color(0xff141A26);
   static const Color yesButtonColor = Color(0xffF1191A);
   static const Color cancelButtonColor = Color(0xff7CC84E);
+  static const Color searchHintText = Color(0xffA2A2A2);
+  static const Color fromRgb = Color.fromRGBO(118, 118, 128, 0.12);
+
 }
