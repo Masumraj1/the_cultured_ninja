@@ -36,7 +36,14 @@ class SignInScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
+              Positioned(
+                  top: 44,
+                  left: 20,
+                  child: InkWell(
+                      onTap: (){
+                        Get.back();
+                      },
+                      child: const Icon(Icons.arrow_back,color: Colors.white,))),
               ///========================This is loader=====================
               Positioned(
                 top: 134,

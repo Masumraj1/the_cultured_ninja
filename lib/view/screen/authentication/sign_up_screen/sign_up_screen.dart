@@ -1,3 +1,4 @@
+import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
@@ -32,7 +33,14 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
               ),
-
+              Positioned(
+                  top: 44,
+                  left: 20,
+                  child: InkWell(
+                      onTap: (){
+                        Get.back();
+                      },
+                      child: const Icon(Icons.arrow_back,color: Colors.white,))),
               Positioned(
                 top: 134,
                 left: 0,
@@ -118,20 +126,13 @@ class SignUpScreen extends StatelessWidget {
 
                       ///======================================Sign In Button==================
                       CustomButton(
-                        onTap: () {},
-                        title: AppStrings.signIn,
+                        onTap: () {
+                          Get.toNamed(AppRoute.homeScreen);
+                        },
+                        title: AppStrings.signUp,
                         fillColor: AppColors.buttonColor,
                       ),
 
-                      ///=======================================Forget Password===================
-                      CustomText(
-                        top: 10,
-                        text: AppStrings.forgotPassword,
-                        color: AppColors.lightWhite,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16.sp,
-                        bottom: 150,
-                      ),
 
 
                     ],

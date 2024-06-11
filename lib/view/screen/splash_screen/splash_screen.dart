@@ -14,7 +14,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   navigate() {
     Future.delayed(const Duration(seconds: 2), () {
-      Get.offAllNamed(AppRoute.signInScreen);
+      Get.offAllNamed(AppRoute.onBoardingPage);
     });
   }
 
