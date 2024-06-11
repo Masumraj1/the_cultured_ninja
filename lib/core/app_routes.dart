@@ -5,7 +5,10 @@ import 'package:final_movie/view/screen/authentication/signIn_screen/sign_in_scr
 import 'package:final_movie/view/screen/authentication/sign_up_screen/sign_up_screen.dart';
 import 'package:final_movie/view/screen/authentication/successfully_screen/successfully_screen.dart';
 import 'package:final_movie/view/screen/home_screen/home_screen.dart';
+import 'package:final_movie/view/screen/notification_screen/notification_screen.dart';
 import 'package:final_movie/view/screen/onbording_screen/onbording_screen.dart';
+import 'package:final_movie/view/screen/setting_screen/change_password_screen/change_password_screen.dart';
+import 'package:final_movie/view/screen/setting_screen/setting_screen.dart';
 import 'package:final_movie/view/screen/splash_screen/splash_screen.dart';
 import 'package:get/get.dart';
 
@@ -27,6 +30,15 @@ class AppRoute {
 
   ///=============================HomeScreen===================
   static const String homeScreen = "/HomeScreen";
+  static const String settingScreen = "/SettingScreen";
+  static const String changePasswordScreen = "/ChangePasswordScreen";
+  static const String notificationScreen = "/NotificationScreen";
+
+
+
+
+
+
 
   static List<GetPage> routes = [
     ///==================== Initial Routes ====================
@@ -46,6 +58,9 @@ class AppRoute {
 
     ///=============================HomeScreen===================
     GetPage(name: homeScreen, page: () =>    HomeScreen()),
+    GetPage(name: settingScreen, page: () =>    const SettingScreen()),
+    GetPage(name: changePasswordScreen, page: () =>    const ChangePasswordScreen()),
+    GetPage(name: notificationScreen, page: () =>    const NotificationScreen()),
 
   ];
 }
