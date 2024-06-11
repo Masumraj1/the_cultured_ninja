@@ -1,3 +1,4 @@
+import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
@@ -5,6 +6,7 @@ import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class SideDrawer extends StatelessWidget {
   const SideDrawer({super.key});
@@ -78,7 +80,9 @@ class SideDrawer extends StatelessWidget {
                     customRow(
                         image: AppIcons.settings,
                         title: AppStrings.settings,
-                        onTap: () {}),
+                        onTap: () {
+                          Get.toNamed(AppRoute.settingScreen);
+                        }),
 
                     ///===============================History=======================
                     customRow(

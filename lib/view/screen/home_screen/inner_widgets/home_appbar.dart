@@ -1,3 +1,4 @@
+import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
@@ -6,6 +7,7 @@ import 'package:final_movie/view/widgets/custom_network_image/custom_network_ima
 import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import '../../../../utils/app_const/app_const.dart';
 import '../../../widgets/custom_text/custom_text.dart';
 
@@ -71,7 +73,7 @@ class HomeAppBar extends StatelessWidget {
                   ///<==================== notification ====================>
                   IconButton(
                       onPressed: () {
-                        // Get.toNamed(AppRoute.notificationScreen);
+                        Get.toNamed(AppRoute.notificationScreen);
                       },
                       icon: const Icon(
                         Icons.notifications,

@@ -10,5 +10,8 @@ class AppIcons {
   static const String settings = "$basePath/Seetings.svg";
   static const String history = "$basePath/history.svg";
   static const String logOut = "$basePath/logOut.svg";
+  static const String lock = "$basePath/lock.svg";
+  static const String remove = "$basePath/remove.svg";
+  static const String x = "$basePath/x.svg";
 }
 
