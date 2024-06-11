@@ -67,89 +67,89 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 16.h,
                   ),
-                  SmoothPageIndicator(
-                    controller: homeController.pageController.value,
-                    count: homeController.bannerImg.length,
-                    axisDirection: Axis.horizontal,
-                    effect: const ExpandingDotsEffect(
-                      expansionFactor: 3,
-                      spacing: 8.0,
-                      dotWidth: 10,
-                      dotHeight: 6.0,
-                      paintStyle: PaintingStyle.fill,
-                      dotColor: AppColors.lightWhite,
-                      activeDotColor: AppColors.buttonColor,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 24.h,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
-                    child: Column(
-                      children: [
-                        ///======================Top Rating Movies==================
-                        Row(
-                          children: [
-                            CustomText(
-                              text: AppStrings.topRatingMovies,
-                              color: AppColors.lightWhite,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            const Spacer(),
-                            CustomText(
-                              text: AppStrings.viewAll,
-                              color: AppColors.lightWhite,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 100,
-                        ),
-                        Row(
-                          children: [
-                            CustomText(
-                              text: AppStrings.myFavorite,
-                              color: AppColors.lightWhite,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            const Spacer(),
-                            CustomText(
-                              text: AppStrings.viewAll,
-                              color: AppColors.lightWhite,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 100,
-                        ),
-                        Row(
-                          children: [
-                            CustomText(
-                              text: AppStrings.studios,
-                              color: AppColors.lightWhite,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            const Spacer(),
-                            CustomText(
-                              text: AppStrings.viewAll,
-                              color: AppColors.lightWhite,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+               SmoothPageIndicator(
+                 controller: homeController.pageController.value,
+                 count: homeController.bannerImg.length,
+                 axisDirection: Axis.horizontal,
+                 effect: const ExpandingDotsEffect(
+                   expansionFactor: 3,
+                   spacing: 8.0,
+                   dotWidth: 10,
+                   dotHeight: 6.0,
+                   paintStyle: PaintingStyle.fill,
+                   dotColor: AppColors.lightWhite,
+                   activeDotColor: AppColors.buttonColor,
+                 ),
+               ),
+               SizedBox(
+                 height: 24.h,
+               ),
+               Padding(
+                 padding: const EdgeInsets.symmetric(
+                     horizontal: 20, vertical: 20),
+                 child: Column(
+                   children: [
+                     ///======================Top Rating Movies==================
+                     Row(
+                       children: [
+                         CustomText(
+                           text: AppStrings.topRatingMovies,
+                           color: AppColors.lightWhite,
+                           fontSize: 20.sp,
+                           fontWeight: FontWeight.w500,
+                         ),
+                         const Spacer(),
+                         CustomText(
+                           text: AppStrings.viewAll,
+                           color: AppColors.lightWhite,
+                           fontSize: 12.sp,
+                           fontWeight: FontWeight.w400,
+                         ),
+                       ],
+                     ),
+                     SizedBox(
+                       height: 100,
+                     ),
+                     Row(
+                       children: [
+                         CustomText(
+                           text: AppStrings.myFavorite,
+                           color: AppColors.lightWhite,
+                           fontSize: 20.sp,
+                           fontWeight: FontWeight.w500,
+                         ),
+                         const Spacer(),
+                         CustomText(
+                           text: AppStrings.viewAll,
+                           color: AppColors.lightWhite,
+                           fontSize: 12.sp,
+                           fontWeight: FontWeight.w400,
+                         ),
+                       ],
+                     ),
+                     SizedBox(
+                       height: 100,
+                     ),
+                     Row(
+                       children: [
+                         CustomText(
+                           text: AppStrings.studios,
+                           color: AppColors.lightWhite,
+                           fontSize: 20.sp,
+                           fontWeight: FontWeight.w500,
+                         ),
+                         const Spacer(),
+                         CustomText(
+                           text: AppStrings.viewAll,
+                           color: AppColors.lightWhite,
+                           fontSize: 12.sp,
+                           fontWeight: FontWeight.w400,
+                         ),
+                       ],
+                     ),
+                   ],
+                 ),
+               )
                 ],
               )
             ],
