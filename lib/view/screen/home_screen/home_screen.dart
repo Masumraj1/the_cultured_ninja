@@ -3,6 +3,7 @@ import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
+import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,9 +24,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       key: scaffoldKey,
-
+      bottomNavigationBar: const NavBar(currentIndex: 0),
       ///===================================Side Drawer=============================
-      drawer: SideDrawer(),
+      drawer: const SideDrawer(),
       // bottomNavigationBar: const NavBar(currentIndex: 0),
       body: Obx(() {
         return SingleChildScrollView(

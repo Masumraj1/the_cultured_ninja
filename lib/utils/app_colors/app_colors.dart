@@ -16,6 +16,7 @@ class AppColors {
   static const Color searchHintText = Color(0xffA2A2A2);
   static const Color blackDeep = Color(0xff07090D);
   static const Color fromRgb = Color.fromRGBO(118, 118, 128, 0.12);
+  static const Color navBarBackgroundColor = Color.fromRGBO(255, 255, 255, 0.6);
   static const Color borderDrawer = Color.fromRGBO(141, 141, 141, 0.3);
 
 }

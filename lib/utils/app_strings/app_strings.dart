@@ -62,6 +62,21 @@ class AppStrings {
   static const address = "Address :";
   static const save = "Save";
 
+
+  ///===============================Following=============================
+  static const following = 'Following';
+
+
+  ///==========================Calender===========================
+  static const calendar = 'Calendar';
+
+
+  ///==========================Favourite===========================
+  static const favourite = 'Favourite';
+
+
+  ///==========================Profile===========================
+
   ///====================================Temporary===========================
   static const welcomeBack = "Welcome back";
   static const williamson = "Williamson";
