@@ -31,6 +31,7 @@ class AppIcons {
   static const String profileSelected = "$basePath/profileSelected.svg";
   static const String userUnselected = "$basePath/userUnselected.svg";
   static const String userSelected = "$basePath/userSelected.svg";
+  static const String bigIcon = "$basePath/big_button.svg";
 
 
 
