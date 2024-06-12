@@ -74,6 +74,7 @@ class AppStrings {
 
   ///==========================Favourite===========================
   static const favourite = 'Favourite';
+  static const releaseDate = 'Release Date:';
 
 
 

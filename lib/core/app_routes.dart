@@ -70,7 +70,7 @@ static const String editProfileScreen = '/EditProfileScreen';
     GetPage(name: historyScreen, page: () =>    const HistoryScreen()),
 
     ///==============================editProfile=====================
-    GetPage(name: editProfileScreen, page: () =>    const EditProfileScreen()),
+    GetPage(name: editProfileScreen, page: () =>     EditProfileScreen()),
 
   ];
 }

@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
+import 'package:final_movie/view/screen/profile_screen/profile_controller/profile_controller.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
@@ -10,13 +13,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  const EditProfileScreen({super.key});
+   EditProfileScreen({super.key});
 
+  final ProfileController profileController = Get.find<ProfileController>();
   ///================================Custom EditProfile===================
   Widget customEditProfile({
     required String title,
     required TextEditingController controller,
-  }) {
+
+  })
+
+  {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -25,15 +32,18 @@ class EditProfileScreen extends StatelessWidget {
           text: title,
           fontWeight: FontWeight.w400,
           fontSize: 16.w,
-          bottom: 8,
+          bottom: 13,
         ),
         CustomTextField(
           textEditingController: controller,
           inputTextStyle: const TextStyle(color: AppColors.lightWhite),
-          fillColor: AppColors.backgroundColor,
-          fieldBorderColor: AppColors.borderColor,
+          fillColor: AppColors.fromRgb,
+          fieldBorderColor: AppColors.borderDrawer,
           keyboardType: TextInputType.name,
         ),
+        SizedBox(
+          height: 24.h,
+        )
       ],
     );
   }
@@ -69,25 +79,25 @@ class EditProfileScreen extends StatelessWidget {
 
               Align(
                 alignment: Alignment.center,
-                // child: GestureDetector(
-                //   onTap: () {
-                //     profileController.selectImage();
-                //   },
-                //   child: profileController.image.isNotEmpty
-                //       ? Container(
-                //     height: 100.h,
-                //     width: 100.w,
-                //     decoration: BoxDecoration(
-                //         image: DecorationImage(
-                //           image: FileImage(
-                //             File(profileController.image.value),
-                //           ),
-                //           fit: BoxFit.cover,
-                //         ),
-                //         shape: BoxShape.circle),
-                //   )
-                //       :
-                child: ClipRRect(
+                child: GestureDetector(
+                  onTap: () {
+                    profileController.selectImage();
+                  },
+                  child: profileController.image.isNotEmpty
+                      ? Container(
+                    height: 100.h,
+                    width: 100.w,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: FileImage(
+                            File(profileController.image.value),
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                        shape: BoxShape.circle),
+                  )
+                      :
+                ClipRRect(
                   borderRadius: BorderRadius.circular(100),
                   child: CustomImage(
                     imageSrc: AppImages.man,
@@ -95,7 +105,7 @@ class EditProfileScreen extends StatelessWidget {
                     size: 100.sp,
                   ),
                 ),
-                // ),
+                ),
               ),
 
               ///<<<<========================================Name======================================
@@ -122,8 +132,9 @@ class EditProfileScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
+                  color: AppColors.fromRgb,
                   border: Border.all(
-                    color: AppColors.borderColor,
+                    color: AppColors.borderDrawer,
                     width: 2.0,
                     style: BorderStyle.solid, // Specify the border style
                   ),
@@ -131,6 +142,7 @@ class EditProfileScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    ///========================personal information==================
                     CustomText(
                       text: AppStrings.personalInformation,
                       color: AppColors.textNormalPerPal,
@@ -143,10 +155,24 @@ class EditProfileScreen extends StatelessWidget {
                         title: AppStrings.name,
                         controller: TextEditingController()),
                     ///=================================phone Number=================
-                    customEditProfile(
-                        title: AppStrings.phoneNumber,
-                        controller: TextEditingController()),
 
+                    CustomText(
+                      color: AppColors.lightWhite,
+                      text: AppStrings.phoneNumber,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16.w,
+                      bottom: 13,
+                    ),
+                    const CustomTextField(
+                      // textEditingController: controller,
+                      inputTextStyle: TextStyle(color: AppColors.lightWhite),
+                      fillColor: AppColors.fromRgb,
+                      fieldBorderColor: AppColors.borderDrawer,
+                      keyboardType: TextInputType.phone,
+                    ),
+                    SizedBox(
+                      height: 24.h,
+                    ),
                     ///===============================Email ========================
                     customEditProfile(
                         title: AppStrings.email,

@@ -19,5 +19,6 @@ class AppColors {
   static const Color fromRgb = Color.fromRGBO(118, 118, 128, 0.12);
   static const Color navBarBackgroundColor = Color.fromRGBO(32, 42, 61, 1);
   static const Color borderDrawer = Color.fromRGBO(141, 141, 141, 0.3);
+  static const Color favoriteContainerTextColor = Color.fromRGBO(235, 235, 235, 1);
 
 }
