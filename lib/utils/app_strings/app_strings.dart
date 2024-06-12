@@ -70,6 +70,7 @@ class AppStrings {
 
   ///==========================Calender===========================
   static const calendar = 'Calendar';
+  static const notifications = 'Notifications';
 
 
   ///==========================Favourite===========================
