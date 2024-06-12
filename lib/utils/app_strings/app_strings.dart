@@ -78,6 +78,8 @@ class AppStrings {
   static const releaseDate = 'Release Date:';
 
 
+  ///===============================Top Rating movies==========================
+
 
   ///====================================Remove===========================
   static const welcomeBack = "Welcome back";

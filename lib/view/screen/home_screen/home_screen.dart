@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
@@ -27,7 +28,6 @@ class HomeScreen extends StatelessWidget {
       bottomNavigationBar: const NavBar(currentIndex: 0),
       ///===================================Side Drawer=============================
       drawer: const SideDrawer(),
-      // bottomNavigationBar: const NavBar(currentIndex: 0),
       body: Obx(() {
         return SingleChildScrollView(
           child: Column(
@@ -100,17 +100,24 @@ class HomeScreen extends StatelessWidget {
                            fontWeight: FontWeight.w500,
                          ),
                          const Spacer(),
-                         CustomText(
-                           text: AppStrings.viewAll,
-                           color: AppColors.lightWhite,
-                           fontSize: 12.sp,
-                           fontWeight: FontWeight.w400,
+                         InkWell(
+                           onTap: (){
+                             Get.toNamed(AppRoute.topRatingMovies);
+                           },
+                           child: CustomText(
+                             text: AppStrings.viewAll,
+                             color: AppColors.lightWhite,
+                             fontSize: 12.sp,
+                             fontWeight: FontWeight.w400,
+                           ),
                          ),
                        ],
                      ),
                      SizedBox(
-                       height: 100,
+                       height: 100.h,
                      ),
+
+                     ///===================================My favorite========================
                      Row(
                        children: [
                          CustomText(
@@ -120,17 +127,25 @@ class HomeScreen extends StatelessWidget {
                            fontWeight: FontWeight.w500,
                          ),
                          const Spacer(),
-                         CustomText(
-                           text: AppStrings.viewAll,
-                           color: AppColors.lightWhite,
-                           fontSize: 12.sp,
-                           fontWeight: FontWeight.w400,
+                         InkWell(
+                           onTap: (){
+                             Get.toNamed(AppRoute.favoriteScreen);
+                             // Get.to( ()=> const FavoriteScreen() );
+                           },
+                           child: CustomText(
+                             text: AppStrings.viewAll,
+                             color: AppColors.lightWhite,
+                             fontSize: 12.sp,
+                             fontWeight: FontWeight.w400,
+                           ),
                          ),
                        ],
                      ),
                      SizedBox(
-                       height: 100,
+                       height: 100.h,
                      ),
+
+                     ///============================Studios============================
                      Row(
                        children: [
                          CustomText(

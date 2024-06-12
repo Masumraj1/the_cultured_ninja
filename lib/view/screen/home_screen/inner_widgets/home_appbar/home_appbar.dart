@@ -131,7 +131,7 @@ class HomeAppBar extends StatelessWidget {
                      color: AppColors.fromRgb,
                      borderRadius: BorderRadius.circular(10)
                  ),
-                  child: const CustomImage(imageSrc: AppIcons.filter,imageType: ImageType.svg,),
+                  child: const Icon(Icons.filter_alt,size:35,color: AppColors.lightWhite,),
                 ),
               )
             ],
