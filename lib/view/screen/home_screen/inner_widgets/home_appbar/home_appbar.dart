@@ -124,14 +124,19 @@ class HomeAppBar extends StatelessWidget {
               ),
               Expanded(
                 flex: 2,
-                child: Container(
-                  height: 55,
-                 width: 54,
-                 decoration: BoxDecoration(
-                     color: AppColors.fromRgb,
-                     borderRadius: BorderRadius.circular(10)
-                 ),
-                  child: const Icon(Icons.filter_alt,size:35,color: AppColors.lightWhite,),
+                child: InkWell(
+                  onTap: (){
+                    Get.toNamed(AppRoute.filterScreen);
+                  },
+                  child: Container(
+                    height: 55,
+                   width: 54,
+                   decoration: BoxDecoration(
+                       color: AppColors.fromRgb,
+                       borderRadius: BorderRadius.circular(10)
+                   ),
+                    child: const Icon(Icons.filter_alt,size:35,color: AppColors.lightWhite,),
+                  ),
                 ),
               )
             ],

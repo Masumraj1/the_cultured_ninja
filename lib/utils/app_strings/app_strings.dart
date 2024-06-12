@@ -38,6 +38,7 @@ class AppStrings {
   static const tvSeries = "Tv Series";
   static const myFavorite = "My Favorite";
   static const studios = "Studios";
+  static const filter = "Filter";
 
   ///==============================Drawer ,setting and change password Screen===============================
   static const logIn = "Log in";

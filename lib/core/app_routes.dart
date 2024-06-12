@@ -5,6 +5,7 @@ import 'package:final_movie/view/screen/authentication/signIn_screen/sign_in_scr
 import 'package:final_movie/view/screen/authentication/sign_up_screen/sign_up_screen.dart';
 import 'package:final_movie/view/screen/authentication/successfully_screen/successfully_screen.dart';
 import 'package:final_movie/view/screen/favorite_screen/favorite_screen.dart';
+import 'package:final_movie/view/screen/filter_screen/filter_screen.dart';
 import 'package:final_movie/view/screen/home_screen/home_screen.dart';
 import 'package:final_movie/view/screen/notification_screen/notification_screen.dart';
 import 'package:final_movie/view/screen/onbording_screen/onbording_screen.dart';
@@ -45,6 +46,7 @@ static const String editProfileScreen = '/EditProfileScreen';
 static const String searchScreen = '/SearchScreen';
 static const String favoriteScreen = '/FavoriteScreen';
 static const String topRatingMovies = '/TopRatingMovies';
+static const String filterScreen = '/FilterScreen';
 
 
 
@@ -83,6 +85,7 @@ static const String topRatingMovies = '/TopRatingMovies';
     GetPage(name: searchScreen, page: () =>     const SearchScreen()),
     GetPage(name: favoriteScreen, page: () =>     const FavoriteScreen()),
     GetPage(name: topRatingMovies, page: () =>     const TopRatingMovies()),
+    GetPage(name: filterScreen, page: () =>     const FilterScreen()),
 
   ];
 }

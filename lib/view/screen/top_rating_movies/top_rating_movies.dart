@@ -106,19 +106,15 @@ class TopRatingMovies extends StatelessWidget {
               ///==========================Search field=============================
               Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     flex: 8,
                     child: CustomTextField(
                       fillColor: AppColors.fromRgb,
-                      onTap: () {
-                        Get.toNamed(AppRoute.searchScreen);
-                      },
                       fieldBorderColor: AppColors.fromRgb,
-                      readOnly: true,
                       hintText: AppStrings.search,
-                      hintStyle: const TextStyle(color: AppColors.searchHintText),
+                      hintStyle: TextStyle(color: AppColors.searchHintText),
                       isPrefixIcon: true,
-                      prefixIcon: const Padding(
+                      prefixIcon: Padding(
                         padding: EdgeInsets.only(left: 12),
                         child: Icon(
                           Icons.search,

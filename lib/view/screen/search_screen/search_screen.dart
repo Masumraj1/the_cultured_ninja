@@ -93,7 +93,6 @@ class SearchScreen extends StatelessWidget {
             const CustomTextField(
               fillColor: AppColors.fromRgb,
               fieldBorderColor: AppColors.fromRgb,
-              readOnly: true,
               hintText: AppStrings.search,
               hintStyle: TextStyle(color: AppColors.searchHintText),
               isPrefixIcon: true,
