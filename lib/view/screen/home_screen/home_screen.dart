@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'inner_widgets/home_appbar.dart';
+import 'inner_widgets/home_appbar/home_appbar.dart';
 import 'inner_widgets/side_drawer/side_drawer.dart';
 
 class HomeScreen extends StatelessWidget {

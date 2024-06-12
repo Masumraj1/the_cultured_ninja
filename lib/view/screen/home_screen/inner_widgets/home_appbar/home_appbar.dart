@@ -8,8 +8,8 @@ import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../utils/app_const/app_const.dart';
-import '../../../widgets/custom_text/custom_text.dart';
+import '../../../../../utils/app_const/app_const.dart';
+import '../../../../widgets/custom_text/custom_text.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({
@@ -101,19 +101,19 @@ class HomeAppBar extends StatelessWidget {
           ),
           Row(
             children: [
-              const Expanded(
+               Expanded(
                 flex: 8,
                 child: CustomTextField(
                     fillColor: AppColors.fromRgb,
-                    // onTapClick: () {
-                    //   Get.toNamed(AppRoute.searchScreen);
-                    // },
+                   onTap: (){
+                      Get.toNamed(AppRoute.searchScreen);
+                   },
                     fieldBorderColor: AppColors.fromRgb,
                     readOnly: true,
                     hintText: AppStrings.search,
-                    hintStyle: TextStyle(color: AppColors.searchHintText),
+                    hintStyle: const TextStyle(color: AppColors.searchHintText),
                     isPrefixIcon: true,
-                prefixIcon: Padding(
+                prefixIcon: const Padding(
                   padding: EdgeInsets.only(left: 12),
                   child: Icon(Icons.search,color: AppColors.searchHintText,),
                 ),

@@ -10,6 +10,7 @@ import 'package:final_movie/view/screen/home_screen/home_screen.dart';
 import 'package:final_movie/view/screen/notification_screen/notification_screen.dart';
 import 'package:final_movie/view/screen/onbording_screen/onbording_screen.dart';
 import 'package:final_movie/view/screen/profile_screen/edit_profile_screen/edit_profile_screen.dart';
+import 'package:final_movie/view/screen/search_screen/search_screen.dart';
 import 'package:final_movie/view/screen/setting_screen/change_password_screen/change_password_screen.dart';
 import 'package:final_movie/view/screen/setting_screen/setting_screen.dart';
 import 'package:final_movie/view/screen/splash_screen/splash_screen.dart';
@@ -42,6 +43,9 @@ class AppRoute {
 static const String editProfileScreen = '/EditProfileScreen';
 
 
+static const String searchScreen = '/SearchScreen';
+
+
 
 
 
@@ -71,6 +75,12 @@ static const String editProfileScreen = '/EditProfileScreen';
 
     ///==============================editProfile=====================
     GetPage(name: editProfileScreen, page: () =>     EditProfileScreen()),
+
+
+
+
+
+    GetPage(name: searchScreen, page: () =>     const SearchScreen()),
 
   ];
 }
