@@ -4,8 +4,6 @@ import 'package:final_movie/view/screen/authentication/reset_password/reset_pass
 import 'package:final_movie/view/screen/authentication/signIn_screen/sign_in_screen.dart';
 import 'package:final_movie/view/screen/authentication/sign_up_screen/sign_up_screen.dart';
 import 'package:final_movie/view/screen/authentication/successfully_screen/successfully_screen.dart';
-import 'package:final_movie/view/screen/following_screen/following_screen.dart';
-import 'package:final_movie/view/screen/history_screen/history_screen.dart';
 import 'package:final_movie/view/screen/home_screen/home_screen.dart';
 import 'package:final_movie/view/screen/notification_screen/notification_screen.dart';
 import 'package:final_movie/view/screen/onbording_screen/onbording_screen.dart';
@@ -37,7 +35,6 @@ class AppRoute {
   static const String settingScreen = "/SettingScreen";
   static const String changePasswordScreen = "/ChangePasswordScreen";
   static const String notificationScreen = "/NotificationScreen";
-  static const String historyScreen = "/HistoryScreen";
 
   ///=======================EditProfile=====================
 static const String editProfileScreen = '/EditProfileScreen';
@@ -71,7 +68,6 @@ static const String searchScreen = '/SearchScreen';
     GetPage(name: settingScreen, page: () =>    const SettingScreen()),
     GetPage(name: changePasswordScreen, page: () =>     ChangePasswordScreen()),
     GetPage(name: notificationScreen, page: () =>    const NotificationScreen()),
-    GetPage(name: historyScreen, page: () =>    const HistoryScreen()),
 
     ///==============================editProfile=====================
     GetPage(name: editProfileScreen, page: () =>     EditProfileScreen()),
