@@ -88,6 +88,9 @@ class AppStrings {
    ///================================Movie Details======================
   static const movieDetails = "Movie Details";
   static const addToFavorite = "Add to Favourite";
+  static const relatedMovies = "Related Movies";
+  static const allMovies = "All Movies";
+  static const costAndCrew = "Cost & Crew";
 
 
 

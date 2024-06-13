@@ -1,3 +1,4 @@
+import 'package:final_movie/view/screen/all_movies/all_movies.dart';
 import 'package:final_movie/view/screen/authentication/forget_otp/forget_otp.dart';
 import 'package:final_movie/view/screen/authentication/forget_password/forget_password.dart';
 import 'package:final_movie/view/screen/authentication/reset_password/reset_password.dart';
@@ -53,6 +54,7 @@ static const String filterScreen = '/FilterScreen';
 static const String studiosScreen = '/StudiosScreen';
 static const String studiosDetailsScreen = '/StudiosDetailsScreen';
 static const String movieDetails = '/MovieDetails';
+static const String allMovies = '/AllMovies';
 
 
 
@@ -94,7 +96,8 @@ static const String movieDetails = '/MovieDetails';
     GetPage(name: filterScreen, page: () =>     const FilterScreen()),
     GetPage(name: studiosScreen, page: () =>     const StudiosScreen()),
     GetPage(name: studiosDetailsScreen, page: () =>     const StudiosDetailsScreen()),
-    GetPage(name: movieDetails, page: () =>     const MovieDetails()),
+    GetPage(name: movieDetails, page: () =>      MovieDetails()),
+    GetPage(name: allMovies, page: () =>      const AllMovies()),
 
   ];
 }
