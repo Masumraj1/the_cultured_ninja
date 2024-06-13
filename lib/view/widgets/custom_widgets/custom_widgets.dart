@@ -18,6 +18,7 @@ class CustomWidgets {
     required String movieName,
   }) {
     return Container(
+      margin: EdgeInsets.all(10),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: AppColors.fromRgb,
@@ -318,8 +319,61 @@ class CustomWidgets {
 
 
 
-  ///=============================custom favorite=============================
+  ///=============================custom filter=============================
 
+  ///====================================Custom favorite ====================
+  Widget customFilter({
+    required String image,
+    required String movieName,
+    required String releaseDate,
+  }) {
+    return Container(
+      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+          color: AppColors.fromRgb,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: AppColors.borderDrawer)
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          CustomNetworkImage(
+            height: 97,
+            width: 142,
+            imageUrl: image,
+          ),
+          SizedBox(
+            width: 14.w,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomText(
+                  textAlign: TextAlign.start,
+                  bottom: 8,
+                  maxLines: 5,
+                  text: movieName,
+                  fontSize: 15.sp,
+                  color: AppColors.lightWhite,
+                  fontWeight: FontWeight.w400),
+              CustomText(
+                  maxLines: 2,
+                  text: AppStrings.releaseDate,
+                  fontSize: 12.sp,
+                  color: AppColors.favoriteContainerTextColor,
+                  fontWeight: FontWeight.w400),
+              CustomText(
+                  text: releaseDate,
+                  fontSize: 12.sp,
+                  color: AppColors.favoriteContainerTextColor,
+                  fontWeight: FontWeight.w400),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
   ///====================================Custom favorite ====================
   Widget customFavorite({
     required String image,
@@ -386,4 +440,7 @@ class CustomWidgets {
       ),
     );
   }
+
+
+
 }

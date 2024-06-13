@@ -47,9 +47,7 @@ class ActorDetails extends StatelessWidget {
                 image: AppConstants.onlineImage,
                 movieName: "Masum Raj",
               ),
-              SizedBox(
-                height: 24.h,
-              ),
+
 
               ///===================================Upcoming movies====================
               Row(
