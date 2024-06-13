@@ -1,7 +1,6 @@
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
-import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
@@ -18,42 +17,7 @@ class MovieDetails extends StatelessWidget {
   final CustomWidgets customWidget = CustomWidgets();
 
 
-  ///============================customCostAndCrew========================
-  Widget customCostAndCrew({
-    required String image,
-    required String title,
-    required String designation,
-  }) {
-    return SizedBox(
-      height: 124.h,
-      width: 90.w,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 13),
-        child: Column(
-          children: [
-            CustomNetworkImage(
-              boxShape: BoxShape.circle,
-              height: 56.h,
-              width: 56.w,
-              imageUrl: image,
-            ),
-            CustomText(
-                text: title,
-                top: 8,
-                fontSize: 12.sp,
-                color: AppColors.lightWhite,
-                fontWeight: FontWeight.w400),
-            CustomText(
-                maxLines: 5,
-                text: designation,
-                fontSize: 14.sp,
-                color: AppColors.lightWhite,
-                fontWeight: FontWeight.w400),
-          ],
-        ),
-      ),
-    );
-  }
+
 
   final HomeController homeController = Get.find<HomeController>();
 
@@ -162,7 +126,7 @@ class MovieDetails extends StatelessWidget {
 
                 ///==================================Cost & Crew====================
                 CustomText(
-                  text: AppStrings.costAndCrew,
+                  text: AppStrings.actorsAndDirector,
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w500,
                   color: AppColors.lightWhite,
@@ -178,7 +142,7 @@ class MovieDetails extends StatelessWidget {
                           onTap: (){
                             Get.toNamed(AppRoute.actorDetails);
                           },
-                          child: customCostAndCrew(
+                          child: customWidget.customActorAndDirector(
                               image: AppConstants.onlineImage,
                               title: 'actor',
                               designation: 'director'),

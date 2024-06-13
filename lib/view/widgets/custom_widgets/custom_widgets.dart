@@ -214,4 +214,105 @@ class CustomWidgets {
       ),
     );
   }
+
+
+  ///=================================custom Actor movies=======================
+
+  Widget customActorMovie({
+    required String image,
+    required String movieName,
+    required String releaseDate,
+    required String button,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+          color: AppColors.fromRgb,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: AppColors.borderDrawer)),
+      child: Row(
+        children: [
+          CustomNetworkImage(
+
+            imageUrl: image,
+            height: 97,
+            width: 142,
+          ),
+          SizedBox(
+            width: 14.w,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(
+
+                  textAlign: TextAlign.start,
+                  maxLines: 3,
+                  text: movieName,
+                  color: AppColors.lightWhite,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp,
+                  bottom: 7,
+                ),
+                   CustomText(
+                  text: releaseDate,
+                  color: AppColors.favoriteContainerTextColor,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14,
+                     bottom: 10,
+                ),
+                CustomButton(onTap: (){},
+                title: button,
+                  width: 134.w,
+                  height: 37.h,
+                  fillColor: AppColors.buttonColor,
+                )
+
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+
+  ///============================custom Actor and director========================
+  Widget customActorAndDirector({
+    required String image,
+    required String title,
+    required String designation,
+  }) {
+    return SizedBox(
+      height: 124.h,
+      width: 90.w,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 13),
+        child: Column(
+          children: [
+            CustomNetworkImage(
+              boxShape: BoxShape.circle,
+              height: 56.h,
+              width: 56.w,
+              imageUrl: image,
+            ),
+            CustomText(
+                text: title,
+                top: 8,
+                fontSize: 12.sp,
+                color: AppColors.lightWhite,
+                fontWeight: FontWeight.w400),
+            CustomText(
+                maxLines: 5,
+                text: designation,
+                fontSize: 14.sp,
+                color: AppColors.lightWhite,
+                fontWeight: FontWeight.w400),
+          ],
+        ),
+      ),
+    );
+  }
 }

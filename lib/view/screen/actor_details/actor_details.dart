@@ -17,6 +17,7 @@ class ActorDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+      ///===========================Actor details appbar=============================
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -30,6 +31,7 @@ class ActorDetails extends StatelessWidget {
           text: AppStrings.actorDetails,
           color: AppColors.lightWhite,
           fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
         ),
         centerTitle: true,
       ),
@@ -37,6 +39,7 @@ class ActorDetails extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               customWidget.customFollowing(
                 image: AppConstants.onlineImage,
@@ -57,7 +60,7 @@ class ActorDetails extends StatelessWidget {
                   const Spacer(),
                   InkWell(
                     onTap: () {
-                      Get.toNamed(AppRoute.allMovies);
+                      Get.toNamed(AppRoute.actorMovie);
                     },
                     child: CustomText(
                       text: AppStrings.viewAll,
@@ -128,6 +131,33 @@ class ActorDetails extends StatelessWidget {
                   },
                 ),
               ),
+
+              ///======================================Actor and director=================
+              CustomText(
+                text: AppStrings.actorsAndDirector,
+                fontSize: 20.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.lightWhite,
+                bottom: 16,
+              ),
+              SizedBox(
+                height: 140.h,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: (){
+                          Get.toNamed(AppRoute.actorDetails);
+                        },
+                        child: customWidget.customActorAndDirector(
+                            image: AppConstants.onlineImage,
+                            title: 'actor',
+                            designation: 'director'),
+                      );
+                    }),
+              ),
+
             ],
           ),
         ),

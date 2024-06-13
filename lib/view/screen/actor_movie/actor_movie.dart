@@ -39,10 +39,10 @@ class ActorMovie extends StatelessWidget {
                 onTap: (){
                   Get.toNamed(AppRoute.movieDetails);
                 },
-                child: customWidget.customMovie(
+                child: customWidget.customActorMovie(
                     image: AppConstants.movieImage,
-                    movieName: 'Star Wars: The Rise of Skywalker (2024)',
-                    releaseDate: '3h 12m', year: '2024 Action Comedy'),
+                    movieName: 'Star Wars:',
+                    releaseDate: '3h 12m', button: AppStrings.addToCalender),
               );
             }),
       ),

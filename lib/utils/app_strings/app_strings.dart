@@ -90,7 +90,7 @@ class AppStrings {
   static const addToFavorite = "Add to Favourite";
   static const relatedMovies = "Related Movies";
   static const allMovies = "All Movies";
-  static const costAndCrew = "Cost & Crew";
+  static const actorsAndDirector = "Actors & Director";
 
 
 ///======================================actor details=====================
