@@ -1,12 +1,10 @@
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
-import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:final_movie/view/screen/calender_screen/calender_screen.dart';
 import 'package:final_movie/view/screen/favorite_screen/favorite_screen.dart';
 import 'package:final_movie/view/screen/following_screen/following_screen.dart';
 import 'package:final_movie/view/screen/home_screen/home_screen.dart';
 import 'package:final_movie/view/screen/profile_screen/profile_screen.dart';
-import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -108,7 +106,7 @@ class _NavBarState extends State<NavBar> {
     //
     else if (index == 3) {
       if (!(widget.currentIndex == 3)) {
-        Get.to(() => const FavoriteScreen());
+        Get.to(() =>  FavoriteScreen());
       }
     }else if (index == 4) {
       if (!(widget.currentIndex == 4)) {

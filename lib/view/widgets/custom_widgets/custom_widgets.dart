@@ -315,4 +315,75 @@ class CustomWidgets {
       ),
     );
   }
+
+
+
+  ///=============================custom favorite=============================
+
+  ///====================================Custom favorite ====================
+  Widget customFavorite({
+    required String image,
+    required String movieName,
+    required String releaseDate,
+    required bool isExpanded,
+    required VoidCallback onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 300),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+            color: AppColors.fromRgb,
+            borderRadius: BorderRadius.circular(15),
+            border: Border.all(color: AppColors.borderDrawer)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomNetworkImage(
+              height: 97,
+              width: 142,
+              imageUrl: image,
+            ),
+            SizedBox(
+              width: 14.w,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomText(
+                      textAlign: TextAlign.start,
+                      bottom: 8,
+                      maxLines: 5,
+                      text: movieName,
+                      fontSize: 15.sp,
+                      color: AppColors.lightWhite,
+                      fontWeight: FontWeight.w400),
+                  CustomText(
+                      maxLines: 2,
+                      text: AppStrings.releaseDate,
+                      fontSize: 12.sp,
+                      color: AppColors.favoriteContainerTextColor,
+                      fontWeight: FontWeight.w400),
+                  CustomText(
+                      text: releaseDate,
+                      fontSize: 12.sp,
+                      color: AppColors.favoriteContainerTextColor,
+                      fontWeight: FontWeight.w400),
+                ],
+              ),
+            ),
+            if (isExpanded)
+              IconButton(
+                icon: const Icon(Icons.delete, color: AppColors.buttonColor),
+                onPressed: () {
+                  // Handle delete action
+                },
+              ),
+          ],
+        ),
+      ),
+    );
+  }
 }

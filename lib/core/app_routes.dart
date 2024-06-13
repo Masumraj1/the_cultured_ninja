@@ -95,7 +95,7 @@ static const String actorMovie = '/ActorMovie';
 
 
     GetPage(name: searchScreen, page: () =>     const SearchScreen()),
-    GetPage(name: favoriteScreen, page: () =>     const FavoriteScreen()),
+    GetPage(name: favoriteScreen, page: () =>      FavoriteScreen()),
     GetPage(name: topRatingMovies, page: () =>     const TopRatingMovies()),
     GetPage(name: filterScreen, page: () =>     const FilterScreen()),
     GetPage(name: studiosScreen, page: () =>     const StudiosScreen()),
