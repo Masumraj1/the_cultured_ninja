@@ -4,8 +4,8 @@ import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
-import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
+import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,36 +20,7 @@ class HomeScreen extends StatelessWidget {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  ///================================My Favorite==========================
-  Widget customWidgets({
-    required String image,
-    required String movieName,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 13),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomNetworkImage(
-            borderRadius: BorderRadius.circular(13),
-            height: 106.h,
-            width: 142.w,
-            imageUrl: image,
-          ),
-          SizedBox(
-            height: 12.h,
-          ),
-          CustomText(
-              textAlign: TextAlign.start,
-              maxLines: 5,
-              text: movieName,
-              fontSize: 12.sp,
-              color: AppColors.lightWhite,
-              fontWeight: FontWeight.w400),
-        ],
-      ),
-    );
-  }
+  final CustomWidgets customWidget = CustomWidgets();
 
 
   final HomeController homeController = Get.find<HomeController>();
@@ -189,7 +160,7 @@ class HomeScreen extends StatelessWidget {
                                onTap: (){
                                  Get.toNamed(AppRoute.movieDetails);
                                },
-                               child: customWidgets(
+                               child: customWidget.customImageText(
                                    image: AppConstants.movieImage,
                                    movieName: "Bad Boy"),
                              );
@@ -235,7 +206,7 @@ class HomeScreen extends StatelessWidget {
                             onTap: (){
                               Get.toNamed(AppRoute.studiosDetailsScreen);
                             },
-                            child: customWidgets(
+                            child: customWidget.customImageText(
                                 image: AppConstants.disneyPlus,
                                 movieName: "Bad Boy"),
                           );

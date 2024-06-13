@@ -93,7 +93,12 @@ class AppStrings {
   static const costAndCrew = "Cost & Crew";
 
 
-
+///======================================actor details=====================
+  static const actorDetails= 'Actor Details';
+  static const upcomingMovie = 'Upcoming Movie ';
+  static const addToCalender = 'Add to Calendar';
+  static const hisWork = 'His Work';
+  static const actorMovies = 'Actor Movies';
 
   ///====================================Remove===========================
   static const welcomeBack = "Welcome back";

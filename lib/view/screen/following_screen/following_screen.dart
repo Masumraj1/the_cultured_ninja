@@ -88,7 +88,7 @@ class FollowingScreen extends StatelessWidget {
         ),
         backgroundColor: AppColors.blackDeep,
         title: CustomText(
-          text: AppStrings.favourite,
+          text: AppStrings.following,
           color: AppColors.lightWhite,
           fontSize: 20.sp,
           fontWeight: FontWeight.w600,

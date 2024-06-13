@@ -2,15 +2,14 @@ import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class AllMovies extends StatelessWidget {
-   AllMovies({super.key});
+class ActorMovie extends StatelessWidget {
+  ActorMovie({super.key});
 
 
 
@@ -30,7 +29,7 @@ class AllMovies extends StatelessWidget {
           color: AppColors.lightWhite,
         ),
         backgroundColor: AppColors.blackDeep,
-        title: CustomText(text: AppStrings.allMovies,color: AppColors.lightWhite,fontSize: 20.sp,),centerTitle: true,),
+        title: CustomText(text: AppStrings.actorMovies,color: AppColors.lightWhite,fontSize: 20.sp,),centerTitle: true,),
       body:  Padding(
         padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
         child: ListView.builder(
