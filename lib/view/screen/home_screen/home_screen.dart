@@ -226,7 +226,7 @@ class HomeScreen extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         itemCount: 4,
                         itemBuilder: (context,index){
-                          return   InkWell(
+                          return   GestureDetector(
                             onTap: (){
                               Get.toNamed(AppRoute.studiosDetailsScreen);
                             },
