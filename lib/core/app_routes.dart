@@ -14,6 +14,8 @@ import 'package:final_movie/view/screen/search_screen/search_screen.dart';
 import 'package:final_movie/view/screen/setting_screen/change_password_screen/change_password_screen.dart';
 import 'package:final_movie/view/screen/setting_screen/setting_screen.dart';
 import 'package:final_movie/view/screen/splash_screen/splash_screen.dart';
+import 'package:final_movie/view/screen/studios_details_screen/studios_details_screen.dart';
+import 'package:final_movie/view/screen/studios_screen/studios_screen.dart';
 import 'package:final_movie/view/screen/top_rating_movies/top_rating_movies.dart';
 import 'package:get/get.dart';
 
@@ -47,6 +49,8 @@ static const String searchScreen = '/SearchScreen';
 static const String favoriteScreen = '/FavoriteScreen';
 static const String topRatingMovies = '/TopRatingMovies';
 static const String filterScreen = '/FilterScreen';
+static const String studiosScreen = '/StudiosScreen';
+static const String studiosDetailsScreen = '/StudiosDetailsScreen';
 
 
 
@@ -86,6 +90,8 @@ static const String filterScreen = '/FilterScreen';
     GetPage(name: favoriteScreen, page: () =>     const FavoriteScreen()),
     GetPage(name: topRatingMovies, page: () =>     const TopRatingMovies()),
     GetPage(name: filterScreen, page: () =>     const FilterScreen()),
+    GetPage(name: studiosScreen, page: () =>     const StudiosScreen()),
+    GetPage(name: studiosDetailsScreen, page: () =>     const StudiosDetailsScreen()),
 
   ];
 }

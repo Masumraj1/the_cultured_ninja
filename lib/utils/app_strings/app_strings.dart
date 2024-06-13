@@ -37,7 +37,6 @@ class AppStrings {
   static const movies = "Movies";
   static const tvSeries = "Tv Series";
   static const myFavorite = "My Favorite";
-  static const studios = "Studios";
   static const filter = "Filter";
 
   ///==============================Drawer ,setting and change password Screen===============================
@@ -67,6 +66,7 @@ class AppStrings {
 
   ///===============================Following=============================
   static const following = 'Following';
+  static const follow = 'Follow';
 
 
   ///==========================Calender===========================
@@ -79,7 +79,11 @@ class AppStrings {
   static const releaseDate = 'Release Date:';
 
 
-  ///===============================Top Rating movies==========================
+  ///===============================Studios==========================
+  static const studios = "Studios";
+  static const allStudio = "All Studio";
+  static const relatedStudios = "Related Studios";
+  static const latestUpdates = "Latest Updates";
 
 
   ///====================================Remove===========================
@@ -87,4 +91,7 @@ class AppStrings {
   static const williamson = "Williamson";
   static const mariaEmail = "deanna.curtis@example.com";
   static const cameronWilliamson = "Cameron Williamson";
+  static const synopsis = "Synopsis";
+  static const weAreDedicated = "We are dedicated to expanding our presence and offerings in the region,” Francesco Perta, vice president of business development more...";
+  static const warnerBros = "Warner Bros: Discovery to expand Mideast presence through partnerships";
 }
