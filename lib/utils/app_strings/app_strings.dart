@@ -85,6 +85,12 @@ class AppStrings {
   static const relatedStudios = "Related Studios";
   static const latestUpdates = "Latest Updates";
 
+   ///================================Movie Details======================
+  static const movieDetails = "Movie Details";
+  static const addToFavorite = "Add to Favourite";
+
+
+
 
   ///====================================Remove===========================
   static const welcomeBack = "Welcome back";

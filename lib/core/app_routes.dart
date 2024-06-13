@@ -7,6 +7,7 @@ import 'package:final_movie/view/screen/authentication/successfully_screen/succe
 import 'package:final_movie/view/screen/favorite_screen/favorite_screen.dart';
 import 'package:final_movie/view/screen/filter_screen/filter_screen.dart';
 import 'package:final_movie/view/screen/home_screen/home_screen.dart';
+import 'package:final_movie/view/screen/movie_details/movie_details.dart';
 import 'package:final_movie/view/screen/notification_screen/notification_screen.dart';
 import 'package:final_movie/view/screen/onbording_screen/onbording_screen.dart';
 import 'package:final_movie/view/screen/profile_screen/edit_profile_screen/edit_profile_screen.dart';
@@ -51,6 +52,7 @@ static const String topRatingMovies = '/TopRatingMovies';
 static const String filterScreen = '/FilterScreen';
 static const String studiosScreen = '/StudiosScreen';
 static const String studiosDetailsScreen = '/StudiosDetailsScreen';
+static const String movieDetails = '/MovieDetails';
 
 
 
@@ -92,6 +94,7 @@ static const String studiosDetailsScreen = '/StudiosDetailsScreen';
     GetPage(name: filterScreen, page: () =>     const FilterScreen()),
     GetPage(name: studiosScreen, page: () =>     const StudiosScreen()),
     GetPage(name: studiosDetailsScreen, page: () =>     const StudiosDetailsScreen()),
+    GetPage(name: movieDetails, page: () =>     const MovieDetails()),
 
   ];
 }

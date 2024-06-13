@@ -185,9 +185,14 @@ class HomeScreen extends StatelessWidget {
                            scrollDirection: Axis.horizontal,
                            itemCount: 4,
                            itemBuilder: (context,index){
-                             return   customWidgets(
-                                 image: AppConstants.movieImage,
-                                 movieName: "Bad Boy");
+                             return   GestureDetector(
+                               onTap: (){
+                                 Get.toNamed(AppRoute.movieDetails);
+                               },
+                               child: customWidgets(
+                                   image: AppConstants.movieImage,
+                                   movieName: "Bad Boy"),
+                             );
                            }),
                      ),
 
