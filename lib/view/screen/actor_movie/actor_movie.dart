@@ -20,6 +20,7 @@ class ActorMovie extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+      ///=================================Actor movies appbar====================
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -29,7 +30,7 @@ class ActorMovie extends StatelessWidget {
           color: AppColors.lightWhite,
         ),
         backgroundColor: AppColors.blackDeep,
-        title: CustomText(text: AppStrings.actorMovies,color: AppColors.lightWhite,fontSize: 20.sp,),centerTitle: true,),
+        title: CustomText(text: AppStrings.actorMovies,fontWeight:FontWeight.w500,color: AppColors.lightWhite,fontSize: 20.sp,),centerTitle: true,),
       body:  Padding(
         padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
         child: ListView.builder(

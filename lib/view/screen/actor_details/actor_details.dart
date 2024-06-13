@@ -17,6 +17,7 @@ class ActorDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+
       ///===========================Actor details appbar=============================
       appBar: AppBar(
         leading: IconButton(
@@ -41,6 +42,7 @@ class ActorDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              ///===========================container==================
               customWidget.customFollowing(
                 image: AppConstants.onlineImage,
                 movieName: "Masum Raj",
@@ -48,6 +50,7 @@ class ActorDetails extends StatelessWidget {
               SizedBox(
                 height: 24.h,
               ),
+
               ///===================================Upcoming movies====================
               Row(
                 children: [
@@ -83,7 +86,8 @@ class ActorDetails extends StatelessWidget {
                     return customWidget.customUpcomingMovies(
                       image: AppConstants.movieImage,
                       movieName: "The Talented People",
-                      releaseDate: '10 august 2023', button: AppStrings.addToCalender,
+                      releaseDate: '10 august 2023',
+                      button: AppStrings.addToCalender,
                     );
                   },
                 ),
@@ -147,7 +151,7 @@ class ActorDetails extends StatelessWidget {
                     itemCount: 4,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Get.toNamed(AppRoute.actorDetails);
                         },
                         child: customWidget.customActorAndDirector(
@@ -157,7 +161,6 @@ class ActorDetails extends StatelessWidget {
                       );
                     }),
               ),
-
             ],
           ),
         ),
