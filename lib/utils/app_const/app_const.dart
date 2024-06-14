@@ -11,6 +11,8 @@ class AppConstants {
   static String profileID = "profileID";
   static String userStatus = "userStatus";
   static String rememberMe = "rememberMe";
+  static String loveAgain = "https://m.media-amazon.com/images/M/MV5BNjQwZDIyNjAtZGQxMC00OTUwLWFiOWYtNzg2NDc5Mjc1MDQ5XkEyXkFqcGdeQXVyMTAxNzQ1NzI@._V1_.jpg";
+  static String tvSeries = "https://resizing.flixster.com/OyhJi9hG6QwHK-ZByEbMRkExjd4=/fit-in/180x240/v2/https://resizing.flixster.com/2lDrCwrxvzXcFQVa6a6MvLiNX8w=/ems.cHJkLWVtcy1hc3NldHMvdHZzZWFzb24vNDNkOWY2ZjgtYjhmMi00N2NjLTgyNGUtMTc2OTlhOTcwODc0LmpwZw==";
   static String chinaMovie = "https://www.boxofficepro.com/wp-content/uploads/2016/04/Logo-China-Film-e1460696968873-1-600x584.png";
   static String disneyPlus = "https://insidethemagic.net/wp-content/uploads/2021/11/disney-plus-logo-e1692456989563.jpg";
   static String movieStudio= "https://banner2.cleanpng.com/20180903/kbs/kisspng-universal-studios-japan-universal-studios-florida-florida-theme-park-packages-cp-transfers-5b8d0ad57ea128.8865741315359700055187.jpg";

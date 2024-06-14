@@ -1,3 +1,4 @@
+import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,14 @@ class HomeController extends GetxController{
     AppImages.onBoardingThree,
     AppImages.onBoardingTwo,
     AppImages.onBoardingOne,
+  ];
+
+  final List<String> tvSeriesList = [
+    AppConstants.loveAgain,
+    AppConstants.movieImage,
+    AppConstants.tvSeries,
+    AppConstants.movieImage,
+
   ];
 
   RxInt bannerIndex = 0.obs;
