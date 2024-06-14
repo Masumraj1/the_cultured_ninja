@@ -1,3 +1,4 @@
+import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
@@ -19,7 +20,7 @@ class FilterScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
 
-      ///==================================Favorite Appbar ==========================
+      ///==================================Filter Appbar ==========================
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -39,10 +40,15 @@ class FilterScreen extends StatelessWidget {
       body: ListView.builder(
         itemCount: 5,
           itemBuilder: (context,index) {
-        return customWidget.customFilter(
-            image: AppConstants.movieImage,
-            movieName: 'bad boy',
-            releaseDate: "10 august 2023");
+        return GestureDetector(
+          onTap: (){
+            Get.toNamed(AppRoute.movieDetails);
+          },
+          child: customWidget.customFilter(
+              image: AppConstants.movieImage,
+              movieName: 'bad boy',
+              releaseDate: "10 august 2023"),
+        );
       })
     );
   }
