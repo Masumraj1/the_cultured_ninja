@@ -1,5 +1,4 @@
-// Removed the problematic import
-// import 'dart:nativewrappers/_internal/vm/lib/core_patch.dart';
+
 
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
@@ -18,7 +17,7 @@ class CustomWidgets {
     required String movieName,
   }) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
           color: AppColors.fromRgb,
@@ -319,7 +318,6 @@ class CustomWidgets {
 
 
 
-  ///=============================custom filter=============================
 
   ///====================================Custom favorite ====================
   Widget customFilter({
@@ -441,6 +439,35 @@ class CustomWidgets {
     );
   }
 
-
+///=========================================custom Rating movies====================
+  Widget customRatingMovies({
+    required String image,
+    required String ratingBar
+  }) {
+    return Stack(
+      children: [
+        CustomNetworkImage(
+          borderRadius: BorderRadius.circular(13),
+          height: 106.h,
+          width: 142.w,
+          imageUrl: image,
+        ),
+        Positioned(
+            right: 15,
+            child: Row(
+              children: [
+                const Icon(Icons.star,color: Colors.amber,size: 20,),
+                CustomText(
+                  left: 5,
+                  text: ratingBar,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp,
+                  color: AppColors.lightWhite,
+                ),
+              ],
+            ))
+      ],
+    );
+  }
 
 }

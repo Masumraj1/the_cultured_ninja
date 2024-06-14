@@ -1,3 +1,4 @@
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
@@ -22,8 +23,9 @@ class HomeScreen extends StatelessWidget {
 
   final CustomWidgets customWidget = CustomWidgets();
 
-
   final HomeController homeController = Get.find<HomeController>();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class HomeScreen extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       key: scaffoldKey,
       bottomNavigationBar: const NavBar(currentIndex: 0),
+
       ///===================================Side Drawer=============================
       drawer: const SideDrawer(),
       body: Obx(() {
@@ -73,148 +76,149 @@ class HomeScreen extends StatelessWidget {
                   SizedBox(
                     height: 16.h,
                   ),
-               SmoothPageIndicator(
-                 controller: homeController.pageController.value,
-                 count: homeController.bannerImg.length,
-                 axisDirection: Axis.horizontal,
-                 effect: const ExpandingDotsEffect(
-                   expansionFactor: 3,
-                   spacing: 8.0,
-                   dotWidth: 10,
-                   dotHeight: 6.0,
-                   paintStyle: PaintingStyle.fill,
-                   dotColor: AppColors.lightWhite,
-                   activeDotColor: AppColors.buttonColor,
-                 ),
-               ),
-               SizedBox(
-                 height: 24.h,
-               ),
-               Padding(
-                 padding: const EdgeInsets.symmetric(
-                     horizontal: 20, vertical: 20),
-                 child: Column(
-                   children: [
-                     ///======================Top Rating Movies==================
-                     Row(
-                       children: [
-                         CustomText(
-                           text: AppStrings.topRatingMovies,
-                           color: AppColors.lightWhite,
-                           fontSize: 20.sp,
-                           fontWeight: FontWeight.w500,
-                         ),
-                         const Spacer(),
-                         InkWell(
-                           onTap: (){
-                             Get.toNamed(AppRoute.topRatingMovies);
-                           },
-                           child: CustomText(
-                             text: AppStrings.viewAll,
-                             color: AppColors.lightWhite,
-                             fontSize: 12.sp,
-                             fontWeight: FontWeight.w400,
-                           ),
-                         ),
-                       ],
-                     ),
-
-                     SizedBox(
-                       height: 100.h,
-                     ),
-
-                     ///===================================My favorite========================
-                     Row(
-                       children: [
-                         CustomText(
-                           text: AppStrings.myFavorite,
-                           color: AppColors.lightWhite,
-                           fontSize: 20.sp,
-                           fontWeight: FontWeight.w500,
-                         ),
-                         const Spacer(),
-                         InkWell(
-                           onTap: (){
-                             Get.toNamed(AppRoute.favoriteScreen);
-                             // Get.to( ()=> const FavoriteScreen() );
-                           },
-                           child: CustomText(
-                             text: AppStrings.viewAll,
-                             color: AppColors.lightWhite,
-                             fontSize: 12.sp,
-                             fontWeight: FontWeight.w400,
-                           ),
-                         ),
-                       ],
-                     ),
-                     SizedBox(
-                       height: 16.h,
-                     ),
-                     SizedBox(
-                       height: 170.h,
-                       child: ListView.builder(
-                           scrollDirection: Axis.horizontal,
-                           itemCount: 4,
-                           itemBuilder: (context,index){
-                             return   GestureDetector(
-                               onTap: (){
-                                 Get.toNamed(AppRoute.movieDetails);
-                               },
-                               child: customWidget.customImageText(
-                                   image: AppConstants.movieImage,
-                                   movieName: "Bad Boy"),
-                             );
-                           }),
-                     ),
-
-
-
-                     ///============================Studios============================
-                  Row(
-                    children: [
-                      CustomText(
-                        text: AppStrings.studios,
-                        color: AppColors.lightWhite,
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      const Spacer(),
-                      InkWell(
-                        onTap: (){
-                          Get.toNamed(AppRoute.studiosScreen);
-                        },
-                        child: CustomText(
-                          text: AppStrings.viewAll,
-                          color: AppColors.lightWhite,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w400,
+                  SmoothPageIndicator(
+                    controller: homeController.pageController.value,
+                    count: homeController.bannerImg.length,
+                    axisDirection: Axis.horizontal,
+                    effect: const ExpandingDotsEffect(
+                      expansionFactor: 3,
+                      spacing: 8.0,
+                      dotWidth: 10,
+                      dotHeight: 6.0,
+                      paintStyle: PaintingStyle.fill,
+                      dotColor: AppColors.lightWhite,
+                      activeDotColor: AppColors.buttonColor,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 24.h,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    child: Column(
+                      children: [
+                        ///======================Top Rating Movies==================
+                        Row(
+                          children: [
+                            CustomText(
+                              text: AppStrings.topRatingMovies,
+                              color: AppColors.lightWhite,
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            const Spacer(),
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed(AppRoute.topRatingMovies);
+                              },
+                              child: CustomText(
+                                text: AppStrings.viewAll,
+                                color: AppColors.lightWhite,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 16.h,
-                  ),
 
-                  SizedBox(
-                    height: 170.h,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 4,
-                        itemBuilder: (context,index){
-                          return   GestureDetector(
-                            onTap: (){
-                              Get.toNamed(AppRoute.studiosDetailsScreen);
-                            },
-                            child: customWidget.customImageText(
-                                image: AppConstants.disneyPlus,
-                                movieName: "Bad Boy"),
-                          );
-                        }),
+                        ///==============================Movies and tv series==============
+                        customWidget.customRatingMovies(
+                          image: AppConstants.movieImage, ratingBar: '4.5',
+                        ),
+                        SizedBox(
+                          height: 100.h,
+                        ),
+
+                        ///===================================My favorite========================
+                        Row(
+                          children: [
+                            CustomText(
+                              text: AppStrings.myFavorite,
+                              color: AppColors.lightWhite,
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            const Spacer(),
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed(AppRoute.favoriteScreen);
+                              },
+                              child: CustomText(
+                                text: AppStrings.viewAll,
+                                color: AppColors.lightWhite,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 16.h,
+                        ),
+                        SizedBox(
+                          height: 170.h,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 4,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(AppRoute.movieDetails);
+                                  },
+                                  child: customWidget.customImageText(
+                                      image: AppConstants.movieImage,
+                                      movieName: "Bad Boy"),
+                                );
+                              }),
+                        ),
+
+                        ///============================Studios============================
+                        Row(
+                          children: [
+                            CustomText(
+                              text: AppStrings.studios,
+                              color: AppColors.lightWhite,
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            const Spacer(),
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed(AppRoute.studiosScreen);
+                              },
+                              child: CustomText(
+                                text: AppStrings.viewAll,
+                                color: AppColors.lightWhite,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 16.h,
+                        ),
+
+                        SizedBox(
+                          height: 170.h,
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 4,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(AppRoute.studiosDetailsScreen);
+                                  },
+                                  child: customWidget.customImageText(
+                                      image: AppConstants.disneyPlus,
+                                      movieName: "Bad Boy"),
+                                );
+                              }),
+                        )
+                      ],
+                    ),
                   )
-                   ],
-                 ),
-               )
                 ],
               )
             ],
