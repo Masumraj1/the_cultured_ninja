@@ -1,9 +1,7 @@
 import 'package:final_movie/utils/app_colors/app_colors.dart';
-import 'package:final_movie/utils/app_const/app_const.dart';
-import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
-import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
+import 'package:final_movie/view/screen/following_screen/following_controller/following_controller.dart';
+import 'package:final_movie/view/screen/following_screen/inner_widgets/following_studios.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
@@ -11,17 +9,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import 'inner_widgets/following_actor.dart';
+import 'inner_widgets/tabBar_widget.dart';
+
 class FollowingScreen extends StatelessWidget {
    FollowingScreen({super.key});
 
   final CustomWidgets customWidget = CustomWidgets();
-
+final FollowingController followingController = Get.find<FollowingController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       bottomNavigationBar: const NavBar(currentIndex: 1),
+      ///============================Flowing screen Appbar======================
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -39,16 +41,31 @@ class FollowingScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Padding(
-          padding: const EdgeInsets.all(20),
-          child: ListView.builder(
-              itemCount: 6,
-              itemBuilder: (context,index){
-                return   customWidget.customFollowing(
-                    image: AppConstants.onlineImage,
-                    movieName: 'Leonardo DiCaprio ,Actor',);
-              })
+      body: Obx(
+         () {
+          return Padding(
+              padding: const EdgeInsets.all(20),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ///=================================Actor and studios tabBar================
+                    FollowingTabBar(followingController: followingController),
+                IndexedStack(
+                  index: followingController.selectedIndex.value,
+                  children: [
+                    SingleChildScrollView(child: FollowingActor(customWidget: customWidget)),
+                    FollowingStudios(customWidget: customWidget)
+                  ],
+                )
+
+                  ],
+                ),
+              )
+          );
+        }
       ),
     );
   }
 }
+
+

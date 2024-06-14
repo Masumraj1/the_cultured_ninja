@@ -67,6 +67,7 @@ class AppStrings {
   ///===============================Following=============================
   static const following = 'Following';
   static const follow = 'Follow';
+  static const actor = 'Actor';
 
 
   ///==========================Calender===========================
