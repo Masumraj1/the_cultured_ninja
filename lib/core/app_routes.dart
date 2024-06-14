@@ -98,7 +98,7 @@ static const String profileScreen = '/ProfileScreen';
 
     GetPage(name: searchScreen, page: () =>     const SearchScreen()),
     GetPage(name: favoriteScreen, page: () =>      FavoriteScreen()),
-    GetPage(name: topRatingMovies, page: () =>     const TopRatingMovies()),
+    GetPage(name: topRatingMovies, page: () =>      TopRatingMovies()),
     GetPage(name: filterScreen, page: () =>      FilterScreen()),
     GetPage(name: studiosScreen, page: () =>     const StudiosScreen()),
     GetPage(name: studiosDetailsScreen, page: () =>     const StudiosDetailsScreen()),

@@ -1,9 +1,9 @@
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
-import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
+import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
+import 'package:final_movie/view/screen/home_screen/inner_widgets/top_rating_tabbar/top_rating_movies_tabbar.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TopRatingMovies extends StatelessWidget {
-  const TopRatingMovies({super.key});
+   TopRatingMovies({super.key});
 
   ///===========================custom top rating movies=========================
   Widget customTopRatingMovies({
@@ -73,6 +73,8 @@ class TopRatingMovies extends StatelessWidget {
     );
   }
 
+
+    final HomeController homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,6 +160,15 @@ class TopRatingMovies extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 color: AppColors.lightWhite,
               ),
+              SizedBox(
+                height: 16.h,
+              ),
+              ///====================================Movies and tv series tab bar===============
+              TopRatingMoviesTabBar(homeController: homeController,),
+              SizedBox(
+                height: 16.h,
+              ),
+
               Column(
                 children: List.generate(4, (index) {
                   return customTopRatingMovies(
