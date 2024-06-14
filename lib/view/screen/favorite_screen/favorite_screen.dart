@@ -1,7 +1,6 @@
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/view/screen/favorite_screen/favorite_controller/favorite_controller.dart';
-import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -48,12 +47,12 @@ class FavoriteScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 13),
         child: Obx(() {
           return ListView.builder(
-            itemCount: favoriteController.movie.length, // Update with your actual item count
+            itemCount: favoriteController.isExpandedList.length, // Update with your actual item count
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: customWidget.customFavorite(
-                  image:favoriteController.movie[index],
+                  image: AppConstants.lover,
                   movieName: 'Star Wars: The Rise of Skywalker (2024)',
                   releaseDate: '15 May 2020',
                   isExpanded: favoriteController.isExpandedList[index],
