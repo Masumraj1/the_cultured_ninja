@@ -14,6 +14,7 @@ import 'package:final_movie/view/screen/movie_details/movie_details.dart';
 import 'package:final_movie/view/screen/notification_screen/notification_screen.dart';
 import 'package:final_movie/view/screen/onbording_screen/onbording_screen.dart';
 import 'package:final_movie/view/screen/profile_screen/edit_profile_screen/edit_profile_screen.dart';
+import 'package:final_movie/view/screen/profile_screen/profile_screen.dart';
 import 'package:final_movie/view/screen/search_screen/search_screen.dart';
 import 'package:final_movie/view/screen/setting_screen/change_password_screen/change_password_screen.dart';
 import 'package:final_movie/view/screen/setting_screen/setting_screen.dart';
@@ -59,6 +60,7 @@ static const String movieDetails = '/MovieDetails';
 static const String allMovies = '/AllMovies';
 static const String actorDetails = '/ActorDetails';
 static const String actorMovie = '/ActorMovie';
+static const String profileScreen = '/ProfileScreen';
 
 
 
@@ -104,6 +106,7 @@ static const String actorMovie = '/ActorMovie';
     GetPage(name: allMovies, page: () =>       AllMovies()),
     GetPage(name: actorDetails, page: () =>       ActorDetails()),
     GetPage(name: actorMovie, page: () =>        ActorMovie()),
+    GetPage(name: profileScreen, page: () =>        const ProfileScreen()),
 
   ];
 }

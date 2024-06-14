@@ -74,7 +74,9 @@ class SideDrawer extends StatelessWidget {
                     customRow(
                         image: AppIcons.user,
                         title: AppStrings.profile,
-                        onTap: () {}),
+                        onTap: () {
+                          Get.toNamed(AppRoute.profileScreen);
+                        }),
 
                     ///==============================Settings =====================
                     customRow(
