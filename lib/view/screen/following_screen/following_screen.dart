@@ -53,7 +53,7 @@ final FollowingController followingController = Get.find<FollowingController>();
                 IndexedStack(
                   index: followingController.selectedIndex.value,
                   children: [
-                    SingleChildScrollView(child: FollowingActor(customWidget: customWidget)),
+                    FollowingActor(customWidget: customWidget),
                     FollowingStudios(customWidget: customWidget)
                   ],
                 )

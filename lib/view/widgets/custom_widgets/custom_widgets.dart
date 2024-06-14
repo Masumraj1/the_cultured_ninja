@@ -444,29 +444,32 @@ class CustomWidgets {
     required String image,
     required String ratingBar
   }) {
-    return Stack(
-      children: [
-        CustomNetworkImage(
-          borderRadius: BorderRadius.circular(13),
-          height: 106.h,
-          width: 142.w,
-          imageUrl: image,
-        ),
-        Positioned(
-            right: 15,
-            child: Row(
-              children: [
-                const Icon(Icons.star,color: Colors.amber,size: 20,),
-                CustomText(
-                  left: 5,
-                  text: ratingBar,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.sp,
-                  color: AppColors.lightWhite,
-                ),
-              ],
-            ))
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(right: 13,top: 10),
+      child: Stack(
+        children: [
+          CustomNetworkImage(
+            borderRadius: BorderRadius.circular(13),
+            height: 106.h,
+            width: 142.w,
+            imageUrl: image,
+          ),
+          Positioned(
+              right: 15,
+              child: Row(
+                children: [
+                  const Icon(Icons.star,color: Colors.amber,size: 20,),
+                  CustomText(
+                    left: 5,
+                    text: ratingBar,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
+                    color: AppColors.lightWhite,
+                  ),
+                ],
+              ))
+        ],
+      ),
     );
   }
 

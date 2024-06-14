@@ -5,6 +5,7 @@ import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
+import 'package:final_movie/view/screen/home_screen/inner_widgets/top_rating_tabbar/top_rating_movies_tabbar.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import 'inner_widgets/homeScreen_top_rating_movies/home_screen_top_rating_movies.dart';
 import 'inner_widgets/home_appbar/home_appbar.dart';
 import 'inner_widgets/side_drawer/side_drawer.dart';
 
@@ -40,6 +42,7 @@ class HomeScreen extends StatelessWidget {
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+
             children: [
               ///====================== Home AppBar and banner =======================
               HomeAppBar(scaffoldKey: scaffoldKey),
@@ -49,6 +52,7 @@ class HomeScreen extends StatelessWidget {
 
               ///===============================This is banner=======================
               Column(
+
                 children: [
                   CarouselSlider(
                     options: CarouselOptions(
@@ -97,6 +101,7 @@ class HomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 20),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ///======================Top Rating Movies==================
                         Row(
@@ -123,11 +128,20 @@ class HomeScreen extends StatelessWidget {
                         ),
 
                         ///==============================Movies and tv series==============
-                        customWidget.customRatingMovies(
-                          image: AppConstants.movieImage, ratingBar: '4.5',
-                        ),
+                                    SizedBox(
+                                      height: 16.h,
+                                    ),
+                        TopRatingMoviesTabBar(homeController: homeController,),
                         SizedBox(
-                          height: 100.h,
+                          height: 16.h,
+                        ),
+                        IndexedStack(
+                          index: homeController.selectedIndex.value,
+                          children: [
+                            HomeScreenTopRatingMovies(customWidget: customWidget),
+                            HomeScreenTopRatingMovies(customWidget: customWidget),
+
+                          ],
                         ),
 
                         ///===================================My favorite========================
@@ -228,3 +242,5 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
