@@ -50,28 +50,12 @@ class ActorDetails extends StatelessWidget {
 
 
               ///===================================Upcoming movies====================
-              Row(
-                children: [
-                  CustomText(
-                    text: AppStrings.upcomingMovie,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.lightWhite,
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(AppRoute.actorMovie);
-                    },
-                    child: CustomText(
-                      text: AppStrings.viewAll,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.lightWhite,
-                    ),
-                  ),
-                ],
-              ),
+              customWidget.customRow(
+                  startTitle: AppStrings.upcomingMovie,
+                  endTitle: AppStrings.viewAll,
+                  onTap: (){
+                    Get.toNamed(AppRoute.actorMovie);
+                  }),
               SizedBox(
                 height: 16.h,
               ),
@@ -95,28 +79,12 @@ class ActorDetails extends StatelessWidget {
               ),
 
               ///=========================His work=========================
-              Row(
-                children: [
-                  CustomText(
-                    text: AppStrings.hisWork,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.lightWhite,
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(AppRoute.actorMovie);
-                    },
-                    child: CustomText(
-                      text: AppStrings.viewAll,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.lightWhite,
-                    ),
-                  ),
-                ],
-              ),
+              customWidget.customRow(
+                  startTitle: AppStrings.hisWork,
+                  endTitle: AppStrings.viewAll,
+                  onTap: (){
+                    Get.toNamed(AppRoute.actorMovie);
+                  }),
               SizedBox(
                 height: 16.h,
               ),

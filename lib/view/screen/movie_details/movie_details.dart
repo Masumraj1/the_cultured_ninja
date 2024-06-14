@@ -40,6 +40,7 @@ class MovieDetails extends StatelessWidget {
           text: AppStrings.movieDetails,
           color: AppColors.lightWhite,
           fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
         ),
         centerTitle: true,
       ),
@@ -152,28 +153,12 @@ class MovieDetails extends StatelessWidget {
 
                 ///==================================related Movies====================
 
-                Row(
-                  children: [
-                    CustomText(
-                      text: AppStrings.relatedMovies,
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.lightWhite,
-                    ),
-                    const Spacer(),
-                    InkWell(
-                      onTap: () {
-                        Get.toNamed(AppRoute.allMovies);
-                      },
-                      child: CustomText(
-                        text: AppStrings.viewAll,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.lightWhite,
-                      ),
-                    ),
-                  ],
-                ),
+                customWidget.customRow(
+                    startTitle: AppStrings.relatedMovies,
+                    endTitle: AppStrings.viewAll,
+                    onTap: (){
+                      Get.toNamed(AppRoute.allMovies);
+                    }),
                 SizedBox(
                   height: 16.h,
                 ),
