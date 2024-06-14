@@ -95,7 +95,6 @@ class TopRatingMovies extends StatelessWidget {
           color: AppColors.lightWhite,
           fontWeight: FontWeight.w500,
         ),
-
       ),
       body: Padding(
         padding: const EdgeInsets.all(12),
@@ -128,14 +127,22 @@ class TopRatingMovies extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 2,
-                    child: Container(
-                      height: 50,
-                      width: 54,
-                      decoration: BoxDecoration(
-                        color: AppColors.fromRgb,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child:const Icon(Icons.filter_alt,size:35,color: AppColors.lightWhite,)
+                    child: GestureDetector(
+                      onTap: (){
+                        Get.toNamed(AppRoute.filterScreen);
+                      },
+                      child: Container(
+                          height: 50,
+                          width: 54,
+                          decoration: BoxDecoration(
+                            color: AppColors.fromRgb,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Icon(
+                            Icons.filter_alt,
+                            size: 35,
+                            color: AppColors.lightWhite,
+                          )),
                     ),
                   ),
                 ],
@@ -143,6 +150,7 @@ class TopRatingMovies extends StatelessWidget {
               SizedBox(
                 height: 50.h,
               ),
+
               ///================================Top rating movies=============================
               CustomText(
                 text: AppStrings.topRatingMovies,
@@ -166,5 +174,3 @@ class TopRatingMovies extends StatelessWidget {
     );
   }
 }
-
-

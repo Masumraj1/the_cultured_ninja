@@ -17,7 +17,7 @@ class FilterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.backgroundColor,
 
       ///==================================Favorite Appbar ==========================
       appBar: AppBar(
@@ -28,7 +28,7 @@ class FilterScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back),
           color: Colors.white,
         ),
-        backgroundColor: Colors.black,
+        backgroundColor: AppColors.blackDeep,
         title: CustomText(
             text: AppStrings.filter,
             fontSize: 20.sp,
