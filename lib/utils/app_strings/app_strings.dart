@@ -100,6 +100,7 @@ class AppStrings {
   static const addToCalender = 'Add to Calendar';
   static const hisWork = 'His Work';
   static const actorMovies = 'Actor Movies';
+  static const genres = 'Genres :';
 
   ///====================================Remove===========================
   static const welcomeBack = "Welcome back";

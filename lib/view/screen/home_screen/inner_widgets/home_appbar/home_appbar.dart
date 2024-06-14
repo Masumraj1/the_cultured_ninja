@@ -126,7 +126,7 @@ class HomeAppBar extends StatelessWidget {
                 flex: 2,
                 child: InkWell(
                   onTap: (){
-                    Get.toNamed(AppRoute.filterScreen);
+                    Get.toNamed(AppRoute.filterSelectedGenresScreen);
                   },
                   child: Container(
                     height: 55,

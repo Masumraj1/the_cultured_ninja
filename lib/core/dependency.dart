@@ -1,6 +1,7 @@
 import 'package:final_movie/view/screen/authentication/authentication_controller/authentication_controller.dart';
 import 'package:final_movie/view/screen/calender_screen/calendar_controller/calendar_controller.dart';
 import 'package:final_movie/view/screen/favorite_screen/favorite_controller/favorite_controller.dart';
+import 'package:final_movie/view/screen/filter_screen/filter_controller/filter_controller.dart';
 import 'package:final_movie/view/screen/following_screen/following_controller/following_controller.dart';
 import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
 import 'package:final_movie/view/screen/profile_screen/profile_controller/profile_controller.dart';
@@ -16,6 +17,7 @@ class DependancyInjection extends Bindings {
     Get.lazyPut(() => FavoriteController(), fenix: true);
     Get.lazyPut(() => FollowingController(), fenix: true);
     Get.lazyPut(() => CalendarController(), fenix: true);
+    Get.lazyPut(() => FilterController(), fenix: true);
 
   }
 }

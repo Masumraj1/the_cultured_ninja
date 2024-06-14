@@ -22,5 +22,6 @@ class AppColors {
   static const Color favoriteContainerTextColor = Color.fromRGBO(235, 235, 235, 1);
   static const Color borderRgb = Color.fromRGBO(250, 240, 202, 0.05);
   static const Color tavChangeColor = Color.fromRGBO(206, 176, 230, 1);
+  static const Color genreUnselectedColor = Color.fromRGBO(239, 230, 247, 0.12);
 
 }
