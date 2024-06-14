@@ -1,3 +1,4 @@
+
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
@@ -5,43 +6,15 @@ import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
+import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class StudiosDetailsScreen extends StatelessWidget {
-  const StudiosDetailsScreen({super.key});
+  StudiosDetailsScreen({super.key});
 
-  ///============================customStudios========================
-  Widget customWidgets({
-    required String image,
-    required String movieName,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 13),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomNetworkImage(
-            borderRadius: BorderRadius.circular(13),
-            height: 106.h,
-            width: 142.w,
-            imageUrl: image,
-          ),
-          SizedBox(
-            height: 12.h,
-          ),
-          CustomText(
-              textAlign: TextAlign.start,
-              maxLines: 5,
-              text: movieName,
-              fontSize: 12.sp,
-              color: AppColors.lightWhite,
-              fontWeight: FontWeight.w400),
-        ],
-      ),
-    );
-  }
+  final CustomWidgets customWidget = CustomWidgets();
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +36,7 @@ class StudiosDetailsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ///=========================Image======================
+              ///=========================Studio Image======================
               CustomNetworkImage(
                   borderRadius: BorderRadius.circular(14),
                   imageUrl: AppConstants.disneyPlus,
@@ -106,6 +79,8 @@ class StudiosDetailsScreen extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 color: AppColors.lightWhite,
               ),
+
+              ///====================================latest updates==============
               CustomText(
                 textAlign: TextAlign.start,
                 text: AppStrings.latestUpdates,
@@ -116,28 +91,13 @@ class StudiosDetailsScreen extends StatelessWidget {
               ),
 
               ///==================================related Studios====================
-              Row(
-                children: [
-                  CustomText(
-                    text: AppStrings.relatedStudios,
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.lightWhite,
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    onTap: () {
-                      Get.toNamed(AppRoute.studiosScreen);
-                    },
-                    child: CustomText(
-                      text: AppStrings.viewAll,
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.lightWhite,
-                    ),
-                  ),
-                ],
-              ),
+             customWidget.customRow(
+                  startTitle: AppStrings.relatedStudios,
+                  endTitle: AppStrings.viewAll,
+                  onTap: () {
+                    Get.toNamed(AppRoute.studiosScreen);
+                  }),
+
               SizedBox(
                 height: 16.h,
               ),
@@ -147,7 +107,7 @@ class StudiosDetailsScreen extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: 4,
                     itemBuilder: (context, index) {
-                      return customWidgets(
+                      return customWidget.customImageText(
                           image: AppConstants.movieStudio,
                           movieName: "Universal Studios");
                     }),

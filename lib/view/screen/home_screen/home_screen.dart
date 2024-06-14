@@ -6,7 +6,6 @@ import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
 import 'package:final_movie/view/screen/home_screen/inner_widgets/top_rating_tabbar/top_rating_movies_tabbar.dart';
-import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
 import 'package:flutter/material.dart';
@@ -104,28 +103,12 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ///======================Top Rating Movies==================
-                        Row(
-                          children: [
-                            CustomText(
-                              text: AppStrings.topRatingMovies,
-                              color: AppColors.lightWhite,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            const Spacer(),
-                            InkWell(
-                              onTap: () {
-                                Get.toNamed(AppRoute.topRatingMovies);
-                              },
-                              child: CustomText(
-                                text: AppStrings.viewAll,
-                                color: AppColors.lightWhite,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
+                customWidget.customRow(
+                    startTitle: AppStrings.topRatingMovies,
+                    endTitle: AppStrings.viewAll,
+                    onTap: (){
+                      Get.toNamed(AppRoute.topRatingMovies);
+                    }),
 
                         ///==============================Movies and tv series==============
                                     SizedBox(
@@ -145,28 +128,12 @@ class HomeScreen extends StatelessWidget {
                         ),
 
                         ///===================================My favorite========================
-                        Row(
-                          children: [
-                            CustomText(
-                              text: AppStrings.myFavorite,
-                              color: AppColors.lightWhite,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            const Spacer(),
-                            InkWell(
-                              onTap: () {
-                                Get.toNamed(AppRoute.favoriteScreen);
-                              },
-                              child: CustomText(
-                                text: AppStrings.viewAll,
-                                color: AppColors.lightWhite,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
+                        customWidget.customRow(
+                            startTitle: AppStrings.myFavorite,
+                            endTitle: AppStrings.viewAll,
+                            onTap: (){
+                              Get.toNamed(AppRoute.favoriteScreen);
+                            }),
                         SizedBox(
                           height: 16.h,
                         ),
@@ -188,28 +155,12 @@ class HomeScreen extends StatelessWidget {
                         ),
 
                         ///============================Studios============================
-                        Row(
-                          children: [
-                            CustomText(
-                              text: AppStrings.studios,
-                              color: AppColors.lightWhite,
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            const Spacer(),
-                            InkWell(
-                              onTap: () {
-                                Get.toNamed(AppRoute.studiosScreen);
-                              },
-                              child: CustomText(
-                                text: AppStrings.viewAll,
-                                color: AppColors.lightWhite,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
+                        customWidget.customRow(
+                            startTitle: AppStrings.studios,
+                            endTitle: AppStrings.viewAll,
+                            onTap: (){
+                              Get.toNamed(AppRoute.studiosScreen);
+                            }),
                         SizedBox(
                           height: 16.h,
                         ),

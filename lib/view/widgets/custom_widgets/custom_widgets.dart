@@ -480,4 +480,34 @@ class CustomWidgets {
     );
   }
 
+
+
+  ///====================================Custom Row=============================
+
+  Widget customRow(
+      {required String startTitle,
+        required String endTitle,
+        required VoidCallback onTap}) {
+    return Row(
+      children: [
+        CustomText(
+          text: startTitle,
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
+          color: AppColors.lightWhite,
+        ),
+        const Spacer(),
+        InkWell(
+          onTap: onTap,
+          child: CustomText(
+            text: endTitle,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w400,
+            color: AppColors.lightWhite,
+          ),
+        ),
+      ],
+    );
+  }
+
 }
