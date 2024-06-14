@@ -1,47 +1,22 @@
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
-import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
+import 'package:final_movie/view/screen/studios_screen/studios_controller/studios_controller.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
+import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class StudiosScreen extends StatelessWidget {
-  const StudiosScreen({super.key});
+   StudiosScreen({super.key});
 
 
   ///============================customStudios========================
-  Widget customWidgets({
-    required String image,
-    required String movieName,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 13),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomNetworkImage(
-            borderRadius: BorderRadius.circular(13),
-            height: 106.h,
-            width: 142.w,
-            imageUrl: image,
-          ),
-          SizedBox(
-            height: 12.h,
-          ),
-          CustomText(
-              textAlign: TextAlign.start,
-              maxLines: 5,
-              text: movieName,
-              fontSize: 12.sp,
-              color: AppColors.lightWhite,
-              fontWeight: FontWeight.w400),
-        ],
-      ),
-    );
-  }
+  final CustomWidgets customWidget = CustomWidgets();
+
+
+  final StudiosController studiosController = Get.find<StudiosController>();
 
     @override
   Widget build(BuildContext context) {
@@ -80,14 +55,14 @@ class StudiosScreen extends StatelessWidget {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
         ),
-        itemCount: 5,
+        itemCount: studiosController.tvSeriesList.length,
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: (){
               Get.toNamed(AppRoute.studiosDetailsScreen);
             },
-            child: customWidgets(
-                image: AppConstants.disneyPlus,
+            child: customWidget.customImageText(
+                image: studiosController.tvSeriesList[index],
                 movieName: "Disney Plus"),
           );
         },

@@ -517,4 +517,65 @@ class CustomWidgets {
     );
   }
 
+
+
+
+  ///===========================custom top rating movies=========================
+  Widget customTopRatingMovies({
+    required String image,
+    required String movieName,
+    required String ratings,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: AppColors.fromRgb,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: AppColors.borderDrawer),
+      ),
+      child: Row(
+        children: [
+          CustomNetworkImage(
+            imageUrl: image,
+            height: 97,
+            width: 142,
+          ),
+          SizedBox(
+            width: 14.w,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(
+                  textAlign: TextAlign.start,
+                  maxLines: 3,
+                  text: movieName,
+                  color: AppColors.lightWhite,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 14.sp,
+                  bottom: 7,
+                ),
+                Row(
+                  children: [
+                    const Icon(Icons.star, color: Colors.amber, size: 20),
+                    SizedBox(width: 5.w),
+                    CustomText(
+                      textAlign: TextAlign.start,
+                      maxLines: 3,
+                      text: ratings,
+                      color: AppColors.lightWhite,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14.sp,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

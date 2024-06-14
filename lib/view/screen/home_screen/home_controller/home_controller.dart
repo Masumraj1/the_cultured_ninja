@@ -3,7 +3,7 @@ import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class HomeController extends GetxController{
+class HomeController extends GetxController {
   ///================================BannerImage=========================
   final List<String> bannerImg = [
     AppImages.onBoardingThree,
@@ -15,13 +15,17 @@ class HomeController extends GetxController{
     AppConstants.loveAgain,
     AppConstants.movieImage,
     AppConstants.tvSeries,
+    AppConstants.lover,
+  ];
+  final List<String> movie = [
+    AppConstants.lover,
+    AppConstants.loveAgain,
     AppConstants.movieImage,
-
+    AppConstants.chinaMovie,
   ];
 
   RxInt bannerIndex = 0.obs;
   Rx<PageController> pageController = PageController().obs;
-
 
   ///=======================================Movie details screen============================
   var isFavorite = false.obs;
@@ -29,7 +33,6 @@ class HomeController extends GetxController{
   void toggleFavorite() {
     isFavorite.value = !isFavorite.value;
   }
-
 
   ///====================================top rating movies ======================
   var selectedIndex = 0.obs;

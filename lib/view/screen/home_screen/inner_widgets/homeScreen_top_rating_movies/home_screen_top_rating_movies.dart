@@ -19,10 +19,10 @@ final HomeController homeController = Get.find<HomeController>();
       height: 170.h,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: homeController.tvSeriesList.length,
+          itemCount: homeController.movie.length,
           itemBuilder: (context, index) {
             return customWidget.customRatingMovies(
-              image: homeController.tvSeriesList[index], ratingBar: '4.5',
+              image: homeController.movie[index], ratingBar: '4.5',
             );
           }),
     );

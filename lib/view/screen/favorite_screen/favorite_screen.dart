@@ -48,12 +48,12 @@ class FavoriteScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 13),
         child: Obx(() {
           return ListView.builder(
-            itemCount: favoriteController.isExpandedList.length, // Update with your actual item count
+            itemCount: favoriteController.movie.length, // Update with your actual item count
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 12.0),
                 child: customWidget.customFavorite(
-                  image: AppConstants.movieImage,
+                  image:favoriteController.movie[index],
                   movieName: 'Star Wars: The Rise of Skywalker (2024)',
                   releaseDate: '15 May 2020',
                   isExpanded: favoriteController.isExpandedList[index],

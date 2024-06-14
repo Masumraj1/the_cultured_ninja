@@ -141,14 +141,14 @@ class HomeScreen extends StatelessWidget {
                           height: 170.h,
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: 4,
+                              itemCount: homeController.tvSeriesList.length,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
                                     Get.toNamed(AppRoute.movieDetails);
                                   },
                                   child: customWidget.customImageText(
-                                      image: AppConstants.movieImage,
+                                      image: homeController.tvSeriesList[index],
                                       movieName: "Bad Boy"),
                                 );
                               }),
