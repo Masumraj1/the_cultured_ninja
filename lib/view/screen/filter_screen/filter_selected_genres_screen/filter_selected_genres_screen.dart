@@ -45,71 +45,73 @@ class FilterSelectedGenresScreen extends StatelessWidget {
       backgroundColor: AppColors.backgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ///============================Genres=====================
-            CustomText(
-              text: AppStrings.genres,
-              fontWeight: FontWeight.w500,
-              fontSize: 20.sp,
-              color: AppColors.lightWhite,
-            ),
-            SizedBox(height: 10.h),
-            Wrap(
-              spacing: 10.0,
-              runSpacing: 10.0,
-              children: genres.map((genre) {
-                return GestureDetector(
-                  onTap: () => filterController.toggleGenreSelection(genre),
-                  child: Obx(() {
-                    final bool isSelected =
-                        filterController.selectedGenres.contains(genre);
-                    return Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 13.0, vertical: 12),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.buttonColor
-                            : AppColors.genreUnselectedColor,
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CustomText(
-                            text: genre,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 12.sp,
-                            color: AppColors.lightWhite,
-                          ),
-                          if (isSelected) const SizedBox(width: 5.0),
-                          if (isSelected)
-                            Icon(
-                              Icons.close,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ///============================Genres=====================
+              CustomText(
+                text: AppStrings.genres,
+                fontWeight: FontWeight.w500,
+                fontSize: 20.sp,
+                color: AppColors.lightWhite,
+              ),
+              SizedBox(height: 10.h),
+              Wrap(
+                spacing: 10.0,
+                runSpacing: 10.0,
+                children: genres.map((genre) {
+                  return GestureDetector(
+                    onTap: () => filterController.toggleGenreSelection(genre),
+                    child: Obx(() {
+                      final bool isSelected =
+                          filterController.selectedGenres.contains(genre);
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 13.0, vertical: 12),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? AppColors.buttonColor
+                              : AppColors.genreUnselectedColor,
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomText(
+                              text: genre,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 12.sp,
                               color: AppColors.lightWhite,
-                              size: 16.sp,
                             ),
-                        ],
-                      ),
-                    );
-                  }),
-                );
-              }).toList(),
-            ),
-            SizedBox(
-              height: 320.h,
-            ),
-            CustomButton(
-              onTap: () {
-                Get.toNamed(AppRoute.filterScreen
-                );
-              },
-              fillColor: AppColors.buttonColor,
-              title: AppStrings.search,
-              textColor: AppColors.lightWhite,
-            )
-          ],
+                            if (isSelected) const SizedBox(width: 5.0),
+                            if (isSelected)
+                              Icon(
+                                Icons.close,
+                                color: AppColors.lightWhite,
+                                size: 16.sp,
+                              ),
+                          ],
+                        ),
+                      );
+                    }),
+                  );
+                }).toList(),
+              ),
+              SizedBox(
+                height: 320.h,
+              ),
+              CustomButton(
+                onTap: () {
+                  Get.toNamed(AppRoute.filterScreen
+                  );
+                },
+                fillColor: AppColors.buttonColor,
+                title: AppStrings.search,
+                textColor: AppColors.lightWhite,
+              )
+            ],
+          ),
         ),
       ),
     );
