@@ -131,7 +131,7 @@ class TopRatingMovies extends StatelessWidget {
                     flex: 2,
                     child: GestureDetector(
                       onTap: (){
-                        Get.toNamed(AppRoute.filterScreen);
+                        Get.toNamed(AppRoute.filterSelectedGenresScreen);
                       },
                       child: Container(
                           height: 50,
