@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../widgets/custom_following/custom_following.dart';
+
 class ActorDetails extends StatelessWidget {
   ActorDetails({super.key});
 
@@ -43,11 +45,13 @@ class ActorDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ///===========================container==================
-              customWidget.customFollowing(
+              // customWidget.customFollowing(
+              //   image: AppConstants.onlineImage,
+              //   movieName: "Masum Raj", onTap: () {  },
+              // ),
+              CustomFollowing(
                 image: AppConstants.onlineImage,
-                movieName: "Masum Raj",
-              ),
-
+                movieName: 'Masum Raj',),
 
               ///===================================Upcoming movies====================
               customWidget.customRow(

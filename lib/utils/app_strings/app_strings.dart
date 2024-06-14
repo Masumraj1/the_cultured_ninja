@@ -23,6 +23,7 @@ class AppStrings {
   static const dontHaveAnAccount = "Don't Have an Account?";
   static const signUp = "Sign Up";
   static const continues = "Continue";
+  static const unfollow = "Unfollow";
   static const yourPasswordHasBeenUpdated = "Your password has been updated, please change your password regularly to avoid this happening";
   static const createANewPasswordEnsureIt = "Create a new password. Ensure it differs from previous ones for security";
   static const weSentAResetLink = "We sent a reset link to contact@dscode...com enter 5 digit code that mentioned in the email";

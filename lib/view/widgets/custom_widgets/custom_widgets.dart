@@ -1,5 +1,6 @@
 
 
+
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
@@ -14,68 +15,74 @@ import 'package:get/get.dart';
 
 class CustomWidgets {
   ///============================Custom Flowing=====================
-  Widget customFollowing({
-    required String image,
-    required String movieName,
-  }) {
-    return Container(
-      margin: const EdgeInsets.all(10),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-          color: AppColors.fromRgb,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: AppColors.borderRgb)),
-      child: Row(
-        children: [
-          CustomNetworkImage(
-            boxShape: BoxShape.circle,
-            imageUrl: image,
-            height: 97,
-            width: 142,
-          ),
-          SizedBox(
-            width: 14.w,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                  textAlign: TextAlign.start,
-                  maxLines: 3,
-                  text: movieName,
-                  color: AppColors.lightWhite,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.sp,
-                  bottom: 7,
-                ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  height: 40.h,
-                  width: 114.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.blackDeep),
-                  child: Row(
-                    children: [
-                      const CustomImage(imageSrc: AppIcons.profileSelected),
-                      CustomText(
-                        left: 10,
-                        text: AppStrings.following,
-                        color: Colors.white,
-                        fontSize: 13.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
+  // Widget customFollowing({
+  //   required String image,
+  //   required String movieName,
+  //   required VoidCallback onTap
+  // })
+  // {
+  //   return Container(
+  //     margin: const EdgeInsets.all(10),
+  //     padding: const EdgeInsets.all(12),
+  //     decoration: BoxDecoration(
+  //         color: AppColors.fromRgb,
+  //         borderRadius: BorderRadius.circular(15),
+  //         border: Border.all(color: AppColors.borderRgb)),
+  //     child: Row(
+  //       children: [
+  //         CustomNetworkImage(
+  //           boxShape: BoxShape.circle,
+  //           imageUrl: image,
+  //           height: 97,
+  //           width: 142,
+  //         ),
+  //         SizedBox(
+  //           width: 14.w,
+  //         ),
+  //         Expanded(
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               CustomText(
+  //                 textAlign: TextAlign.start,
+  //                 maxLines: 3,
+  //                 text: movieName,
+  //                 color: AppColors.lightWhite,
+  //                 fontWeight: FontWeight.w500,
+  //                 fontSize: 14.sp,
+  //                 bottom: 7,
+  //               ),
+  //               GestureDetector(
+  //                 onTap: onTap,
+  //                 child: Container(
+  //                   padding: const EdgeInsets.all(10),
+  //                   height: 40.h,
+  //                   width: 114.w,
+  //                   decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.circular(10),
+  //                       color: AppColors.blackDeep),
+  //                   child: Row(
+  //                     children: [
+  //                       const CustomImage(imageSrc: AppIcons.profileSelected),
+  //                       CustomText(
+  //                         left: 10,
+  //                         text: AppStrings.following,
+  //                         color: Colors.white,
+  //                         fontSize: 13.sp,
+  //                         fontWeight: FontWeight.w400,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   ///=============================================customUpcomingMovies===================
   Widget customUpcomingMovies({
