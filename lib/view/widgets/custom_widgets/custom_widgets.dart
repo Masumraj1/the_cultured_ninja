@@ -237,6 +237,7 @@ class CustomWidgets {
     required String movieName,
     required String releaseDate,
     required String button,
+    void Function()? onTap,
   }) {
     return Container(
       padding: const EdgeInsets.all(12),
@@ -277,7 +278,8 @@ class CustomWidgets {
                   fontSize: 14,
                      bottom: 10,
                 ),
-                CustomButton(onTap: (){},
+                CustomButton(
+                  onTap: onTap ?? () {},
                 title: button,
                   width: 134.w,
                   height: 37.h,
