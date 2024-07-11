@@ -14,6 +14,7 @@ import 'package:final_movie/view/screen/home_screen/home_screen.dart';
 import 'package:final_movie/view/screen/movie_details/movie_details.dart';
 import 'package:final_movie/view/screen/notification_screen/notification_screen.dart';
 import 'package:final_movie/view/screen/onbording_screen/onbording_screen.dart';
+import 'package:final_movie/view/screen/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:final_movie/view/screen/profile_screen/edit_profile_screen/edit_profile_screen.dart';
 import 'package:final_movie/view/screen/profile_screen/profile_screen.dart';
 import 'package:final_movie/view/screen/search_screen/search_screen.dart';
@@ -22,6 +23,7 @@ import 'package:final_movie/view/screen/setting_screen/setting_screen.dart';
 import 'package:final_movie/view/screen/splash_screen/splash_screen.dart';
 import 'package:final_movie/view/screen/studios_details_screen/studios_details_screen.dart';
 import 'package:final_movie/view/screen/studios_screen/studios_screen.dart';
+import 'package:final_movie/view/screen/terms_and_condition_screen/terms_and_condition.dart';
 import 'package:final_movie/view/screen/top_rating_movies/top_rating_movies.dart';
 import 'package:get/get.dart';
 
@@ -63,6 +65,8 @@ static const String actorDetails = '/ActorDetails';
 static const String actorMovie = '/ActorMovie';
 static const String profileScreen = '/ProfileScreen';
 static const String filterSelectedGenresScreen = '/filterSelectedGenresScreen';
+static const String privacyPolicyScreen = '/PrivacyPolicyScreen';
+static const String termsAndCondition = '/TermsAndCondition';
 
 
 
@@ -90,6 +94,8 @@ static const String filterSelectedGenresScreen = '/filterSelectedGenresScreen';
     GetPage(name: settingScreen, page: () =>    const SettingScreen()),
     GetPage(name: changePasswordScreen, page: () =>     ChangePasswordScreen()),
     GetPage(name: notificationScreen, page: () =>    const NotificationScreen()),
+    GetPage(name: privacyPolicyScreen, page: () =>    const PrivacyPolicyScreen()),
+    GetPage(name: termsAndCondition, page: () =>    const TermsAndCondition()),
 
     ///==============================editProfile=====================
     GetPage(name: editProfileScreen, page: () =>     EditProfileScreen()),

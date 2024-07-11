@@ -86,6 +86,21 @@ class SideDrawer extends StatelessWidget {
                           Get.toNamed(AppRoute.settingScreen);
                         }),
 
+                    ///==============================Privacy Policy =====================
+                    customRow(
+                        image: AppIcons.privacy,
+                        title: AppStrings.privacyPolicy,
+                        onTap: () {
+                          Get.toNamed(AppRoute.privacyPolicyScreen);
+                        }),
+                    ///======================Terms and condition ===============
+                    customRow(
+                        image: AppIcons.privacy,
+                        title: AppStrings.termsAndCondition,
+                        onTap: () {
+                          Get.toNamed(AppRoute.termsAndCondition);
+                        }),
+
 
 
                     ///==============================Sign Out======================

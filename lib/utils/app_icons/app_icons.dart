@@ -17,6 +17,7 @@ class AppIcons {
   static const String edit = "$basePath/edit.svg";
   static const String selectedCalendar = "$basePath/selected.svg";
   static const String unFollow = "$basePath/unfollowIcon.svg";
+  static const String privacy = "$basePath/privacy.svg";
 
 
   ///===========================Nav bar==================

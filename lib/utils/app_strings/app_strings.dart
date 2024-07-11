@@ -9,6 +9,8 @@ class AppStrings {
   static const password = "Password";
   static const rememberMe = "Remember me";
   static const signIn = "Sign in";
+  static const privacyPolicy = "Privacy Policy";
+  static const termsAndCondition = "Terms & Condition";
   static const forgotPassword = "Forgot password?";
   static const signUpYourAccount = "Sign Up Your Account";
   static const userName = "User Name";
