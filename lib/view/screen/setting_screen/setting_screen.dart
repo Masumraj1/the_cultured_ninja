@@ -66,6 +66,7 @@ class SettingScreen extends StatelessWidget {
               ///======================================Password Field==================
               const CustomTextField(
                 hintText: "password",
+                hintStyle: TextStyle(color: Colors.white),
                 isPassword: true,
                 fillColor: AppColors.fromRgb,
                 fieldBorderColor: AppColors.fromRgb,
