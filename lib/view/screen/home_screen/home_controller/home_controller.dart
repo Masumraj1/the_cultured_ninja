@@ -23,7 +23,15 @@ class HomeController extends GetxController {
     AppConstants.movieImage,
     AppConstants.chinaMovie,
   ];
+  final List<String> studiosList = [
+    AppConstants.disneyPlus,
+    AppConstants.netFlix,
+    AppConstants.disneyPlus,
+    AppConstants.movieStudio,
+    AppConstants.netFlix,
 
+
+  ];
   RxInt bannerIndex = 0.obs;
   Rx<PageController> pageController = PageController().obs;
 

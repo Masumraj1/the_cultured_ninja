@@ -105,6 +105,34 @@ class StudiosDetailsScreen extends StatelessWidget {
                   color: AppColors.lightWhite,
                 ),
 
+                Column(
+                  children: List.generate(2, (index) {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 10.h), // Adds space between each Row
+                      child: Row(
+                        children: [
+                          CustomNetworkImage(
+                            borderRadius: BorderRadius.circular(8),
+                            imageUrl: AppConstants.movieImage,
+                            height: 50,
+                            width: 78,
+                          ),
+                          SizedBox(
+                            width: 15.w,
+                          ),
+                          const CustomText(
+                            text: "Now showing this movie",
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                            color: AppColors.lightWhite,
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
+                ),
+
+
                 ///==================================related Studios====================
                 customWidget.customRow(
                     startTitle: AppStrings.relatedStudios,
