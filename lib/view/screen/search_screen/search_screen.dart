@@ -1,3 +1,4 @@
+import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
@@ -12,6 +13,59 @@ class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
+      ///======================Search Appbar===============
+      appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(Icons.arrow_back),
+          color: AppColors.lightWhite,
+        ),
+        backgroundColor: AppColors.backgroundColor,
+        title: CustomText(text: AppStrings.search,color: AppColors.lightWhite,fontSize: 20.sp,),centerTitle: true,),
+      body:  Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
+        child: Column(
+          children: [
+            const CustomTextField(
+              fillColor: AppColors.fromRgb,
+              fieldBorderColor: AppColors.fromRgb,
+              hintText: AppStrings.search,
+              hintStyle: TextStyle(color: AppColors.searchHintText),
+              isPrefixIcon: true,
+              prefixIcon: Padding(
+                padding: EdgeInsets.only(left: 12),
+                child: Icon(Icons.search,color: AppColors.searchHintText,),
+              ),
+            ),
+            SizedBox(
+              height: 10.h,
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: 6,
+                  itemBuilder: (context,index){
+                    return   GestureDetector(
+                      onTap: (){
+                        Get.toNamed(AppRoute.movieDetails);
+                      },
+                      child: customFavorite(
+                          image: AppConstants.movieImage,
+                          movieName: 'Star Wars: The Rise of Skywalker (2024)',
+                          releaseDate: '3h 12m', year: '2024 Action Comedy'),
+                    );
+                  }),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
   ///===========================customFavorite===============================
   Widget customFavorite({
@@ -68,54 +122,6 @@ class SearchScreen extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back),
-          color: AppColors.lightWhite,
-        ),
-        backgroundColor: AppColors.backgroundColor,
-        title: CustomText(text: AppStrings.search,color: AppColors.lightWhite,fontSize: 20.sp,),centerTitle: true,),
-      body:  Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
-        child: Column(
-          children: [
-            const CustomTextField(
-              fillColor: AppColors.fromRgb,
-              fieldBorderColor: AppColors.fromRgb,
-              hintText: AppStrings.search,
-              hintStyle: TextStyle(color: AppColors.searchHintText),
-              isPrefixIcon: true,
-              prefixIcon: Padding(
-                padding: EdgeInsets.only(left: 12),
-                child: Icon(Icons.search,color: AppColors.searchHintText,),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 6,
-                  itemBuilder: (context,index){
-                    return   customFavorite(
-                        image: AppConstants.movieImage,
-                        movieName: 'Star Wars: The Rise of Skywalker (2024)',
-                        releaseDate: '3h 12m', year: '2024 Action Comedy');
-                  }),
-            )
-          ],
-        ),
       ),
     );
   }
