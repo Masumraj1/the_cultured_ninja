@@ -191,7 +191,9 @@ class EditProfileScreen extends StatelessWidget {
 
               ///<<<<========================================Save And Update Button======================================
               CustomButton(
-                onTap: () {},
+                onTap: () {
+                  Get.back();
+                },
                 title: AppStrings.save,
                 fillColor: AppColors.buttonColor,
               )
