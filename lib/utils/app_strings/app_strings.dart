@@ -8,6 +8,7 @@ class AppStrings {
   static const email = "Email";
   static const password = "Password";
   static const rememberMe = "Remember me";
+  static const availablePlatform = "Available Platform";
   static const signIn = "Sign in";
   static const privacyPolicy = "Privacy Policy";
   static const termsAndCondition = "Terms & Condition";

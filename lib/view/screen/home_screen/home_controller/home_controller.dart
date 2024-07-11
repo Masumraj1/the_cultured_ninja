@@ -41,7 +41,10 @@ class HomeController extends GetxController {
   void toggleFavorite() {
     isFavorite.value = !isFavorite.value;
   }
-
+  RxBool isTap = false.obs;
+  void toggleTap() {
+    isTap.value = !isTap.value;
+  }
   ///====================================top rating movies ======================
   var selectedIndex = 0.obs;
 

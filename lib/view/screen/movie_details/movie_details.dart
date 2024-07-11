@@ -3,6 +3,7 @@ import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
+import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
@@ -15,9 +16,6 @@ class MovieDetails extends StatelessWidget {
 
   ///============================customStudios========================
   final CustomWidgets customWidget = CustomWidgets();
-
-
-
 
   final HomeController homeController = Get.find<HomeController>();
 
@@ -106,6 +104,92 @@ class MovieDetails extends StatelessWidget {
                   color: AppColors.lightWhite,
                   bottom: 12,
                 ),
+
+                ///==================Watched Button==============
+                Row(
+                  children: [
+                    const Icon(Icons.timelapse,color: Colors.white,),
+                    SizedBox(width: 5.w,),
+                    const CustomText(
+                      text: '02:30 Second',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: AppColors.lightWhite,
+                    ),                    SizedBox(width: 5.w,),
+
+                    const Icon(Icons.star,color: Colors.amber,),
+                    const CustomText(
+                      text: '4.5',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
+                      color: AppColors.lightWhite,
+                    ),
+                    const Spacer(),
+
+                    homeController.isTap.value
+                        ? CustomButton(
+
+                            width: 87,
+                            onTap: () {
+                              homeController.toggleTap();
+                            },
+                            title: "Watched",
+                            fillColor: AppColors.lightWhite,
+                            textColor: AppColors.buttonColor,
+                          )
+                        : CustomButton(
+                            width: 87,
+                            onTap: () {
+                              homeController.toggleTap();
+                            },
+                            title: 'Watched',
+                            fillColor: AppColors.buttonColor,
+                            textColor: AppColors.lightWhite,
+                          ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                const Row(
+                  children: [
+                    CustomText(
+                      text: AppStrings.releaseDate,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: AppColors.lightWhite,
+                    ),
+                    Spacer(),CustomText(
+                      text:'Genre',
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      color: AppColors.lightWhite,
+                    ),
+                  ],
+                ),
+               Row(children: [
+                 const CustomText(
+                   text: 'December 9, 2017',
+                   fontWeight: FontWeight.w400,
+                   fontSize: 12,
+                   color: AppColors.lightWhite,
+                 ),
+                 const Spacer(),
+                 Container(
+                   margin: EdgeInsets.all(15),
+                   decoration: BoxDecoration(
+                     borderRadius: BorderRadius.circular(15),
+                     border: Border.all(color: Colors.white)
+                   ),
+                   padding: EdgeInsets.all(15),
+                   child:  const CustomText(
+                     text: 'Action',
+                     fontWeight: FontWeight.w400,
+                     fontSize: 12,
+                     color: AppColors.lightWhite,
+                   ),
+                 )
+               ],),
                 ///==================================synopsis===========================
                 CustomText(
                   top: 16,
@@ -125,7 +209,30 @@ class MovieDetails extends StatelessWidget {
                   color: AppColors.lightWhite,
                 ),
 
-                ///==================================Cost & Crew====================
+                ///==================================Available Platform====================
+                CustomText(
+                  text: AppStrings.availablePlatform,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.lightWhite,
+                  bottom: 16,
+                ),
+                SizedBox(
+                  height: 140.h,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 4,
+                      itemBuilder: (context, index) {
+                        return customWidget.customImageText(
+                            image: AppConstants.disneyPlus,
+                            movieName: "Disney Plus");
+                      }),
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+
+                ///==================================Actor and director====================
                 CustomText(
                   text: AppStrings.actorsAndDirector,
                   fontSize: 20.sp,
@@ -140,7 +247,7 @@ class MovieDetails extends StatelessWidget {
                       itemCount: 4,
                       itemBuilder: (context, index) {
                         return GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Get.toNamed(AppRoute.actorDetails);
                           },
                           child: customWidget.customActorAndDirector(
@@ -156,7 +263,7 @@ class MovieDetails extends StatelessWidget {
                 customWidget.customRow(
                     startTitle: AppStrings.relatedMovies,
                     endTitle: AppStrings.viewAll,
-                    onTap: (){
+                    onTap: () {
                       Get.toNamed(AppRoute.allMovies);
                     }),
                 SizedBox(
