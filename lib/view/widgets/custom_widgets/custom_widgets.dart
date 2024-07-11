@@ -1,6 +1,8 @@
 
 
 
+import 'dart:ui';
+
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
@@ -90,6 +92,8 @@ class CustomWidgets {
     required String movieName,
     required String releaseDate,
     required String button,
+    void Function()? onTap,
+
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: 13),
@@ -125,7 +129,8 @@ class CustomWidgets {
           CustomButton(
             height: 50,
             width: 160.w,
-            onTap: (){},title: button,fillColor: AppColors.buttonColor,),
+            onTap:  onTap ?? () {},
+            title: button,fillColor: AppColors.buttonColor,),
 
 
         ],

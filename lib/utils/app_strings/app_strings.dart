@@ -49,9 +49,11 @@ class AppStrings {
   static const logOut = "Log Out";
   static const changePassword = "Change Password";
   static const deleteAccount = "Delete Account";
+  static const addedCalendarSuccessFully = "Added Calendar Successfully!!! ";
   static const currentPassword = "Current Password";
   static const newPassword = "New Password";
   static const yes = "Yes";
+  static const thankYou = "Thank you for adding the calendar. You will be given a reminder on the movie release date.";
   static const cancel = "Cancel";
   static const areYouSureYouWantToDeleteYourAccount = "Are you sure you want to Delete your account?";
 
