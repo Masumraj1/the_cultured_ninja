@@ -1,3 +1,4 @@
+import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,15 @@ class TopRatingTvSeriesList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: List.generate(homeController.tvSeriesList.length, (index) {
-        return customWidget.customTopRatingMovies(
-          image: homeController.tvSeriesList[index],
-          movieName: 'Bad Boy',
-          ratings: '4.5',
+        return GestureDetector(
+          onTap: (){
+            Get.toNamed(AppRoute.movieDetails);
+          },
+          child: customWidget.customTopRatingMovies(
+            image: homeController.tvSeriesList[index],
+            movieName: 'Bad Boy',
+            ratings: '4.5',
+          ),
         );
       }),
     );
