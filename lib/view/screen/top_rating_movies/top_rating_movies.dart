@@ -1,7 +1,7 @@
+import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
 import 'package:final_movie/view/screen/home_screen/inner_widgets/top_rating_tabbar/top_rating_movies_tabbar.dart';
 import 'package:final_movie/view/screen/top_rating_movies/inner/top_rating_tv_series_list.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';

@@ -1,5 +1,4 @@
-import 'package:final_movie/utils/app_const/app_const.dart';
-import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
+import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

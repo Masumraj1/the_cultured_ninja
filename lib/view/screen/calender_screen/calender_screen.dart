@@ -1,4 +1,5 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
+import 'package:final_movie/controller/calendar_controller/calendar_controller.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
@@ -8,7 +9,6 @@ import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'calendar_controller/calendar_controller.dart'; // Make sure this path is correct
 
 class CalendarScreen extends StatelessWidget {
   CalendarScreen({super.key});

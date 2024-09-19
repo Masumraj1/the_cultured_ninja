@@ -1,10 +1,9 @@
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
-import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
 import 'package:final_movie/view/screen/home_screen/inner_widgets/home_screen_tv_series/home_screen_tv_series.dart';
 import 'package:final_movie/view/screen/home_screen/inner_widgets/top_rating_tabbar/top_rating_movies_tabbar.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';

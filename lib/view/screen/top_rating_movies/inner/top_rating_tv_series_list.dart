@@ -1,5 +1,5 @@
+import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
-import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

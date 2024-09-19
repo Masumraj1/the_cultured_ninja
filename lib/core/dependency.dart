@@ -1,11 +1,12 @@
-import 'package:final_movie/view/screen/authentication/authentication_controller/authentication_controller.dart';
-import 'package:final_movie/view/screen/calender_screen/calendar_controller/calendar_controller.dart';
-import 'package:final_movie/view/screen/favorite_screen/favorite_controller/favorite_controller.dart';
-import 'package:final_movie/view/screen/filter_screen/filter_controller/filter_controller.dart';
-import 'package:final_movie/view/screen/following_screen/following_controller/following_controller.dart';
-import 'package:final_movie/view/screen/home_screen/home_controller/home_controller.dart';
-import 'package:final_movie/view/screen/profile_screen/profile_controller/profile_controller.dart';
-import 'package:final_movie/view/screen/studios_screen/studios_controller/studios_controller.dart';
+import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
+import 'package:final_movie/controller/calendar_controller/calendar_controller.dart';
+import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
+import 'package:final_movie/controller/filter_controller/filter_controller.dart';
+import 'package:final_movie/controller/following_controller/following_controller.dart';
+import 'package:final_movie/controller/genarel_controller/genarel_controller.dart';
+import 'package:final_movie/controller/home_controller/home_controller.dart';
+import 'package:final_movie/controller/profile_controller/profile_controller.dart';
+import 'package:final_movie/controller/studios_controller/studios_controller.dart';
 import 'package:get/get.dart';
 
 
@@ -20,6 +21,7 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => CalendarController(), fenix: true);
     Get.lazyPut(() => FilterController(), fenix: true);
     Get.lazyPut(() => StudiosController(), fenix: true);
+    Get.lazyPut(() => GeneralController(), fenix: true);
 
   }
 }

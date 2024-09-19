@@ -2,6 +2,7 @@
 
 
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:final_movie/controller/onbording_controller/onbording_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_images/app_images.dart';
@@ -11,7 +12,6 @@ import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'onbording_controller/onbording_controller.dart';
 
 class OnBoardingPage extends StatelessWidget {
   OnBoardingPage({super.key});

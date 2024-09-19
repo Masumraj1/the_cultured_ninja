@@ -1,6 +1,6 @@
+import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
-import 'package:final_movie/view/screen/favorite_screen/favorite_controller/favorite_controller.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
 import 'package:flutter/material.dart';
