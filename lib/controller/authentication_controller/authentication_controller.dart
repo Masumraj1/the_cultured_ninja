@@ -83,12 +83,12 @@ class AuthenticationController extends GetxController {
       confirmPasswordController.clear();
       nameController.clear();
 
-      SharePrefsHelper.setString(
-          AppConstants.bearerToken, response.body["accessToken"]);
-      print(
-          '======================This is  User Name ${response.body["data"]['name']}');
-      print(
-          '======================User Token Saved::: ${response.body['accessToken']}');
+      // SharePrefsHelper.setString(
+      //     AppConstants.bearerToken, response.body["accessToken"]);
+      // print(
+      //     '======================This is  User Name ${response.body["data"]['name']}');
+      // print(
+      //     '======================User Token Saved::: ${response.body['accessToken']}');
 
       Get.offAllNamed(AppRoute.homeScreen);
       toastMessage(
