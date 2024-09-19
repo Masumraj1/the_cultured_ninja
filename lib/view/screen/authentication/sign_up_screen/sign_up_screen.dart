@@ -1,9 +1,9 @@
 import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
-import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
+import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +11,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SignUpScreen extends StatelessWidget {
-   SignUpScreen({super.key});
- final AuthenticationController authenticationController = Get.find<AuthenticationController>();
+  SignUpScreen({super.key});
+
+  final AuthenticationController authenticationController =
+      Get.find<AuthenticationController>();
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return Obx(
-     () {
-        return Scaffold(
-          body: Stack(
+    return Obx(() {
+      return Scaffold(
+        body: Form(
+          key: formKey,
+          child: Stack(
             children: [
               ///=============================BackGround Image========================
               Container(
@@ -37,20 +42,23 @@ class SignUpScreen extends StatelessWidget {
                   top: 44,
                   left: 20,
                   child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         Get.back();
                       },
-                      child: const Icon(Icons.arrow_back,color: Colors.white,))),
+                      child: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                      ))),
               Positioned(
                 top: 134,
                 left: 0,
                 right: 0,
                 child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   child: Column(
                     children: [
-                      ///===============================Login Your Account=====================
+                      ///===============================signUpYourAccount=====================
                       CustomText(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
@@ -60,89 +68,138 @@ class SignUpScreen extends StatelessWidget {
                       ),
 
                       ///====================================User Name======================
-                      const CustomTextField(
+                      CustomTextField(
+                        validator: (value) {
+                          if (value == null || value.toString().isEmpty) {
+                            return AppStrings.fieldCantBeEmpty;
+                          } else if (value.length < 4) {
+                            return AppStrings.enterAValidName;
+                          }
+                          return null;
+                        },
+                        textEditingController:
+                            authenticationController.nameController,
                         fillColor: AppColors.lightWhite,
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.person,
                           color: AppColors.buttonColor,
                         ),
                         isPrefixIcon: true,
                         hintText: AppStrings.userName,
-                        hintStyle: TextStyle(color: AppColors.buttonColor),
+                        hintStyle:
+                            const TextStyle(color: AppColors.buttonColor),
                       ),
                       SizedBox(
                         height: 24.h,
                       ),
 
                       ///====================================Email Field======================
-                      const CustomTextField(
+                      CustomTextField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return AppStrings.enterValidEmail;
+                          } else if (!AppStrings.emailRegexp.hasMatch(
+                              authenticationController.emailController.text)) {
+                            return AppStrings.enterValidEmail;
+                          } else {
+                            return null;
+                          }
+                        },
+                        textEditingController:
+                            authenticationController.emailController,
                         fillColor: AppColors.lightWhite,
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.email_outlined,
                           color: AppColors.buttonColor,
                         ),
                         isPrefixIcon: true,
                         hintText: AppStrings.email,
-                        hintStyle: TextStyle(color: AppColors.buttonColor),
+                        hintStyle:
+                            const TextStyle(color: AppColors.buttonColor),
                       ),
                       SizedBox(
                         height: 24.h,
                       ),
 
                       ///====================================Password ==============================
-                      const CustomTextField(
+                      CustomTextField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return AppStrings.passwordMustHaveEightWith;
+                          } else if (value.length < 8 ||
+                              !AppStrings.passRegexp.hasMatch(value)) {
+                            return AppStrings.passwordLengthAndContain;
+                          } else {
+                            return null;
+                          }
+                        },
+                        textEditingController:
+                            authenticationController.passwordController,
                         fillColor: AppColors.lightWhite,
                         isPassword: true,
+                        prefixIcon: const Icon(
+                          Icons.lock,
+                          color: AppColors.buttonColor,
+                        ),
                         hintText: AppStrings.password,
-                        hintStyle: TextStyle(color: AppColors.buttonColor),
+                        hintStyle:
+                            const TextStyle(color: AppColors.buttonColor),
                       ),
                       SizedBox(
                         height: 24.h,
                       ),
-                      const CustomTextField(
+
+                      ///====================================Confirm password ==============
+                      CustomTextField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return AppStrings.fieldCantBeEmpty;
+                          } else if (value !=
+                              authenticationController
+                                  .passwordController.text) {
+                            return "Password should match";
+                          }
+                          return null;
+                        },
+                        textEditingController:
+                            authenticationController.confirmPasswordController,
                         fillColor: AppColors.lightWhite,
                         isPassword: true,
+                        prefixIcon: const Icon(
+                          Icons.lock,
+                          color: AppColors.buttonColor,
+                        ),
                         hintText: AppStrings.confirmPassword,
-                        hintStyle: TextStyle(color: AppColors.buttonColor),
+                        hintStyle:
+                            const TextStyle(color: AppColors.buttonColor),
                       ),
 
-                      ///===================================Remember me=========================
-                      Row(
-                        children: [
-                          Checkbox(
-                            value: authenticationController.isRemember.value,
-                            checkColor: AppColors.lightWhite,
-                            activeColor: AppColors.buttonColor,
-                            onChanged: (value) {
-                              authenticationController.toggleRemember();
-                            },
-                          ),
-                          const CustomText(
-                            text: AppStrings.rememberMe,
-                            color: AppColors.lightWhite,
-                          ),
-                        ],
+                      SizedBox(
+                        height: 30.h,
                       ),
 
-                      ///======================================Sign In Button==================
+                      ///======================================Sign Up Button==================
+
+                      authenticationController.isSignUpLoading.value
+                          ? const CustomLoader()
+                          :
                       CustomButton(
-                        onTap: () {
-                          Get.toNamed(AppRoute.homeScreen);
-                        },
-                        title: AppStrings.signUp,
-                        fillColor: AppColors.buttonColor,
-                      ),
-
-
-
+                              onTap: () {
+                                if (formKey.currentState!.validate()) {
+                                  authenticationController.signUp();
+                                }
+                              },
+                              title: AppStrings.signUp,
+                              fillColor: AppColors.buttonColor,
+                            ),
                     ],
                   ),
                 ),
               ),
             ],
           ),
-        );
-      }
-    );
+        ),
+      );
+    });
   }
 }

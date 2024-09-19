@@ -85,7 +85,7 @@ static const String termsAndCondition = '/TermsAndCondition';
     ///============================Authentication Screen========
     GetPage(name: signInScreen, page: () =>  SignInScreen()),
     GetPage(name: signUpScreen, page: () =>  SignUpScreen()),
-    GetPage(name: forgetPassword, page: () =>  const ForgetPassword()),
+    GetPage(name: forgetPassword, page: () =>   ForgetPassword()),
     GetPage(name: forgetOtp, page: () =>  const ForgetOtp()),
     GetPage(name: resetPassword, page: () =>  const ResetPassword()),
     GetPage(name: successfullyScreen, page: () =>  const SuccessfullyScreen()),

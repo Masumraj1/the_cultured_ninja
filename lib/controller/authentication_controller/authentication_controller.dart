@@ -35,25 +35,25 @@ class AuthenticationController extends GetxController {
   ///=================================SignUp ========================
   RxBool isSignUpLoading = false.obs;
 
-  signUpAuth() async {
+  signUp() async {
     isSignUpLoading.value = true;
     refresh();
     Map<String, String> body = {
       "name": nameController.text,
       "email": emailController.text,
-      "password": passwordController.text,
       "confirm_password": confirmPasswordController.text,
+      "password": passwordController.text
     };
-
-    var response =
-        await ApiClient.postData(ApiUrl.signupAuth, jsonEncode(body));
+    var response = await ApiClient.postData(
+      ApiUrl.signupAuth,
+      jsonEncode(body),
+    );
     if (response.statusCode == 200) {
-      isSignUpLoading.value = false;
-      refresh();
-      Get.toNamed(
-        AppRoute.forgetOtp,
+
+      Get.toNamed(AppRoute.forgetOtp);
+      toastMessage(
+        message: response.body["message"],
       );
-      toastMessage(message: response.body["message"]);
     } else {
       ApiChecker.checkApi(response);
     }
@@ -103,25 +103,28 @@ class AuthenticationController extends GetxController {
 
   ///============================ Forget Password ==========================
 
-  RxBool isOtpLoadings = false.obs;
+  RxBool isForgetLoading = false.obs;
 
   forgetPassword() async {
-    isOtpLoadings.value = true;
+    isForgetLoading.value = true;
     refresh();
-    Map<dynamic, String> body = {"email": emailController.text};
+    Map<dynamic, String> body = {
+      "email": emailController.text
+    };
     var response =
         await ApiClient.postData(ApiUrl.forgotPasswordAuth, jsonEncode(body));
-    isOtpLoadings.value = false;
+    isForgetLoading.value = false;
     refresh();
     if (response.statusCode == 200) {
       emailController.clear();
+      Get.toNamed(AppRoute.forgetOtp);
       toastMessage(
         message: response.body["message"],
       );
     } else {
       ApiChecker.checkApi(response);
     }
-    isOtpLoadings.value = false;
+    isForgetLoading.value = false;
     refresh();
   }
 
