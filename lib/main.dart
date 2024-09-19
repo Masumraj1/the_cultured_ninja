@@ -7,7 +7,7 @@ import 'core/dependency.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  DependancyInjection di = DependancyInjection();
+  DependencyInjection di = DependencyInjection();
   di.dependencies();
   runApp(const MyApp());
 }
@@ -20,7 +20,6 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       child: GetMaterialApp(
-        // theme: darkModeTheme,
         debugShowCheckedModeBanner: false,
         defaultTransition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 200),

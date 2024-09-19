@@ -29,6 +29,7 @@ import 'package:get/get.dart';
 
 
 class AppRoute {
+  AppRoute._();
   ///==================== Initial Routes ====================
   static const String splashScreen = "/splash_screen";
 

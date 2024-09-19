@@ -9,7 +9,7 @@ import 'package:final_movie/view/screen/studios_screen/studios_controller/studio
 import 'package:get/get.dart';
 
 
-class DependancyInjection extends Bindings {
+class DependencyInjection extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => AuthenticationController(), fenix: true);

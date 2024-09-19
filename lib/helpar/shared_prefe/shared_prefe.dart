@@ -1,12 +1,17 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferenceValue {
+
+
   static const String searchHistory = "searchHistory";
   static const String token = "token";
   static const String email = "email";
   static const String isRemember = "isRemember";
   static const String isOnboarding = "isOnboarding";
 }
+
+
+
 
 class SharePrefsHelper {
   //===========================Get Data From Shared Preference===================
@@ -61,7 +66,11 @@ class SharePrefsHelper {
     await preferences.setInt(key, value);
   }
 
-//===========================Remove Value===================
+
+
+
+
+///>>>>===========================Remove Value===================
 
   static Future remove(String key) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
