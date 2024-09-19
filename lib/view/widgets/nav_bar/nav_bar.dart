@@ -71,6 +71,7 @@ class _NavBarState extends State<NavBar> {
                     color: index == bottomNavIndex ? AppColors.fromRgb : null,
                     borderRadius: BorderRadius.circular(30)),
                 child: index == bottomNavIndex
+
                     ? SvgPicture.asset(
                   selectedIcon[index],
                   height:index==2?54.h:24.h,
