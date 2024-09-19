@@ -116,4 +116,21 @@ class AppStrings {
   static const synopsis = "Synopsis";
   static const weAreDedicated = "We are dedicated to expanding our presence and offerings in the region,” Francesco Perta, vice president of business development more...";
   static const warnerBros = "Warner Bros: Discovery to expand Mideast presence through partnerships";
+
+///===========================validation text==========================
+  static RegExp passRegexp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.{8,}$)');
+  static RegExp emailRegexp = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  static const String fieldCantBeEmpty = "Field can't be empty";
+  static const String passDoesNotMatch = "Password does not match";
+  static const String passwordMustHaveEightWith =
+      "Password must have 8 characters With(A-z,a-z,0-9)";
+  static const String enterValidEmail = "Enter a valid email";
+  static const String passMustContainBoth =
+      "Password must be 8 characters long & must include one capital letter";
+  static const String enterAValidName = "Enter a valid name";
+  static const String enterValidEamil = "Please Enter Your Email Address";
+  static const String passwordLengthAndContain =
+      "Password must be at least 8 characters long and at least one uppercase letter, one lowercase letter, one number";
+///================================Onboard screen=====================================
 }

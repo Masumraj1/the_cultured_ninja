@@ -4,7 +4,7 @@ import 'package:final_movie/view/screen/all_movies/all_movies.dart';
 import 'package:final_movie/view/screen/authentication/forget_otp/forget_otp.dart';
 import 'package:final_movie/view/screen/authentication/forget_password/forget_password.dart';
 import 'package:final_movie/view/screen/authentication/reset_password/reset_password.dart';
-import 'package:final_movie/view/screen/authentication/signIn_screen/sign_in_screen.dart';
+import 'package:final_movie/view/screen/authentication/sign_in_screen/sign_in_screen.dart';
 import 'package:final_movie/view/screen/authentication/sign_up_screen/sign_up_screen.dart';
 import 'package:final_movie/view/screen/authentication/successfully_screen/successfully_screen.dart';
 import 'package:final_movie/view/screen/favorite_screen/favorite_screen.dart';

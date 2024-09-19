@@ -90,6 +90,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
       validator: widget.validator,
       decoration: InputDecoration(
         errorMaxLines: 2,
+        errorStyle: const TextStyle(
+          color: Colors.white, // Change this to your desired color
+          fontSize: 16,      // Optional: Change font size
+        ),
         hintText: widget.hintText,
         hintStyle: widget.hintStyle,
         fillColor: widget.fillColor,

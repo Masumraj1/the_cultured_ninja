@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 
 import 'core/app_routes.dart';
 import 'core/dependency.dart';
+import 'helpar/device_utils/device_utils.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  DeviceUtils.lockDevicePortrait();
 
   DependencyInjection di = DependencyInjection();
   di.dependencies();

@@ -16,7 +16,7 @@ class ApiUrl {
   static const profile = "/auth/profile";
   static const editProfile = "/auth/update-user";
   static const changePassword = "/auth/change-password";
-  // static const deleteAccount = "/auth/change-password";
+  static const deleteAccount = "/auth/delete-account";
 
 
 
