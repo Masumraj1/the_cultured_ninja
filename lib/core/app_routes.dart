@@ -115,7 +115,7 @@ static const String termsAndCondition = '/TermsAndCondition';
     GetPage(name: allMovies, page: () =>       AllMovies()),
     GetPage(name: actorDetails, page: () =>       ActorDetails()),
     GetPage(name: actorMovie, page: () =>        ActorMovie()),
-    GetPage(name: profileScreen, page: () =>        const ProfileScreen()),
+    GetPage(name: profileScreen, page: () =>         ProfileScreen()),
     GetPage(name: filterSelectedGenresScreen, page: () =>        const FilterSelectedGenresScreen()),
 
   ];
