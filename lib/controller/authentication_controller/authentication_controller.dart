@@ -6,6 +6,7 @@ import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/api_client.dart';
 import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
+import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class AuthenticationController extends GetxController {
   TextEditingController emailController =
       TextEditingController(text: kDebugMode ? "masumrna927@gmail.com" : "");
   TextEditingController passwordController =
-      TextEditingController(text: kDebugMode ? "Masum017@@@@" : "");
+      TextEditingController(text: kDebugMode ? "Masum017" : "");
   TextEditingController nameController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController pinCodeController = TextEditingController();
@@ -50,7 +51,7 @@ class AuthenticationController extends GetxController {
     );
     if (response.statusCode == 200) {
 
-      Get.toNamed(AppRoute.forgetOtp);
+      Get.toNamed(AppRoute.forgetOtp, parameters: {AppStrings.signUp: "true"});
       toastMessage(
         message: response.body["message"],
       );
@@ -64,6 +65,7 @@ class AuthenticationController extends GetxController {
   ///=====================Sign up Otp==================
   var activationCode = "";
   RxBool isOtpLoading = false.obs;
+
 
   signUpVerifyOTP() async {
     isOtpLoading.value = true;
@@ -83,14 +85,14 @@ class AuthenticationController extends GetxController {
       confirmPasswordController.clear();
       nameController.clear();
 
-      // SharePrefsHelper.setString(
-      //     AppConstants.bearerToken, response.body["accessToken"]);
+      SharePrefsHelper.setString(
+          AppConstants.bearerToken, response.body["token"]);
       // print(
       //     '======================This is  User Name ${response.body["data"]['name']}');
       // print(
       //     '======================User Token Saved::: ${response.body['accessToken']}');
 
-      Get.offAllNamed(AppRoute.homeScreen);
+      Get.offAllNamed(AppRoute.selectStreamingScreen);
       toastMessage(
         message: response.body["message"],
       );
@@ -117,7 +119,8 @@ class AuthenticationController extends GetxController {
     refresh();
     if (response.statusCode == 200) {
       emailController.clear();
-      Get.toNamed(AppRoute.forgetOtp);
+      Get.toNamed(AppRoute.forgetOtp, parameters: {AppStrings.signUp: "false"});
+
       toastMessage(
         message: response.body["message"],
       );
@@ -184,6 +187,32 @@ class AuthenticationController extends GetxController {
       ApiChecker.checkApi(response);
     }
     isSignInLoading.value = false;
+    refresh();
+  }
+
+
+  ///=============================================account delete==========================
+  RxBool isDeleteLoading = false.obs;
+
+  deleteAccount() async {
+    isDeleteLoading.value = true;
+    refresh();
+    Map<dynamic, String> body = {
+      "password": passwordController.text
+    };
+    var response =
+    await ApiClient.deleteData(ApiUrl.deleteAccount, body: jsonEncode(body));
+
+    isDeleteLoading.value = false;
+    refresh();
+    if (response.statusCode == 200) {
+      toastMessage(message: response.body["message"]);
+      Get.toNamed(AppRoute.signInScreen);
+
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isDeleteLoading.value = false;
     refresh();
   }
 }

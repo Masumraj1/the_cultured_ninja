@@ -1,8 +1,10 @@
+import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
+import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -11,117 +13,124 @@ import 'package:get/get.dart';
 
 
 class SettingScreen extends StatelessWidget {
-  const SettingScreen({super.key});
-
-  ///====================================Delete Account=============================
+   SettingScreen({super.key});
+  final AuthenticationController authenticationController = Get.find<AuthenticationController>();
+  ///========================= ===========Delete Account=============================
   void showDialogBox(BuildContext context) {
     Get.dialog(
       AlertDialog(
         backgroundColor: AppColors.fromRgb,
-        content: SizedBox(
-          height: 300.h,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const SizedBox(),
-                  const Spacer(),
-                  GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: const CustomImage(
-                        imageSrc: AppIcons.x,
-                        imageType: ImageType.svg,
-                      ))
-                ],
-              ),
-               ///==========================Delete Account===============
-               CustomText(
-                left: 50,
-                fontSize: 20.sp,
-                text: AppStrings.deleteAccount,
-                fontWeight: FontWeight.w500,
-                color: AppColors.lightWhite,
-                bottom: 10,
-              ),
-               CustomText(
-                textAlign: TextAlign.start,
-                text: AppStrings.areYouSureYouWantToDeleteYourAccount,
-                fontWeight: FontWeight.w400,
-                color: AppColors.lightWhite,
-                fontSize: 14.sp,
-                maxLines: 2,
-              ),
-               CustomText(
-                top: 16,
-                text: "Password",
-                fontWeight: FontWeight.w500,
-                fontSize: 16.sp,
-                color: AppColors.lightWhite,
-                bottom: 16,
-              ),
+        content: Obx(
+           () {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const SizedBox(),
+                    const Spacer(),
+                    GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const CustomImage(
+                          imageSrc: AppIcons.x,
+                          imageType: ImageType.svg,
+                        ))
+                  ],
+                ),
+                 ///==========================Delete Account===============
+                 CustomText(
+                  left: 50,
+                  fontSize: 20.sp,
+                  text: AppStrings.deleteAccount,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.lightWhite,
+                  bottom: 10,
+                ),
+                 CustomText(
+                  textAlign: TextAlign.start,
+                  text: AppStrings.areYouSureYouWantToDeleteYourAccount,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.lightWhite,
+                  fontSize: 14.sp,
+                  maxLines: 2,
+                ),
+                 CustomText(
+                  top: 16,
+                  text: "Password",
+                  fontWeight: FontWeight.w500,
+                  fontSize: 16.sp,
+                  color: AppColors.lightWhite,
+                  bottom: 16,
+                ),
 
-              ///======================================Password Field==================
-              const CustomTextField(
-                hintText: "password",
-                hintStyle: TextStyle(color: Colors.white),
-                isPassword: true,
-                fillColor: AppColors.fromRgb,
-                fieldBorderColor: AppColors.fromRgb,
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
+                ///======================================Password Field==================
+                 CustomTextField(
+                   textEditingController:authenticationController.passwordController ,
+                  hintText: "password",
+                  hintStyle: const TextStyle(color: Colors.white),
+                  isPassword: true,
+                  fillColor: AppColors.fromRgb,
+                  fieldBorderColor: AppColors.fromRgb,
+                ),
+                SizedBox(
+                  height: 20.h,
+                ),
 
-              Row(
-                children: [
-                  ///=================================Yes Button============================
-                  Expanded(
-                    flex: 5,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            AppColors.yesButtonColor),
-                      ),
-                      onPressed: () {},
-                      child: CustomText(
-                        text: AppStrings.yes,
-                        color: Colors.white,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight
-                            .w600, // Make sure the text color contrasts with the button color
+                Row(
+                  children: [
+                    ///=================================Yes Button============================
+
+                    authenticationController.isDeleteLoading.value?const CustomLoader():
+                    Expanded(
+                      flex: 5,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColors.yesButtonColor),
+                        ),
+                        onPressed: () {
+                          authenticationController.deleteAccount();
+                        },
+                        child: CustomText(
+                          text: AppStrings.yes,
+                          color: Colors.white,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight
+                              .w600, // Make sure the text color contrasts with the button color
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 8.w,
-                  ),
-                  ///===================================Cancel Button=====================
-                  Expanded(
-                    flex: 5,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                            AppColors.cancelButtonColor),
-                      ),
-                      onPressed: () {
-                        Get.back();
-                      },
-                      child: CustomText(
-                        text: AppStrings.cancel,
-                        color: AppColors.lightWhite,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight
-                            .w600, // Make sure the text color contrasts with the button color
+                    SizedBox(
+                      width: 8.w,
+                    ),
+                    ///===================================Cancel Button=====================
+                    Expanded(
+                      flex: 5,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              AppColors.cancelButtonColor),
+                        ),
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: CustomText(
+                          text: AppStrings.cancel,
+                          color: AppColors.lightWhite,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight
+                              .w600, // Make sure the text color contrasts with the button color
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              )
-            ],
-          ),
+                  ],
+                )
+              ],
+            );
+          }
         ),
       ),
     );

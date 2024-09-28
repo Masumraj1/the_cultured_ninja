@@ -1,5 +1,7 @@
 import 'package:final_movie/core/app_routes.dart';
+import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
+import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
@@ -111,7 +113,9 @@ class SideDrawer extends StatelessWidget {
                     customRow(
                         image: AppIcons.logOut,
                         title: AppStrings.logOut,
-                        onTap: () {
+                        onTap: () async{
+                          await SharePrefsHelper.remove(AppConstants.bearerToken);
+                          await SharePrefsHelper.remove(AppConstants.profileID);
                          Get.toNamed(AppRoute.signInScreen);
                         }),
                   ],

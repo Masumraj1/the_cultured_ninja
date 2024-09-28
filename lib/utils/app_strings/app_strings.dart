@@ -29,7 +29,7 @@ class AppStrings {
   static const unfollow = "Unfollow";
   static const yourPasswordHasBeenUpdated = "Your password has been updated, please change your password regularly to avoid this happening";
   static const createANewPasswordEnsureIt = "Create a new password. Ensure it differs from previous ones for security";
-  static const weSentAResetLink = "We sent a reset link to contact@dscode...com enter 5 digit code that mentioned in the email";
+  static const weSentAResetLink = "We sent a reset link to contact@dscode...com enter 4 digit code that mentioned in the email";
   static const dontWorryInAccurse = "Don’t worry! It accurse. Please enter the e-mail address link with your account.";
 
 

@@ -4,7 +4,6 @@ import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
-import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
@@ -80,16 +79,11 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     CustomNetworkImage(
                       boxShape: BoxShape.circle,
-                      imageUrl:
-                      (profileController.profileModel.value.img != null &&
-                          profileController.profileModel.value.img!.isNotEmpty)
-                          ? ((profileController.profileModel.value.img?.startsWith('https') ?? false)
-                          ? profileController.profileModel.value.img ?? ""
-                          : "${ApiUrl.baseUrl}${profileController.profileModel.value.img?.replaceAll('\\', '/') ?? ""}")
-                          :AppConstants.onlineImage,
+                      imageUrl: "${ApiUrl.baseUrl}${profileController.profileModel.value.img ?? ""}",
+
                        // Placeholder image when img is empty
-                      height: 78.h,
-                      width: 84.w,
+                      height: 78,
+                      width: 84,
                     ),
 
 

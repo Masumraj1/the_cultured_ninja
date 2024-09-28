@@ -46,28 +46,5 @@ class GeneralController extends GetxController{
 
 
 
-  ///=============================================account delete==========================
-  RxBool isDeleteLoading = false.obs;
 
-  deleteAccount() async {
-    isDeleteLoading.value = true;
-    refresh();
-    Map<dynamic, String> body = {
-      "email": emailController.text,
-      "password": passwordController.text
-    };
-    var response =
-    await ApiClient.deleteData(ApiUrl.deleteAccount, body: body);
-
-    isDeleteLoading.value = false;
-    refresh();
-    if (response.statusCode == 200) {
-      Get.toNamed(AppRoute.signInScreen);
-      toastMessage(message: response.body["message"]);
-    } else {
-      ApiChecker.checkApi(response);
-    }
-    isDeleteLoading.value = false;
-    refresh();
-  }
 }

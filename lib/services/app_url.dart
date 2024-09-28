@@ -1,7 +1,6 @@
 class ApiUrl {
   ///=================================This is baseUrl==============================================>
   static const baseUrl = "http://103.161.9.133:7000";
-  // static const socketUrl = "http://103.161.9.133:6061";
 
   ///================================= User Authentication url==========================
   static const signupAuth = "/auth/sign-up";
@@ -17,6 +16,9 @@ class ApiUrl {
   static const editProfile = "/auth/update-user";
   static const changePassword = "/auth/change-password";
   static const deleteAccount = "/auth/delete-account";
+  static const getAllStudio = "/studio/get-studio";
+  static const getMovieGenre = "/movie-type/movie-type/tv";
+
 
 
 

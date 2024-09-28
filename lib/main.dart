@@ -14,6 +14,10 @@ void main() {
   runApp(const MyApp());
 }
 
+
+
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -25,7 +29,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         defaultTransition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 200),
-        initialRoute: AppRoute.splashScreen,
+        initialRoute: AppRoute.selectStreamingScreen,
         navigatorKey: Get.key,
         getPages: AppRoute.routes,
       ),

@@ -4,8 +4,10 @@ import 'package:final_movie/view/screen/all_movies/all_movies.dart';
 import 'package:final_movie/view/screen/authentication/forget_otp/forget_otp.dart';
 import 'package:final_movie/view/screen/authentication/forget_password/forget_password.dart';
 import 'package:final_movie/view/screen/authentication/reset_password/reset_password.dart';
+import 'package:final_movie/view/screen/authentication/select_streaming_screen/select_streaming_screen.dart';
 import 'package:final_movie/view/screen/authentication/sign_in_screen/sign_in_screen.dart';
 import 'package:final_movie/view/screen/authentication/sign_up_screen/sign_up_screen.dart';
+import 'package:final_movie/view/screen/authentication/spin_screen/spin_screen.dart';
 import 'package:final_movie/view/screen/authentication/successfully_screen/successfully_screen.dart';
 import 'package:final_movie/view/screen/favorite_screen/favorite_screen.dart';
 import 'package:final_movie/view/screen/filter_screen/filter_screen.dart';
@@ -68,6 +70,8 @@ static const String profileScreen = '/ProfileScreen';
 static const String filterSelectedGenresScreen = '/filterSelectedGenresScreen';
 static const String privacyPolicyScreen = '/PrivacyPolicyScreen';
 static const String termsAndCondition = '/TermsAndCondition';
+static const String selectStreamingScreen = '/SelectStreamingScreen';
+static const String spinScreen = '/SpinScreen';
 
 
 
@@ -86,13 +90,13 @@ static const String termsAndCondition = '/TermsAndCondition';
     GetPage(name: signInScreen, page: () =>  SignInScreen()),
     GetPage(name: signUpScreen, page: () =>  SignUpScreen()),
     GetPage(name: forgetPassword, page: () =>   ForgetPassword()),
-    GetPage(name: forgetOtp, page: () =>  const ForgetOtp()),
+    GetPage(name: forgetOtp, page: () =>   ForgetOtp()),
     GetPage(name: resetPassword, page: () =>  const ResetPassword()),
     GetPage(name: successfullyScreen, page: () =>  const SuccessfullyScreen()),
 
     ///=============================HomeScreen===================
     GetPage(name: homeScreen, page: () =>    HomeScreen()),
-    GetPage(name: settingScreen, page: () =>    const SettingScreen()),
+    GetPage(name: settingScreen, page: () =>     SettingScreen()),
     GetPage(name: changePasswordScreen, page: () =>     ChangePasswordScreen()),
     GetPage(name: notificationScreen, page: () =>    const NotificationScreen()),
     GetPage(name: privacyPolicyScreen, page: () =>    const PrivacyPolicyScreen()),
@@ -116,7 +120,8 @@ static const String termsAndCondition = '/TermsAndCondition';
     GetPage(name: actorDetails, page: () =>       ActorDetails()),
     GetPage(name: actorMovie, page: () =>        ActorMovie()),
     GetPage(name: profileScreen, page: () =>         ProfileScreen()),
-    GetPage(name: filterSelectedGenresScreen, page: () =>        const FilterSelectedGenresScreen()),
-
+    GetPage(name: filterSelectedGenresScreen, page: () => const FilterSelectedGenresScreen()),
+    GetPage(name: selectStreamingScreen, page: () =>  SelectStreamingScreen()),
+    GetPage(name: spinScreen, page: () =>   SpinScreen()),
   ];
 }
