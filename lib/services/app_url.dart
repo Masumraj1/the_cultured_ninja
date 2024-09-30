@@ -18,6 +18,8 @@ class ApiUrl {
   static const deleteAccount = "/auth/delete-account";
   static const getAllStudio = "/studio/get-studio";
   static const getMovieGenre = "/movie-type/movie-type/tv";
+  static const bannerMovie = "/movie/all-movies?banner=true";
+  static const getMovies = "/movie/all-movies?type=movie";
 
 
 

@@ -72,6 +72,7 @@ class ProfileController extends GetxController {
       };
       var response = await ApiClient.patchMultipartData(
           ApiUrl.editProfile, body,
+          haveImage: true,
           multipartBody: [
             MultipartBody("img", File(image.value)),
           ]);
