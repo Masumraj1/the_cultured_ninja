@@ -6,6 +6,7 @@ import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
+import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,6 +23,7 @@ class _SpinScreenState extends State<SpinScreen> {
   final List selectedMovies = Get.arguments; // List of selected movies
   final StreamController<int> selected = StreamController<int>.broadcast(); // Broadcast stream for multiple listeners
   final StreamingController streamingController = Get.find<StreamingController>();
+  final TextEditingController genreController = TextEditingController(); // Controller for genre input
 
   // State variable to store the selected index
   int selectedIndex = 0;
@@ -29,6 +31,7 @@ class _SpinScreenState extends State<SpinScreen> {
   @override
   void dispose() {
     selected.close();
+    genreController.dispose(); // Dispose of the genre controller
     super.dispose();
   }
 
@@ -66,7 +69,7 @@ class _SpinScreenState extends State<SpinScreen> {
             bottom: 10,
           ),
 
-          ///==========================Selected Movies==========
+          ///========================== Selected Movies ==========
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
@@ -101,7 +104,7 @@ class _SpinScreenState extends State<SpinScreen> {
             ),
           ),
 
-          ///===============================Movie Type==============
+          ///=============================== Movie Type ==============
           Obx(() {
             if (streamingController.genreData.isEmpty) {
               return const CustomText(
@@ -122,17 +125,22 @@ class _SpinScreenState extends State<SpinScreen> {
 
           SizedBox(height: 15.w),
 
-          ///====================Go Button============
+          ///==================== Go Button ============
           CustomButton(
             width: MediaQuery.of(context).size.width / 4,
             onTap: () {
-              Get.toNamed(AppRoute.homeScreen);
+              // Call genreUpdate with the selected genre name
+              if (streamingController.genreData.isNotEmpty) {
+                genreController.text = streamingController.genreData[selectedIndex].name??""; // Update genreController with selected genre
+                streamingController.genreUpdate(genreController: genreController); // Call genreUpdate
+              }
+              print('Selected Genre========================"${streamingController.genreData[selectedIndex].name??""}"');
             },
             title: 'Go',
             fillColor: AppColors.buttonColor,
           ),
 
-          ///==============================Spin ==================
+          ///============================== Spin ==================
           Expanded(
             child: Obx(() {
               if (streamingController.genreData.length <= 1) {

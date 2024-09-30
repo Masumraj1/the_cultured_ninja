@@ -1,9 +1,14 @@
+import 'dart:convert';
+
+import 'package:final_movie/core/app_routes.dart';
+import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/model/all_streaming_model.dart';
 import 'package:final_movie/model/movie_genre_model.dart';
 import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/api_client.dart';
 import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StreamingController extends GetxController{
@@ -56,6 +61,48 @@ class StreamingController extends GetxController{
       ApiChecker.checkApi(response);
     }
   }
+
+
+  ///===============================Genre Updated================
+  RxBool isUpdate = false.obs;
+
+  Future<void> genreUpdate({Map<String, String>? header,
+    required TextEditingController genreController}) async {
+    if (genreController.text.isEmpty) {
+      toastMessage(message: "Genre cannot be empty");
+      return; // Exit if genre is empty
+    }
+
+    isUpdate.value = true;
+    update(); // Notify listeners that state has changed
+
+    try {
+      var body = {
+        "genres": jsonEncode([genreController.text]),
+      };
+
+      var response = await ApiClient.patchMultipartData(
+        ApiUrl.editProfile,
+        body,
+        haveImage: false
+
+      );
+
+      if (response.statusCode == 200) {
+        // toastMessage(message: response.body["message"]);
+        Get.toNamed(AppRoute.homeScreen); // Navigate to home screen
+      } else {
+        ApiChecker.checkApi(response); // Handle other response codes
+      }
+    } catch (e) {
+      debugPrint("Error occurred: $e"); // Print the error for debugging
+    } finally {
+      isUpdate.value = false; // Reset loading state
+      update(); // Notify listeners that state has changed
+    }
+  }
+
+
 
 
   @override

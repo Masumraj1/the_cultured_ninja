@@ -191,11 +191,12 @@ class ApiClient extends GetxService {
     }
   }
 
-  static Future<Response> patchMultipartData(
-      String uri, Map<String, String> body,
+
+
+  static Future<Response> patchMultipartData(String uri, dynamic body,
       {List<MultipartBody>? multipartBody,
-      List<MultipartListBody>? multipartListBody,
-      Map<String, String>? headers}) async {
+        bool haveImage = true,
+        Map<String, String>? headers}) async {
     try {
       bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
@@ -208,12 +209,12 @@ class ApiClient extends GetxService {
       debugPrint('====> API Body: $body with ${multipartBody?.length} picture');
 
       var request =
-          http.MultipartRequest("PATCH", Uri.parse(ApiUrl.baseUrl + uri));
+      http.MultipartRequest('PATCH', Uri.parse(ApiUrl.baseUrl + uri));
       request.fields.addAll(body);
 
-      if (multipartBody!.isNotEmpty) {
+      if (haveImage) {
         // ignore: avoid_function_literals_in_foreach_calls
-        multipartBody.forEach((element) async {
+        multipartBody?.forEach((element) async {
           debugPrint("path : ${element.file.path}");
 
           var mimeType = lookupMimeType(element.file.path);
@@ -238,14 +239,16 @@ class ApiClient extends GetxService {
 
       return Response(
           statusCode: response.statusCode,
-          statusText: noInternetMessage,
+          statusText: "somethingWentWrong",
           body: content);
     } catch (e) {
       debugPrint('------------${e.toString()}');
 
-      return const Response(statusCode: 1, statusText: noInternetMessage);
+      return const Response(statusCode: 1, statusText: "somethingWentWrong");
     }
   }
+
+
 
   static Future<Response> deleteData(String uri,
       {Map<String, String>? headers, dynamic body}) async {

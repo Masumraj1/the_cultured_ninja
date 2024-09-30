@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         defaultTransition: Transition.fadeIn,
         transitionDuration: const Duration(milliseconds: 200),
-        initialRoute: AppRoute.selectStreamingScreen,
+        initialRoute: AppRoute.onBoardingPage,
         navigatorKey: Get.key,
         getPages: AppRoute.routes,
       ),
