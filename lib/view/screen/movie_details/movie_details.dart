@@ -1,23 +1,42 @@
 import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
+import 'package:final_movie/helpar/date_converter/date_converter.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
+import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
+import 'package:final_movie/view/widgets/genarel_error/genarel_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class MovieDetails extends StatelessWidget {
-  MovieDetails({super.key});
+class MovieDetails extends StatefulWidget {
+  const MovieDetails({super.key});
 
-  ///============================customStudios========================
+  @override
+  State<MovieDetails> createState() => _MovieDetailsState();
+}
+
+class _MovieDetailsState extends State<MovieDetails> {
+  ///============================CustomWidgets========================
   final CustomWidgets customWidget = CustomWidgets();
 
   final HomeController homeController = Get.find<HomeController>();
+
+  final id = Get.arguments[0]; // The movie ID
+  final rating = Get.arguments[1]; // The movie ID
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      homeController.movieDetails(id: id);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,246 +62,291 @@ class MovieDetails extends StatelessWidget {
         centerTitle: true,
       ),
 
-      ///====================================body=============================
+      ///====================================Body=============================
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Obx(() {
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomNetworkImage(
-                  borderRadius: BorderRadius.circular(14),
-                  imageUrl: AppConstants.movieImage,
-                  height: 241.h,
-                  width: double.infinity,
-                ),
-                SizedBox(
-                  height: 14.h,
-                ),
+          var data = homeController.moviesDetailsModel;
+          var dataDetails = homeController.moviesDetailsModel.value.details;
 
-                ///=========================Follow button======================
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    color: AppColors.buttonColor,
-                  ),
-                  height: 50.h,
-                  width: double.infinity,
-                  child: GestureDetector(
-                    onTap: homeController.toggleFavorite,
-                    child: Center(
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomText(
-                            text: AppStrings.addToFavorite,
-                            color: AppColors.lightWhite,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16.sp,
-                            right: 10,
+          switch (homeController.rxRequestStatus.value) {
+            case Status.loading:
+              return const CustomLoader();
+
+            case Status.internetError:
+              return GeneralErrorScreen(
+                onTap: () {
+                  homeController.movieDetails(id: id);
+                },
+              );
+
+            case Status.error:
+              return GeneralErrorScreen(
+                onTap: () {
+                  homeController.movieDetails(id: id);
+                },
+              );
+
+            case Status.completed:
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ///==============================Poster Image=============
+                    CustomNetworkImage(
+                      borderRadius: BorderRadius.circular(14),
+                      imageUrl: dataDetails?.backdropPath ?? '',
+                      height: 241.h,
+                      width: double.infinity,
+                    ),
+                    SizedBox(height: 14.h),
+
+                    ///=========================Follow button======================
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(14),
+                        color: AppColors.buttonColor,
+                      ),
+                      height: 50.h,
+                      width: double.infinity,
+                      child: GestureDetector(
+                        onTap: homeController.toggleFavorite,
+                        child: Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomText(
+                                text: AppStrings.addToFavorite,
+                                color: AppColors.lightWhite,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16.sp,
+                                right: 10,
+                              ),
+                              Icon(
+                                homeController.isFavorite.value
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: AppColors.lightWhite,
+                              ),
+                            ],
                           ),
-                          Icon(
-                            homeController.isFavorite.value
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: AppColors.lightWhite,
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                CustomText(
-                  top: 26,
-                  textAlign: TextAlign.start,
-                  text: AppStrings.warnerBros,
-                  fontSize: 18.sp,
-                  maxLines: 6,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lightWhite,
-                  bottom: 12,
-                ),
 
-                ///==================Watched Button==============
-                Row(
-                  children: [
-                    const Icon(Icons.timelapse,color: Colors.white,),
-                    SizedBox(width: 5.w,),
-                    const CustomText(
-                      text: '02:30 Second',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                      color: AppColors.lightWhite,
-                    ),                    SizedBox(width: 5.w,),
-
-                    const Icon(Icons.star,color: Colors.amber,),
-                    const CustomText(
-                      text: '4.5',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12,
-                      color: AppColors.lightWhite,
-                    ),
-                    const Spacer(),
-
-                    homeController.isTap.value
-                        ? CustomButton(
-
-                            width: 87,
-                            onTap: () {
-                              homeController.toggleTap();
-                            },
-                            title: "Watched",
-                            fillColor: AppColors.lightWhite,
-                            textColor: AppColors.buttonColor,
-                          )
-                        : CustomButton(
-                            width: 87,
-                            onTap: () {
-                              homeController.toggleTap();
-                            },
-                            title: 'Watched',
-                            fillColor: AppColors.buttonColor,
-                            textColor: AppColors.lightWhite,
-                          ),
-                  ],
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                const Row(
-                  children: [
+                    ///========================Overview================
                     CustomText(
+                      top: 26,
+                      textAlign: TextAlign.start,
+                      text: dataDetails?.overview ?? "",
+                      fontSize: 18.sp,
+                      maxLines: 15,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightWhite,
+                      bottom: 12,
+                    ),
+
+                    ///==================Watched Button==============
+                    Row(
+                      children: [
+                        const Icon(Icons.timelapse, color: Colors.white),
+                        SizedBox(width: 10.w),
+
+                        ///=====================RunTime============
+                        CustomText(
+                          text: dataDetails?.runtime != null
+                              ? '${dataDetails?.runtime} min'
+                              : 'N/A',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          color: AppColors.lightWhite,
+                        ),
+                        SizedBox(width: 10.w),
+                        const Icon(Icons.star, color: Colors.amber),
+
+                        ///======================Rating=============
+                        CustomText(
+                          left: 8,
+                          text: rating.toString(),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          color: AppColors.lightWhite,
+                        ),
+                        const Spacer(),
+
+                        ///=======================Watch Button===============
+                        homeController.isTap.value
+                            ? CustomButton(
+                                width: 87,
+                                onTap: homeController.toggleTap,
+                                title: "Watched",
+                                fillColor: AppColors.lightWhite,
+                                textColor: AppColors.buttonColor,
+                              )
+                            : CustomButton(
+                                width: 87,
+                                onTap: homeController.toggleTap,
+                                title: 'Watched',
+                                fillColor: AppColors.buttonColor,
+                                textColor: AppColors.lightWhite,
+                              ),
+                      ],
+                    ),
+                    SizedBox(height: 15.h),
+
+                    ///================Release Date and Genre================
+                    const CustomText(
+                      bottom: 10,
                       text: AppStrings.releaseDate,
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                       color: AppColors.lightWhite,
                     ),
-                    Spacer(),CustomText(
-                      text:'Genre',
+                    Row(
+                      children: [
+                        ///============================ReleaseDate==========
+                        CustomText(
+                          text: DateConverter.formatDate(
+                              dataDetails?.releaseDate ?? "1970-01-01"),
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12,
+                          color: AppColors.lightWhite,
+                        ),
+                        const Spacer(),
+                      ],
+                    ),
+                    const CustomText(
+                      top: 10,
+                      text: 'Genre',
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
                       color: AppColors.lightWhite,
                     ),
+
+                    ///=======================Genre list===========
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(
+                          dataDetails!.genres!.length,
+                          // Ensure genres is a list
+                          (index) {
+                            return Container(
+                              margin: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                    color: AppColors.genreUnselectedColor),
+                              ),
+                              padding: const EdgeInsets.all(15),
+                              child: CustomText(
+                                text: dataDetails.genres?[index].name ?? "",
+                                // Safely access the genre name
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12,
+                                color: AppColors.lightWhite,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+
+                    ///==================Synopsis======================
+                    CustomText(
+                      top: 16,
+                      text: AppStrings.synopsis,
+                      fontSize: 16.sp,
+                      bottom: 8,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightWhite,
+                    ),
+                    CustomText(
+                      textAlign: TextAlign.start,
+                      text: dataDetails.tagline ?? "",
+                      fontSize: 12.sp,
+                      maxLines: 5,
+                      bottom: 24,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.lightWhite,
+                    ),
+
+                    ///================Available Platform================
+                    CustomText(
+                      text: AppStrings.availablePlatform,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightWhite,
+                      bottom: 16,
+                    ),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children:
+                            List.generate(data.value.platform!.length, (index) {
+                          var platformList = data.value.platform![index];
+                          return customWidget.customImageText(
+                              image: platformList.logoPath ?? "",
+                              movieName: platformList.providerName ?? "");
+                        }),
+                      ),
+                    ),
+                    SizedBox(height: 15.h),
+
+                    ///================Actor and Director================
+                    CustomText(
+                      text: AppStrings.actorsAndDirector,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightWhite,
+                      bottom: 16,
+                    ),
+                    // Get.toNamed(AppRoute.actorDetails);
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(
+                           data.value.actors?.length??0  ,  // Ensure it's not null
+                              (index) {
+                            var actorList = data.value.actors?[index];
+
+                            return customWidget.customActorAndDirector(
+                              image: actorList?.profilePath ?? "",  // Safely handle profilePath being null
+                              title: actorList?.name ?? 'Unknown Actor',  // Use a default if name is null
+                              designation:  'Unknown Director',  // Fallback value
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+
+
+                    ///================Related Movies================
+                    customWidget.customRow(
+                      startTitle: AppStrings.relatedMovies,
+                      endTitle: AppStrings.viewAll,
+                      onTap: () {
+                        Get.toNamed(AppRoute.allMovies);
+                      },
+                    ),
+                    SizedBox(height: 16.h),
+                    SizedBox(
+                      height: 170.h,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 4,
+                        itemBuilder: (context, index) {
+                          return customWidget.customImageText(
+                              image: AppConstants.movieImage,
+                              movieName: "Universal Studios");
+                        },
+                      ),
+                    ),
                   ],
                 ),
-               Row(children: [
-                 const CustomText(
-                   text: 'December 9, 2017',
-                   fontWeight: FontWeight.w400,
-                   fontSize: 12,
-                   color: AppColors.lightWhite,
-                 ),
-                 const Spacer(),
-                 Container(
-                   margin: EdgeInsets.all(15),
-                   decoration: BoxDecoration(
-                     borderRadius: BorderRadius.circular(15),
-                     border: Border.all(color: Colors.white)
-                   ),
-                   padding: EdgeInsets.all(15),
-                   child:  const CustomText(
-                     text: 'Action',
-                     fontWeight: FontWeight.w400,
-                     fontSize: 12,
-                     color: AppColors.lightWhite,
-                   ),
-                 )
-               ],),
-                ///==================================synopsis===========================
-                CustomText(
-                  top: 16,
-                  text: AppStrings.synopsis,
-                  fontSize: 16.sp,
-                  bottom: 8,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lightWhite,
-                ),
-                CustomText(
-                  textAlign: TextAlign.start,
-                  text: AppStrings.weAreDedicated,
-                  fontSize: 12.sp,
-                  maxLines: 5,
-                  bottom: 24,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.lightWhite,
-                ),
-
-                ///==================================Available Platform====================
-                CustomText(
-                  text: AppStrings.availablePlatform,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lightWhite,
-                  bottom: 16,
-                ),
-                SizedBox(
-                  height: 140.h,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return customWidget.customImageText(
-                            image: AppConstants.disneyPlus,
-                            movieName: "Disney Plus");
-                      }),
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-
-                ///==================================Actor and director====================
-                CustomText(
-                  text: AppStrings.actorsAndDirector,
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lightWhite,
-                  bottom: 16,
-                ),
-                SizedBox(
-                  height: 140.h,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Get.toNamed(AppRoute.actorDetails);
-                          },
-                          child: customWidget.customActorAndDirector(
-                              image: AppConstants.onlineImage,
-                              title: 'actor',
-                              designation: 'director'),
-                        );
-                      }),
-                ),
-
-                ///==================================related Movies====================
-
-                customWidget.customRow(
-                    startTitle: AppStrings.relatedMovies,
-                    endTitle: AppStrings.viewAll,
-                    onTap: () {
-                      Get.toNamed(AppRoute.allMovies);
-                    }),
-                SizedBox(
-                  height: 16.h,
-                ),
-                SizedBox(
-                  height: 170.h,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      itemBuilder: (context, index) {
-                        return customWidget.customImageText(
-                            image: AppConstants.movieImage,
-                            movieName: "Universal Studios");
-                      }),
-                ),
-              ],
-            ),
-          );
+              );
+          }
         }),
       ),
     );

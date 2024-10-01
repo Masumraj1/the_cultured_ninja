@@ -20,7 +20,10 @@ class ApiUrl {
   static const getMovieGenre = "/movie-type/movie-type/tv";
   static const bannerMovie = "/movie/all-movies?banner=true";
   static const getMovies = "/movie/all-movies?type=movie";
-
+  static const getTv = "/movie/all-movies?type=tv";
+  static String movieDetails({required String id}) {
+    return "/movie/get-movie-details/$id";
+  }
 
 
 

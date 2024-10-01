@@ -6,6 +6,29 @@ class DateConverter {
   }
 
 
+  // Method to format the date from a string
+  static String formatDate(dynamic dateStr, {String format = 'MMM dd, yyyy'}) {
+    try {
+      // Ensure the dateStr is converted to a String
+      String dateString = dateStr.toString();  // Cast to String
+      // Parse the string into a DateTime object
+      DateTime dateTime = DateTime.parse(dateString);
+      // Use the intl package to format the DateTime into the desired string format
+      return DateFormat(format).format(dateTime);
+    } catch (e) {
+      // Handle any parsing errors or invalid date strings
+      print('Error formatting date: $e');
+      return 'Invalid date';
+    }
+  }
+
+  // Method to estimate or modify dates (example purpose)
+  static String estimatedDates(dynamic dateStr) {
+    return formatDate(dateStr);
+  }
+
+
+
 
   static DateTime convertStringToDatetime() {
     DateTime now = DateTime.now();

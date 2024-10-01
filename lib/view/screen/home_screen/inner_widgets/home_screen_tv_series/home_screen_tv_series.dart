@@ -1,7 +1,7 @@
 import 'package:final_movie/controller/home_controller/home_controller.dart';
+import 'package:final_movie/view/widgets/custom_movie_card/custom_movie_card.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class HomeScreenTvSeries extends StatelessWidget {
@@ -15,16 +15,19 @@ class HomeScreenTvSeries extends StatelessWidget {
   final HomeController homeController = Get.find<HomeController>();
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 170.h,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: homeController.tvSeriesList.length,
-          itemBuilder: (context, index) {
-            return customWidget.customRatingMovies(
-              image: homeController.tvSeriesList[index], ratingBar: '4.5',
-            );
-          }),
+    return   SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: List.generate(homeController.tvList
+            .length, (index) {
+          return CustomMovieCard(
+            image: homeController.tvList[index].poster ??
+                "",
+            ratingBar: homeController.tvList[index].rating
+                .toString(),
+          );
+        }),
+      ),
     );
   }
 }

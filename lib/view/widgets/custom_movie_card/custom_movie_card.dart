@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
-import 'package:final_movie/core/app_routes.dart';
 
 class CustomMovieCard extends StatelessWidget {
   final String image;
   final String ratingBar;
+  final VoidCallback? onTap;
 
   const CustomMovieCard({
     super.key,
     required this.image,
-    required this.ratingBar,
+    required this.ratingBar, this.onTap,
   });
 
   @override
@@ -23,9 +22,7 @@ class CustomMovieCard extends StatelessWidget {
       child: Stack(
         children: [
           GestureDetector(
-            onTap: () {
-              Get.toNamed(AppRoute.movieDetails);
-            },
+            onTap: onTap,
             child: CustomNetworkImage(
               borderRadius: BorderRadius.circular(13),
               height: 106.h,

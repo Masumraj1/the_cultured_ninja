@@ -4,9 +4,12 @@ import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
+import 'package:final_movie/view/screen/home_screen/inner_widgets/homeScreen_top_rating_movies/home_screen_top_rating_movies.dart';
+import 'package:final_movie/view/screen/home_screen/inner_widgets/home_screen_tv_series/home_screen_tv_series.dart';
 import 'package:final_movie/view/screen/home_screen/inner_widgets/top_rating_tabbar/top_rating_movies_tabbar.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_movie_card/custom_movie_card.dart';
+import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:final_movie/view/widgets/genarel_error/genarel_error.dart';
 import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
@@ -33,6 +36,7 @@ class HomeScreen extends StatelessWidget {
       bottomNavigationBar: const NavBar(currentIndex: 0),
       drawer: const SideDrawer(),
       body: Obx(() {
+        var data = homeController.moviesList;
         switch (homeController.rxRequestStatus.value) {
           case Status.loading:
             return const CustomLoader();
@@ -40,7 +44,8 @@ class HomeScreen extends StatelessWidget {
           case Status.error:
             return GeneralErrorScreen(
               onTap: () {
-                homeController.customMethod(); // Retry fetching movies and banners
+                homeController
+                    .customMethod(); // Retry fetching movies and banners
               },
             );
           case Status.completed:
@@ -72,7 +77,8 @@ class HomeScreen extends StatelessWidget {
                                 return Container(
                                   margin: const EdgeInsets.only(right: 10),
                                   decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(15)),
                                     image: DecorationImage(
                                       image: NetworkImage(banner.poster ?? ""),
                                       fit: BoxFit.cover,
@@ -104,12 +110,14 @@ class HomeScreen extends StatelessWidget {
 
                   SizedBox(height: 24.h),
 
-                  ///======================== Top Rating Movies =========================
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        ///======================== Top Rating Movies =========================
+
                         customWidget.customRow(
                           startTitle: AppStrings.topRatingMovies,
                           endTitle: AppStrings.viewAll,
@@ -120,23 +128,31 @@ class HomeScreen extends StatelessWidget {
 
                         SizedBox(height: 16.h),
 
-                        // Top Rating Movies Tab Bar
+                        ///================ Top Rating Movies Tab Bar======
                         TopRatingMoviesTabBar(homeController: homeController),
                         SizedBox(height: 16.h),
+                        IndexedStack(
+                          index: homeController.selectedIndex.value,
+                          children: [
 
-                        ///============================ Movies ============================
+                            ///========================Movies================
+                            homeController.moviesList.isEmpty
+                                ? const CustomText(
+                                    text: 'No Movie Found',
+                                    color: AppColors.blackDeep,
+                                    fontWeight: FontWeight.w500,
+                                  )
+                                : HomeScreenTopRatingMovies(
+                                    customWidget: customWidget,
+                                  ),
+
+                            ///========================Tv Series================
+                            HomeScreenTvSeries(customWidget: customWidget)
+                          ],
+                        ),
+
                         SizedBox(
-                          height: 170.h,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: homeController.moviesList.length,
-                            itemBuilder: (context, index) {
-                              return CustomMovieCard(
-                                image: homeController.moviesList[index].poster ?? "",
-                                ratingBar: '4.5',
-                              );
-                            },
-                          ),
+                          height: 10.h,
                         ),
 
                         ///======================== My Favorites =========================
