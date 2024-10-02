@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
+import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
@@ -134,7 +135,6 @@ class HomeScreen extends StatelessWidget {
                         IndexedStack(
                           index: homeController.selectedIndex.value,
                           children: [
-
                             ///========================Movies================
                             homeController.moviesList.isEmpty
                                 ? const CustomText(
@@ -196,24 +196,19 @@ class HomeScreen extends StatelessWidget {
 
                         SizedBox(height: 16.h),
 
-                        SizedBox(
-                          height: 170.h,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: homeController.studiosList.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(AppRoute.studiosDetailsScreen);
-                                },
-                                child: customWidget.customImageText(
-                                  image: homeController.studiosList[index],
-                                  movieName: "Studio Name",
-                                ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: List.generate(homeController.studioDataList.length, (index)
+                            {
+                              var studioData = homeController.studioDataList[index];
+                              return customWidget.customImageText(
+                                image:"${ApiUrl.networkImageUrl}${studioData.logo??""}",
+                                movieName: studioData.name??"",
                               );
-                            },
+                            }),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),

@@ -1,4 +1,4 @@
-import 'package:final_movie/controller/studios_controller/studios_controller.dart';
+import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
@@ -8,15 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../services/app_url.dart';
+
 class StudiosScreen extends StatelessWidget {
    StudiosScreen({super.key});
 
 
   ///============================customStudios========================
   final CustomWidgets customWidget = CustomWidgets();
-
-
-  final StudiosController studiosController = Get.find<StudiosController>();
+  final HomeController homeController = Get.find<HomeController>();
 
     @override
   Widget build(BuildContext context) {
@@ -55,15 +55,16 @@ class StudiosScreen extends StatelessWidget {
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
         ),
-        itemCount: studiosController.tvSeriesList.length,
+        itemCount: homeController.studioDataList.length,
         itemBuilder: (context, index) {
+          var data = homeController.studioDataList[index];
           return GestureDetector(
             onTap: (){
               Get.toNamed(AppRoute.studiosDetailsScreen);
             },
             child: customWidget.customImageText(
-                image: studiosController.tvSeriesList[index],
-                movieName: "Disney Plus"),
+                image: "${ApiUrl.networkImageUrl}${data.logo??""}",
+                movieName:data.name??""),
           );
         },
       )

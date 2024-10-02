@@ -79,7 +79,7 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     CustomNetworkImage(
                       boxShape: BoxShape.circle,
-                      imageUrl: "${ApiUrl.baseUrl}${profileController.profileModel.value.img ?? ""}",
+                      imageUrl: "${ApiUrl.networkImageUrl}${profileController.profileModel.value.img ?? ""}",
 
                        // Placeholder image when img is empty
                       height: 78,

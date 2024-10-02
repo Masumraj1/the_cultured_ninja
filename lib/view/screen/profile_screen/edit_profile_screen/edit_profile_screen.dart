@@ -1,12 +1,15 @@
 import 'dart:io';
 
 import 'package:final_movie/controller/profile_controller/profile_controller.dart';
+import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
+import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
+import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_profile_edit/custom-edit_profile.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
@@ -55,31 +58,47 @@ class EditProfileScreen extends StatelessWidget {
                   Align(
                     alignment: Alignment.center,
                     child: GestureDetector(
-                      onTap: () {
-                        profileController.selectImage();
-                      },
-                      child: profileController.image.isNotEmpty
-                          ? Container(
-                              height: 100.h,
-                              width: 100.w,
-                              decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: FileImage(
-                                      File(profileController.image.value),
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  shape: BoxShape.circle),
-                            )
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: CustomImage(
-                                imageSrc: AppImages.man,
-                                imageType: ImageType.png,
-                                size: 100.sp,
+                        onTap: () {
+                          profileController.selectImage();
+                        },
+                        child: profileController.image.isNotEmpty
+                            ? Container(
+                          height: 78.h,
+                          width: 84.w,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: FileImage(
+                                File(profileController.image.value),
                               ),
+                              fit: BoxFit.cover,
                             ),
-                    ),
+                          ),
+                        )
+                            : Stack(
+                          children: [
+                            CustomNetworkImage(
+                              boxShape: BoxShape.circle,
+                              imageUrl: (profileController
+                                  .profileModel.value.img
+                                  ?.startsWith('https') ??
+                                  false)
+                                  ? profileController.profileModel.value
+                                  .img ??
+                                  ""
+                                  : "${ApiUrl.networkImageUrl}${profileController.profileModel.value.img ?? ""}",
+                              height: 78.h,
+                              width: 84.w,
+                            ),
+                            const Positioned(
+                                right: 0,
+                                bottom: 0,
+                                child: CustomImage(
+                                  imageSrc: AppIcons.camera,
+                                  imageType: ImageType.svg,
+                                ))
+                          ],
+                        )),
                   ),
 
                   ///<<<<========================================Name======================================

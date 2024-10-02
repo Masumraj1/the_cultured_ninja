@@ -1,6 +1,7 @@
 import 'package:final_movie/model/banner_model.dart';
 import 'package:final_movie/model/movie_details.dart';
 import 'package:final_movie/model/movies_model.dart';
+import 'package:final_movie/model/studio/studio_model.dart';
 import 'package:final_movie/model/tv_series_model.dart';
 import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/api_client.dart';
@@ -159,10 +160,39 @@ class HomeController extends GetxController {
     }
   }
 
+
+
+  ///=======================================Studio======================
+  RxList<StudioData> studioDataList = <StudioData>[].obs;
+
+  getStudio() async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    var response = await ApiClient.getData(ApiUrl.getAllStudio);
+
+    if (response.statusCode == 200) {
+      studioDataList.value = List<StudioData>.from(
+          response.body["data"].map((x) => StudioData.fromJson(x)));
+      print('StudioList=========================="${studioDataList.length}"');
+
+      setRxRequestStatus(Status.completed);
+      refresh();
+    } else {
+      if (response.statusText == ApiClient.noInternetMessage) {
+        setRxRequestStatus(Status.internetError);
+      } else {
+        setRxRequestStatus(Status.error);
+      }
+      ApiChecker.checkApi(response);
+    }
+  }
+
+
   customMethod() {
     getBanner();
     getMovies();
     getTv();
+    getStudio();
   }
 
   @override
