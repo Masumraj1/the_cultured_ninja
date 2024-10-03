@@ -126,11 +126,13 @@ class CustomWidgets {
           SizedBox(
             height: 10.h,
           ),
-          CustomButton(
-            height: 50,
-            width: 160.w,
-            onTap:  onTap ?? () {},
-            title: button,fillColor: AppColors.buttonColor,),
+          Expanded(
+            child: CustomButton(
+              height: 50,
+              width: 160.w,
+              onTap:  onTap ?? () {},
+              title: button,fillColor: AppColors.buttonColor,),
+          ),
 
 
         ],

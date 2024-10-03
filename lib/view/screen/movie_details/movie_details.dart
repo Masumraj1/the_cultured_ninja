@@ -229,7 +229,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: List.generate(
-                          dataDetails!.genres!.length,
+                          dataDetails?.genres?.length??0,
                           // Ensure genres is a list
                           (index) {
                             return Container(
@@ -241,7 +241,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                               ),
                               padding: const EdgeInsets.all(15),
                               child: CustomText(
-                                text: dataDetails.genres?[index].name ?? "",
+                                text: dataDetails?.genres?[index].name ?? "",
                                 // Safely access the genre name
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12,
@@ -264,7 +264,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                     ),
                     CustomText(
                       textAlign: TextAlign.start,
-                      text: dataDetails.tagline ?? "",
+                      text: dataDetails?.tagline ?? "",
                       fontSize: 12.sp,
                       maxLines: 5,
                       bottom: 24,
@@ -286,9 +286,15 @@ class _MovieDetailsState extends State<MovieDetails> {
                         children:
                             List.generate(data.value.platform!.length, (index) {
                           var platformList = data.value.platform![index];
-                          return customWidget.customImageText(
-                              image: platformList.logoPath ?? "",
-                              movieName: platformList.providerName ?? "");
+                          return GestureDetector(
+                            onTap: (){
+                              Get.toNamed(AppRoute.actorDetails);
+                            },
+                            child: customWidget.customImageText(
+
+                                image: platformList.logoPath ?? "",
+                                movieName: platformList.providerName ?? ""),
+                          );
                         }),
                       ),
                     ),

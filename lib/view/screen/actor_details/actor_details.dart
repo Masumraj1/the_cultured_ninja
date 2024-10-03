@@ -1,11 +1,15 @@
+import 'package:final_movie/controller/calendar_controller/calendar_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
+import 'package:final_movie/helpar/date_converter/date_converter.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
+import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
+import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,11 +17,32 @@ import 'package:get/get.dart';
 
 import '../../widgets/custom_following/custom_following.dart';
 
-class ActorDetails extends StatelessWidget {
-  ActorDetails({super.key});
+class ActorDetails extends StatefulWidget {
+  const ActorDetails({super.key});
 
+  @override
+  State<ActorDetails> createState() => _ActorDetailsState();
+}
+
+class _ActorDetailsState extends State<ActorDetails> {
   final CustomWidgets customWidget = CustomWidgets();
+  DateTime selectedDate = DateTime.now();
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+
+  final CalendarController calendarController = Get.find<CalendarController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,11 +72,7 @@ class ActorDetails extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ///===========================container==================
-              // customWidget.customFollowing(
-              //   image: AppConstants.onlineImage,
-              //   movieName: "Masum Raj", onTap: () {  },
-              // ),
+
               CustomFollowing(
                 image: AppConstants.onlineImage,
                 movieName: 'Masum Raj',
@@ -149,53 +170,62 @@ class ActorDetails extends StatelessWidget {
     Get.dialog(
       AlertDialog(
         backgroundColor: AppColors.backgroundColor,
-        content: SizedBox(
-          height: 250.h,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const SizedBox(),
-                  const Spacer(),
-                  GestureDetector(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: const CustomImage(
-                        imageSrc: AppIcons.x,
-                        imageType: ImageType.svg,
-                      ))
-                ],
-              ),
+        content: Obx(
+           () {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    const SizedBox(),
+                    const Spacer(),
+                    GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: const CustomImage(
+                          imageSrc: AppIcons.x,
+                          imageType: ImageType.svg,
+                        ))
+                  ],
+                ),
+                     SizedBox(height: 10.h,),
+                ///==========================added ===============
 
-              ///==========================added ===============
-              CustomText(
-                maxLines: 3,
-                fontSize: 18.sp,
-                text: AppStrings.addedCalendarSuccessFully,
-                fontWeight: FontWeight.w500,
-                color: AppColors.lightWhite,
-                bottom: 10,
-              ),   CustomText(
-                maxLines: 3,
-                fontSize: 14.sp,
-                text: AppStrings.thankYou,
-                fontWeight: FontWeight.w400,
-                color: AppColors.lightWhite,
-                bottom: 10,
-              ),
-              SizedBox(
-                height: 15.h,
-              ),
-              CustomButton(onTap: (){
-                Get.back();
-              },
-                fillColor: AppColors.buttonColor,
-                title: 'Ok',
-              )
-            ],
-          ),
+                 CustomTextField(
+                 textEditingController: TextEditingController(text: DateConverter.estimatedDate(selectedDate)),
+                 fillColor: AppColors.fromRgb,
+                  fieldBorderColor: AppColors.fromRgb,
+                  suffixIcon: GestureDetector(
+                      onTap: (){
+                        _selectDate(context);
+                      },
+                      child: const Icon(Icons.calendar_month)),
+                ),
+                CustomText(
+                  top: 15,
+                  maxLines: 3,
+                  fontSize: 14.sp,
+                  text: AppStrings.thankYou,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.lightWhite,
+                  bottom: 10,
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+
+                 calendarController.isAdded.value?const CustomLoader():
+                CustomButton(onTap: (){
+                  calendarController.addedCalender(id: '');
+                },
+                  fillColor: AppColors.buttonColor,
+                  title: 'Added Calender',
+                )
+              ],
+            );
+          }
         ),
       ),
     );

@@ -31,6 +31,10 @@ class ApiUrl {
   static const getAllStudio = "/studio/get-studio";
   static const search = "/movie/all-movies?search";
 
+  ///=====================calender==============
+  static const addedCalender = "/calender/add-to-calender";
+  static const getCalenderMovie = "/calender/get-calendered-movie";
+
 
   ///===========================Favorite===============
   static const getFavorite = "/favorite/get-favorite";
