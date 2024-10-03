@@ -1,5 +1,4 @@
 import 'package:final_movie/controller/home_controller/home_controller.dart';
-import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,16 +15,14 @@ class TopRatingTvSeriesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: List.generate(homeController.tvSeriesList.length, (index) {
-        return GestureDetector(
-          onTap: (){
-            Get.toNamed(AppRoute.movieDetails);
-          },
-          child: customWidget.customTopRatingMovies(
-            image: homeController.tvSeriesList[index],
-            movieName: 'Bad Boy',
-            ratings: '4.5',
-          ),
+      children: List.generate(homeController.tvList
+          .length, (index) {
+
+        var data = homeController.tvList[index];
+        return customWidget.customTopRatingMovies(
+          image:data.poster??"",
+          movieName: data.title??"",
+          ratings: data.rating.toString(),
         );
       }),
     );

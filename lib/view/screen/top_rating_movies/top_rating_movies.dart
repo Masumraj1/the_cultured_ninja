@@ -1,6 +1,5 @@
 import 'package:final_movie/controller/home_controller/home_controller.dart';
-import 'package:final_movie/core/app_routes.dart';
-import 'package:final_movie/utils/app_colors/app_colors.dart';
+  import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/home_screen/inner_widgets/top_rating_tabbar/top_rating_movies_tabbar.dart';
 import 'package:final_movie/view/screen/top_rating_movies/inner/top_rating_tv_series_list.dart';
@@ -25,7 +24,6 @@ class TopRatingMovies extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-
       ///=================================top rating movies appbar=====================
       appBar: AppBar(
         centerTitle: true,
@@ -75,26 +73,7 @@ class TopRatingMovies extends StatelessWidget {
                       SizedBox(
                         width: 14.h,
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: GestureDetector(
-                          onTap: (){
-                            Get.toNamed(AppRoute.filterSelectedGenresScreen);
-                          },
-                          child: Container(
-                              height: 50,
-                              width: 54,
-                              decoration: BoxDecoration(
-                                color: AppColors.fromRgb,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: const Icon(
-                                Icons.filter_alt,
-                                size: 35,
-                                color: AppColors.lightWhite,
-                              )),
-                        ),
-                      ),
+
                     ],
                   ),
                   SizedBox(
@@ -119,7 +98,24 @@ class TopRatingMovies extends StatelessWidget {
                   IndexedStack(
                     index: homeController.selectedIndex.value,
                     children: [
+                      ///================================Movies=================
+                      homeController.moviesList.isEmpty
+                          ? const CustomText(
+                        text: 'No Movie Found',
+                        color: AppColors.lightWhite,
+                        fontWeight: FontWeight.w500,
+                      )
+                          :
                       TopRatingMoviesList(customWidget: customWidget),
+                      ///================================Movies=================
+                      homeController.tvList.isEmpty
+                          ? const CustomText(
+                        text: 'No Tv Series Found',
+                        color: AppColors.lightWhite,
+                        fontWeight: FontWeight.w500,
+                      )
+                          :
+                      ///============================Tv ====================
                       TopRatingTvSeriesList(customWidget: customWidget)
                      ],
                   ),

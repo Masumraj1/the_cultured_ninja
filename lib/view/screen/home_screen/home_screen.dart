@@ -137,7 +137,7 @@ class HomeScreen extends StatelessWidget {
                             homeController.moviesList.isEmpty
                                 ? const CustomText(
                                     text: 'No Movie Found',
-                                    color: AppColors.blackDeep,
+                                    color: AppColors.lightWhite,
                                     fontWeight: FontWeight.w500,
                                   )
                                 : HomeScreenTopRatingMovies(

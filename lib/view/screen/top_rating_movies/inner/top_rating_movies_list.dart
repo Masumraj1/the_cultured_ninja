@@ -15,15 +15,19 @@ class TopRatingMoviesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: List.generate(homeController.movie.length, (index) {
+      children: List.generate(homeController.moviesList.length, (index) {
+        var data = homeController.moviesList[index];
         return GestureDetector(
           onTap: (){
-            Get.toNamed(AppRoute.movieDetails);
+            Get.toNamed(AppRoute.movieDetails,  arguments: [
+              data.id,
+              data.rating
+            ]);
           },
           child: customWidget.customTopRatingMovies(
-            image: homeController.movie[index],
-            movieName: 'Bad Boy',
-            ratings: '4.5',
+            image: data.poster??"",
+            movieName: data.title??"",
+            ratings: data.rating.toString(),
           ),
         );
       }),
