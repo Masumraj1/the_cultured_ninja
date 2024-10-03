@@ -32,5 +32,11 @@ class ApiUrl {
   static const search = "/movie/all-movies?search";
 
 
+  ///===========================Favorite===============
+  static const getFavorite = "/favorite/get-favorite";
+  static String addFavorite({required String id}) {
+    return "/favorite/add-favorite/$id";
+  }
+
 
 }

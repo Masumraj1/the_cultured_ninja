@@ -55,9 +55,10 @@ class HomeController extends GetxController {
 
   ///===============================Banner======================
   final rxRequestStatus = Status.loading.obs;
-  RxInt currentBannerIndex = 0.obs;
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
+  RxInt currentBannerIndex = 0.obs;
+
 
   RxList<BannerData> bannerList = <BannerData>[].obs;
 
