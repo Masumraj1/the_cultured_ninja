@@ -300,6 +300,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                     ),
                     SizedBox(height: 15.h),
 
+
                     ///================Actor and Director================
                     CustomText(
                       text: AppStrings.actorsAndDirector,
