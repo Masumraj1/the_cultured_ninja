@@ -7,6 +7,7 @@ import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:final_movie/view/widgets/genarel_error/genarel_error.dart';
+import 'package:final_movie/view/widgets/no_internet_screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -47,25 +48,9 @@ class StudiosScreen extends StatelessWidget {
             return const CustomLoader(); // Show loading indicator
 
           case Status.internetError:
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomText(
-                    text: 'No Internet Connection',
-                    fontSize: 18.sp,
-                    color: AppColors.lightWhite,
-                  ),
-                  SizedBox(height: 20.h),
-                  ElevatedButton(
-                    onPressed: () {
-                      homeController.getStudio(); // Retry fetching data
-                    },
-                    child: const Text("Retry"),
-                  ),
-                ],
-              ),
-            );
+            return NoInternetScreen(onTap: () {
+              homeController.getStudio();
+            });
 
           case Status.error:
             return GeneralErrorScreen(
@@ -75,46 +60,43 @@ class StudiosScreen extends StatelessWidget {
             );
 
           case Status.completed:
-            return Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    left: 21,
-                    top: 24,
-                    text: AppStrings.allStudio,
-                    color: AppColors.lightWhite,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20.sp,
-                    bottom: 24,
-                  ),
-                  Expanded(
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 10.0,
-                        mainAxisSpacing: 10.0,
-                        childAspectRatio: 0.75, // Adjust the aspect ratio as needed
-                      ),
-                      itemCount: homeController.studioDataList.length,
-                      itemBuilder: (context, index) {
-                        var data = homeController.studioDataList[index];
-                        return GestureDetector(
-                          onTap: () {
-                            Get.toNamed(AppRoute.studiosDetailsScreen);
-                          },
-                          child: customWidget.customImageText(
-                            image: "${ApiUrl.networkImageUrl}${data.logo ?? ""}",
-                            movieName: data.name ?? "",
-                          ),
-                        );
-                      },
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomText(
+                  left: 21,
+                  top: 24,
+                  text: AppStrings.allStudio,
+                  color: AppColors.lightWhite,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 20.sp,
+                  bottom: 24,
+                ),
+                Expanded(
+                  child: GridView.builder(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10.0,
+                      mainAxisSpacing: 10.0,
+                      // childAspectRatio: 0.10, // Adjust the aspect ratio as needed
                     ),
+                    itemCount: homeController.studioDataList.length,
+                    itemBuilder: (context, index) {
+                      var data = homeController.studioDataList[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Get.toNamed(AppRoute.studiosDetailsScreen);
+                        },
+                        child: customWidget.customImageText(
+                          image: "${ApiUrl.networkImageUrl}${data.logo ?? ""}",
+                          movieName: data.name ?? "",
+                        ),
+                      );
+                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             );
           default:
             return const SizedBox(); // Fallback for unknown state
