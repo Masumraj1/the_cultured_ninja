@@ -84,20 +84,55 @@ class HomeController extends GetxController {
   }
 
   ///====================================Get Movies================
-  RxList<MoviesData> moviesList = <MoviesData>[].obs;
+  // RxList<MoviesData> moviesList = <MoviesData>[].obs;
+  // RxList<MoviesData> searchMovieList = <MoviesData>[].obs;
+  //
+  // getMovies() async {
+  //   setRxRequestStatus(Status.loading);
+  //   refresh();
+  //   var response = await ApiClient.getData(ApiUrl.getMovies);
+  //
+  //   if (response.statusCode == 200) {
+  //     moviesList.value = List<MoviesData>.from(
+  //         response.body["data"].map((x) => MoviesData.fromJson(x)));
+  //     print('moviesList=========================="${moviesList.length}"');
+  //
+  //     searchMovieList.value = List<MoviesData>.from(
+  //         response.body["data"].map((x) => MoviesData.fromJson(x)));
+  //     print('searchMovieList=========================="${moviesList.length}"');
+  //
+  //     setRxRequestStatus(Status.completed);
+  //     refresh();
+  //   } else {
+  //     if (response.statusText == ApiClient.noInternetMessage) {
+  //       setRxRequestStatus(Status.internetError);
+  //     } else {
+  //       setRxRequestStatus(Status.error);
+  //     }
+  //     ApiChecker.checkApi(response);
+  //   }
+  // }
 
-  getMovies() async {
+  RxList<MoviesData> moviesList = <MoviesData>[].obs;
+  RxList<MoviesData> searchMovieList = <MoviesData>[].obs;
+
+  Future<void> getMovies({required MovieListType listType}) async {
     setRxRequestStatus(Status.loading);
-    refresh();
+
     var response = await ApiClient.getData(ApiUrl.getMovies);
 
     if (response.statusCode == 200) {
-      moviesList.value = List<MoviesData>.from(
+      List<MoviesData> fetchedMovies = List<MoviesData>.from(
           response.body["data"].map((x) => MoviesData.fromJson(x)));
-      print('moviesList=========================="${moviesList.length}"');
+      if (listType == MovieListType.movies) {
+        moviesList.value = fetchedMovies;
+        print('moviesList count:========== ${moviesList.length}');
+      } else if (listType == MovieListType.searchMovies) {
+        searchMovieList.value = fetchedMovies;
+        print('searchMovieList count: ============${searchMovieList.length}');
+      }
 
       setRxRequestStatus(Status.completed);
-      refresh();
     } else {
       if (response.statusText == ApiClient.noInternetMessage) {
         setRxRequestStatus(Status.internetError);
@@ -188,9 +223,28 @@ class HomeController extends GetxController {
   }
 
 
+
+  ///<<<<<<<<<<======================================Search Method====================>>>>>>>
+  TextEditingController searchController = TextEditingController();
+
+  searchMovie({required String search}) async {
+    setRxRequestStatus(Status.loading);
+    searchMovieList.refresh();
+    var response = await ApiClient.getData("${ApiUrl.search}=$search");
+    searchMovieList.refresh();
+    if (response.statusCode == 200) {
+      searchMovieList = RxList<MoviesData>.from(
+          response.body["data"].map((x) => MoviesData.fromJson(x)));
+      setRxRequestStatus(Status.completed);
+      searchMovieList.refresh();
+    } else {
+      ApiChecker.checkApi(response);
+    }
+  }
+
   customMethod() {
     getBanner();
-    getMovies();
+    getMovies(listType: MovieListType.movies);
     getTv();
     getStudio();
   }
@@ -201,3 +255,6 @@ class HomeController extends GetxController {
     super.onInit();
   }
 }
+
+
+enum MovieListType { movies, searchMovies }

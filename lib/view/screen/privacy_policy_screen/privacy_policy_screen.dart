@@ -32,7 +32,7 @@ class _TermsConditionState extends State<PrivacyPolicyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -68,6 +68,8 @@ class _TermsConditionState extends State<PrivacyPolicyScreen> {
               padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 20.w),
               child: HtmlWidget(
                 controller.privacyModel.data?.value ?? "",
+                textStyle:
+                    const TextStyle(color: AppColors.lightWhite, fontSize: 16),
               ),
             );
           default:

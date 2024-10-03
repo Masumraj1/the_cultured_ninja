@@ -29,6 +29,7 @@ class ApiUrl {
 
   ///========================Studio==============
   static const getAllStudio = "/studio/get-studio";
+  static const search = "/movie/all-movies?search";
 
 
 

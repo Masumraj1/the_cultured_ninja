@@ -27,3 +27,4 @@ static String netFlix = "https://images.ctfassets.net/4cd45et68cgf/5ZVnTR7jyrRs0
 }
 
 enum Status { loading, error, completed, internetError }
+

@@ -9,7 +9,6 @@ import 'package:final_movie/view/screen/home_screen/inner_widgets/homeScreen_top
 import 'package:final_movie/view/screen/home_screen/inner_widgets/home_screen_tv_series/home_screen_tv_series.dart';
 import 'package:final_movie/view/screen/home_screen/inner_widgets/top_rating_tabbar/top_rating_movies_tabbar.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
-import 'package:final_movie/view/widgets/custom_movie_card/custom_movie_card.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:final_movie/view/widgets/genarel_error/genarel_error.dart';
@@ -37,7 +36,6 @@ class HomeScreen extends StatelessWidget {
       bottomNavigationBar: const NavBar(currentIndex: 0),
       drawer: const SideDrawer(),
       body: Obx(() {
-        var data = homeController.moviesList;
         switch (homeController.rxRequestStatus.value) {
           case Status.loading:
             return const CustomLoader();

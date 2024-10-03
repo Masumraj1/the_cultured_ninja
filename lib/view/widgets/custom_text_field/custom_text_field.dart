@@ -4,35 +4,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class CustomTextField extends StatefulWidget {
-  const CustomTextField(
-      {this.inputFormatters,
-        this.onFieldSubmitted,
-        this.textEditingController,
-        this.focusNode,
-        this.keyboardType = TextInputType.text,
-        this.textInputAction = TextInputAction.next,
-        this.cursorColor = AppColors.buttonColor,
-        this.inputTextStyle,
-        this.textAlignVertical = TextAlignVertical.center,
-        this.textAlign = TextAlign.start,
-        this.onChanged,
-        this.maxLines = 1,
-        this.validator,
-        this.hintText,
-        this.hintStyle,
-        this.fillColor = AppColors.buttonColor,
-        this.suffixIcon,
-        this.suffixIconColor,
-        this.fieldBorderRadius = 8,
-        this.fieldBorderColor = const Color(0xffB5D8EE),
-        this.isPassword = false,
-        this.isPrefixIcon = true,
-        this.readOnly = false,
-        this.maxLength,
-        super.key,
-        this.prefixIcon, this.onTap});
+  const CustomTextField({
+    this.inputFormatters,
+    this.onFieldSubmitted,
+    this.textEditingController,
+    this.focusNode,
+    this.keyboardType = TextInputType.text,
+    this.textInputAction = TextInputAction.next,
+    this.cursorColor = AppColors.buttonColor,
+    this.isColor = false, // Default value for isColor
+    this.inputTextStyle,
+    this.textAlignVertical = TextAlignVertical.center,
+    this.textAlign = TextAlign.start,
+    this.onChanged,
+    this.maxLines = 1,
+    this.validator,
+    this.hintText,
+    this.hintStyle,
+    this.fillColor = AppColors.buttonColor,
+    this.suffixIcon,
+    this.suffixIconColor,
+    this.fieldBorderRadius = 8,
+    this.fieldBorderColor = const Color(0xffB5D8EE),
+    this.isPassword = false,
+    this.isPrefixIcon = true,
+    this.readOnly = false,
+    this.maxLength,
+    super.key,
+    this.prefixIcon,
+    this.onTap,
+  });
 
   final TextEditingController? textEditingController;
   final FocusNode? focusNode;
@@ -40,13 +42,14 @@ class CustomTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
   final Color cursorColor;
+  final bool? isColor;
   final TextStyle? inputTextStyle;
   final TextAlignVertical? textAlignVertical;
   final TextAlign textAlign;
   final int? maxLines;
   final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
-  final FormFieldValidator? validator;
+  final FormFieldValidator<String>? validator;
   final String? hintText;
   final TextStyle? hintStyle;
   final Color? fillColor;
@@ -71,6 +74,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    // Determine the input text color based on the isColor flag
+    final textStyle = widget.inputTextStyle ??
+        TextStyle(
+          color: widget.isColor! ? Colors.white : AppColors.buttonColor,
+        );
+
     return TextFormField(
       onTap: widget.onTap,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -83,7 +92,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       cursorColor: widget.cursorColor,
-      style: widget.inputTextStyle,
+      style: textStyle, // Apply the dynamically determined text style
       onChanged: widget.onChanged,
       maxLines: widget.maxLines,
       obscureText: widget.isPassword ? obscureText : false,

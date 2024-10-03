@@ -1,22 +1,28 @@
+import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
+import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
+import 'package:final_movie/view/widgets/custom_search_card/custom_search_card.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
+import 'package:final_movie/view/widgets/genarel_error/genarel_error.dart';
+import 'package:final_movie/view/widgets/no_internet_screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+   SearchScreen({super.key});
 
+  final HomeController homeController = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+
       ///======================Search Appbar===============
       appBar: AppBar(
         leading: IconButton(
@@ -27,102 +33,97 @@ class SearchScreen extends StatelessWidget {
           color: AppColors.lightWhite,
         ),
         backgroundColor: AppColors.backgroundColor,
-        title: CustomText(text: AppStrings.search,color: AppColors.lightWhite,fontSize: 20.sp,),centerTitle: true,),
-      body:  Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
-        child: Column(
-          children: [
-            const CustomTextField(
-              fillColor: AppColors.fromRgb,
-              fieldBorderColor: AppColors.fromRgb,
-              hintText: AppStrings.search,
-              hintStyle: TextStyle(color: AppColors.searchHintText),
-              isPrefixIcon: true,
-              prefixIcon: Padding(
-                padding: EdgeInsets.only(left: 12),
-                child: Icon(Icons.search,color: AppColors.searchHintText,),
-              ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 6,
-                  itemBuilder: (context,index){
-                    return   GestureDetector(
-                      onTap: (){
-                        Get.toNamed(AppRoute.movieDetails);
-                      },
-                      child: customFavorite(
-                          image: AppConstants.movieImage,
-                          movieName: 'Star Wars: The Rise of Skywalker (2024)',
-                          releaseDate: '3h 12m', year: '2024 Action Comedy'),
-                    );
-                  }),
-            )
-          ],
+        title: CustomText(
+          text: AppStrings.search,
+          color: AppColors.lightWhite,
+          fontSize: 20.sp,
         ),
+        centerTitle: true,
       ),
-    );
-  }
+      body: Obx(() {
+        switch (homeController.rxRequestStatus.value) {
+          case Status.loading:
+            return const CustomLoader(); // Show loading indicator
 
-  ///===========================customFavorite===============================
-  Widget customFavorite({
-    required String image,
-    required String movieName,
-    required String releaseDate,
-    required String year,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      margin: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: AppColors.fromRgb,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: AppColors.borderDrawer)),
-      child: Row(
-        children: [
-          CustomNetworkImage(
+          case Status.internetError:
+            return NoInternetScreen(onTap: () {
+              homeController.getMovies(listType: MovieListType.searchMovies);
+            });
 
-            imageUrl: image,
-            height: 97,
-            width: 142,
-          ),
-          SizedBox(
-            width: 14.w,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
+          case Status.error:
+            return GeneralErrorScreen(
+              onTap: () {
+                homeController.getMovies(listType: MovieListType.searchMovies); // Retry fetching data on error
+              },
+            );
 
-                  textAlign: TextAlign.start,
-                  maxLines: 3,
-                  text: movieName,
-                  color: AppColors.lightWhite,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14.sp,
-                  bottom: 7,
-                ),
+          case Status.completed:
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: Column(
+                children: [
+                  ///===========================Search=====================
+                  CustomTextField(
+                    isColor: true,
+                    onFieldSubmitted: (value) {
+                      homeController.searchMovie(search: value);
+                    },
+                    textEditingController: homeController.searchController,
+                    fillColor: AppColors.fromRgb,
+                    fieldBorderColor: AppColors.fromRgb,
+                    hintText: AppStrings.search,
+                    hintStyle: const TextStyle(color: AppColors.searchHintText),
+                    isPrefixIcon: true,
+                    prefixIcon: const Padding(
+                      padding: EdgeInsets.only(left: 12),
+                      child: Icon(
+                        Icons.search,
+                        color: AppColors.searchHintText,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
 
-                CustomText(
-                  text: year,
-                  color: AppColors.favoriteContainerTextColor,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                ), CustomText(
-                  text: releaseDate,
-                  color: AppColors.favoriteContainerTextColor,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+                  ///==========================All Movie====================
+                  Expanded(
+                    child: homeController.searchMovieList.isNotEmpty
+                        ? ListView.builder(
+                      itemCount: homeController.searchMovieList.length,
+                      itemBuilder: (context, index) {
+                        var data = homeController.searchMovieList[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Get.toNamed(AppRoute.movieDetails,  arguments: [
+                              data.id,
+                              data.rating
+                            ]);
+                          },
+                          child: CustomSearchCard(
+                            image: data.poster ?? "",
+                            movieName: data.title ?? "N/A",
+                            releaseDate: data.rating?.toString() ?? "N/A",
+                          ),
+                        );
+                      },
+                    )
+                        : Center(
+                      child: CustomText(
+                        text: 'No Movie Found',
+                        color: AppColors.lightWhite,
+                        fontSize: 18.sp,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+
+          default:
+            return const SizedBox(); // Fallback for unknown state
+        }
+      }),
     );
   }
 }

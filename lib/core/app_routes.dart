@@ -109,7 +109,7 @@ static const String spinScreen = '/SpinScreen';
 
 
 
-    GetPage(name: searchScreen, page: () =>     const SearchScreen()),
+    GetPage(name: searchScreen, page: () =>      SearchScreen()),
     GetPage(name: favoriteScreen, page: () =>      FavoriteScreen()),
     GetPage(name: topRatingMovies, page: () =>      TopRatingMovies()),
     GetPage(name: filterScreen, page: () =>      FilterScreen()),

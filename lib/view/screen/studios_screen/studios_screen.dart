@@ -75,7 +75,8 @@ class StudiosScreen extends StatelessWidget {
                 Expanded(
                   child: GridView.builder(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 10.0,
                       mainAxisSpacing: 10.0,
@@ -86,7 +87,12 @@ class StudiosScreen extends StatelessWidget {
                       var data = homeController.studioDataList[index];
                       return GestureDetector(
                         onTap: () {
-                          Get.toNamed(AppRoute.studiosDetailsScreen);
+                          Get.toNamed(AppRoute.studiosDetailsScreen,
+                              arguments: [
+                                data.logo,
+                                data.name,
+                                data.totalMovies
+                              ]);
                         },
                         child: customWidget.customImageText(
                           image: "${ApiUrl.networkImageUrl}${data.logo ?? ""}",

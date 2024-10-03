@@ -1,5 +1,6 @@
 import 'package:final_movie/controller/studios_controller/studios_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
+import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
@@ -16,6 +17,10 @@ class StudiosDetailsScreen extends StatelessWidget {
 
   final CustomWidgets customWidget = CustomWidgets();
   final StudiosController studiosController = Get.find<StudiosController>();
+
+  final img = Get.arguments[0];
+  final name = Get.arguments[1];
+  final totalMovie = Get.arguments[2];
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +46,7 @@ class StudiosDetailsScreen extends StatelessWidget {
                 ///=========================Studio Image======================
                 CustomNetworkImage(
                     borderRadius: BorderRadius.circular(14),
-                    imageUrl: AppConstants.disneyPlus,
+                    imageUrl: "${ApiUrl.networkImageUrl}$img",
                     height: 241.h,
                     width: double.infinity),
                 SizedBox(
@@ -67,72 +72,58 @@ class StudiosDetailsScreen extends StatelessWidget {
                         fillColor: AppColors.buttonColor,
                         textColor: AppColors.lightWhite,
                       ),
-
-                CustomText(
-                  top: 26,
-                  textAlign: TextAlign.start,
-                  text: AppStrings.warnerBros,
-                  fontSize: 18.sp,
-                  maxLines: 6,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lightWhite,
+                SizedBox(
+                  height: 15.h,
                 ),
-                CustomText(
-                  top: 16,
-                  text: AppStrings.synopsis,
-                  fontSize: 16.sp,
-                  bottom: 8,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lightWhite,
-                ),
-                CustomText(
-                  textAlign: TextAlign.start,
-                  text: AppStrings.weAreDedicated,
-                  fontSize: 12.sp,
-                  maxLines: 5,
-                  bottom: 24,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.lightWhite,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const CustomText(
+                      textAlign: TextAlign.start,
+                      text: 'Studio Name :',
+                      fontSize: 18,
+                      maxLines: 6,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightWhite,
+                    ),
+                    CustomText(
+                      textAlign: TextAlign.start,
+                      text: name,
+                      fontSize: 15,
+                      maxLines: 6,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightWhite,
+                    ),
+                  ],
                 ),
 
-                ///====================================latest updates==============
-                CustomText(
-                  textAlign: TextAlign.start,
-                  text: AppStrings.latestUpdates,
-                  fontSize: 18.sp,
-                  bottom: 24,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.lightWhite,
+                SizedBox(
+                  height: 15.h,
                 ),
-
-                Column(
-                  children: List.generate(2, (index) {
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: 10.h), // Adds space between each Row
-                      child: Row(
-                        children: [
-                          CustomNetworkImage(
-                            borderRadius: BorderRadius.circular(8),
-                            imageUrl: AppConstants.movieImage,
-                            height: 50,
-                            width: 78,
-                          ),
-                          SizedBox(
-                            width: 15.w,
-                          ),
-                          const CustomText(
-                            text: "Now showing this movie",
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15,
-                            color: AppColors.lightWhite,
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const CustomText(
+                      textAlign: TextAlign.start,
+                      text: 'Total Movie :',
+                      fontSize: 18,
+                      maxLines: 6,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightWhite,
+                    ),
+                    CustomText(
+                      textAlign: TextAlign.start,
+                      text: totalMovie.toString(),
+                      fontSize: 15,
+                      maxLines: 6,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.lightWhite,
+                    ),
+                  ],
                 ),
-
-
+                SizedBox(
+                  height: 15.h,
+                ),
                 ///==================================related Studios====================
                 customWidget.customRow(
                     startTitle: AppStrings.relatedStudios,
