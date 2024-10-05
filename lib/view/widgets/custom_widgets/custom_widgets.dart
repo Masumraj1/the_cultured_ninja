@@ -126,13 +126,11 @@ class CustomWidgets {
           SizedBox(
             height: 10.h,
           ),
-          Expanded(
-            child: CustomButton(
-              height: 50,
-              width: 160.w,
-              onTap:  onTap ?? () {},
-              title: button,fillColor: AppColors.buttonColor,),
-          ),
+          CustomButton(
+            height: 50,
+            width: 160.w,
+            onTap:  onTap ?? () {},
+            title: button,fillColor: AppColors.buttonColor,),
 
 
         ],
@@ -162,7 +160,7 @@ class CustomWidgets {
           ),
           CustomText(
               textAlign: TextAlign.start,
-              maxLines: 5,
+              maxLines: 3,
               text: movieName,
               fontSize: 12.sp,
               color: AppColors.lightWhite,

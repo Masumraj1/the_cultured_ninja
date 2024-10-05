@@ -68,6 +68,8 @@ class _TermsConditionState extends State<TermsAndCondition> {
               padding: EdgeInsets.symmetric(vertical: 24.h, horizontal: 20.w),
               child: HtmlWidget(
                 controller.termsModel.data?.value ?? "",
+                  textStyle:
+                  const TextStyle(color: AppColors.lightWhite, fontSize: 16)
               ),
             );
           default:

@@ -59,7 +59,7 @@ class GeneralController extends GetxController {
     if (response.statusCode == 200) {
       termsModel = TermsModel.fromJson(response.body);
 
-      print('body========================"${response.body}');
+      print('Value========================"${termsModel.data?.value}"');
     } else {
       if (response.statusText == ApiClient.noInternetMessage) {
         setRxRequestStatus(Status.internetError);

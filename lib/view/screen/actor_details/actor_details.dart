@@ -1,4 +1,4 @@
-import 'package:final_movie/controller/calendar_controller/calendar_controller.dart';
+import 'package:final_movie/controller/movie_details_controller/movie_details_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/date_converter/date_converter.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
@@ -7,7 +7,6 @@ import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
-import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
@@ -41,192 +40,199 @@ class _ActorDetailsState extends State<ActorDetails> {
     }
   }
 
+  final MovieDetailsController movieDetailsController =
+      Get.find<MovieDetailsController>();
 
-  final CalendarController calendarController = Get.find<CalendarController>();
+  final id = Get.arguments.toString(); // Ensure id is converted to a string
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      movieDetailsController.actorDetail(id: id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+        backgroundColor: AppColors.backgroundColor,
 
-      ///===========================Actor details appbar=============================
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back),
-          color: AppColors.lightWhite,
-        ),
-        backgroundColor: AppColors.blackDeep,
-        title: CustomText(
-          text: AppStrings.actorDetails,
-          color: AppColors.lightWhite,
-          fontSize: 20.sp,
-          fontWeight: FontWeight.w500,
-        ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              CustomFollowing(
-                image: AppConstants.onlineImage,
-                movieName: 'Masum Raj',
-              ),
-
-              ///===================================Upcoming movies====================
-              customWidget.customRow(
-                  startTitle: AppStrings.upcomingMovie,
-                  endTitle: AppStrings.viewAll,
-                  onTap: () {
-                    Get.toNamed(AppRoute.actorMovie);
-                  }),
-              SizedBox(
-                height: 16.h,
-              ),
-              SizedBox(
-                height: 350.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return customWidget.customUpcomingMovies(
-                      onTap: (){
-                        showDialogBox(context);
-                      },
-                      image: AppConstants.movieImage,
-                      movieName: "The Talented People",
-                      releaseDate: '10 august 2023',
-                      button: AppStrings.addToCalender,
-                    );
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 24.h,
-              ),
-
-              ///=========================His work=========================
-              customWidget.customRow(
-                  startTitle: AppStrings.hisWork,
-                  endTitle: AppStrings.viewAll,
-                  onTap: () {
-                    Get.toNamed(AppRoute.actorMovie);
-                  }),
-              SizedBox(
-                height: 16.h,
-              ),
-              SizedBox(
-                height: 170.h,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return customWidget.customImageText(
-                      image: AppConstants.movieImage,
-                      movieName: "The Talented People",
-                    );
-                  },
-                ),
-              ),
-
-              ///======================================Actor and director=================
-              CustomText(
-                text: AppStrings.actorsAndDirector,
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w500,
-                color: AppColors.lightWhite,
-                bottom: 16,
-              ),
-              SizedBox(
-                height: 140.h,
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 4,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Get.toNamed(AppRoute.actorDetails);
-                        },
-                        child: customWidget.customActorAndDirector(
-                            image: AppConstants.onlineImage,
-                            title: 'actor',
-                           ),
-                      );
-                    }),
-              ),
-            ],
+        ///===========================Actor details appbar=============================
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(Icons.arrow_back),
+            color: AppColors.lightWhite,
           ),
+          backgroundColor: AppColors.blackDeep,
+          title: CustomText(
+            text: AppStrings.actorDetails,
+            color: AppColors.lightWhite,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          centerTitle: true,
         ),
-      ),
-    );
+        body: Obx(() {
+          var data = movieDetailsController.actorDetails.value;
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomFollowing(
+                    image: data.profilePath ?? "",
+                    movieName: data.name ?? "",
+                  ),
+
+                  ///===================================Upcoming movies====================
+                  customWidget.customRow(
+                      startTitle: AppStrings.upcomingMovie,
+                      endTitle: AppStrings.viewAll,
+                      onTap: () {
+                        Get.toNamed(AppRoute.actorMovie);
+                      }),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+
+                  data.upcomingMovies!.isEmpty
+                      ? SizedBox(
+                    height: MediaQuery.of(context).size.height/2,
+                        child: const Center(
+                          child: CustomText(
+                              text: 'No Upcoming Movies',
+                              color: AppColors.lightWhite,
+                              fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            ),
+                        ),
+                      )
+                      : SizedBox(
+                          height:MediaQuery.of(context).size.height/2 ,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: movieDetailsController
+                                .actorDetails.value.upcomingMovies?.length,
+                            itemBuilder: (context, index) {
+                              return customWidget.customUpcomingMovies(
+                                onTap: () {
+                                  showDialogBox(context);
+                                },
+                                image: AppConstants.movieImage,
+                                movieName: "The Talented People",
+                                releaseDate: '10 august 2023',
+                                button: AppStrings.addToCalender,
+                              );
+                            },
+                          ),
+                        ),
+
+
+
+                  ///=========================His work=========================
+                  customWidget.customRow(
+                      startTitle: AppStrings.hisWork,
+                      endTitle: AppStrings.viewAll,
+                      onTap: () {
+                        Get.toNamed(AppRoute.actorMovie);
+                      }),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(
+                          movieDetailsController
+                                  .actorDetails.value.popularMovies?.length ??
+                              0, (index) {
+                        var data = movieDetailsController
+                            .actorDetails.value.popularMovies?[index];
+                        return customWidget.customImageText(
+                          image: data?.posterPath ?? "",
+                          movieName: data?.title ?? "",
+                        );
+                      }),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          );
+        }));
   }
 
   void showDialogBox(BuildContext context) {
     Get.dialog(
       AlertDialog(
         backgroundColor: AppColors.backgroundColor,
-        content: Obx(
-           () {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    const SizedBox(),
-                    const Spacer(),
-                    GestureDetector(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: const CustomImage(
-                          imageSrc: AppIcons.x,
-                          imageType: ImageType.svg,
-                        ))
-                  ],
-                ),
-                     SizedBox(height: 10.h,),
-                ///==========================added ===============
-
-                 CustomTextField(
-                 textEditingController: TextEditingController(text: DateConverter.estimatedDate(selectedDate)),
-                 fillColor: AppColors.fromRgb,
-                  fieldBorderColor: AppColors.fromRgb,
-                  suffixIcon: GestureDetector(
-                      onTap: (){
-                        _selectDate(context);
+        content: Obx(() {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  const SizedBox(),
+                  const Spacer(),
+                  GestureDetector(
+                      onTap: () {
+                        Get.back();
                       },
-                      child: const Icon(Icons.calendar_month)),
-                ),
-                CustomText(
-                  top: 15,
-                  maxLines: 3,
-                  fontSize: 14.sp,
-                  text: AppStrings.thankYou,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.lightWhite,
-                  bottom: 10,
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
+                      child: const CustomImage(
+                        imageSrc: AppIcons.x,
+                        imageType: ImageType.svg,
+                      ))
+                ],
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
 
-                 calendarController.isAdded.value?const CustomLoader():
-                CustomButton(onTap: (){
-                  calendarController.addedCalender(id: '');
+              ///==========================added ===============
+
+              CustomTextField(
+                textEditingController: TextEditingController(
+                    text: DateConverter.estimatedDate(selectedDate)),
+                fillColor: AppColors.fromRgb,
+                fieldBorderColor: AppColors.fromRgb,
+                suffixIcon: GestureDetector(
+                    onTap: () {
+                      _selectDate(context);
+                    },
+                    child: const Icon(Icons.calendar_month)),
+              ),
+              CustomText(
+                top: 15,
+                maxLines: 3,
+                fontSize: 14.sp,
+                text: AppStrings.thankYou,
+                fontWeight: FontWeight.w400,
+                color: AppColors.lightWhite,
+                bottom: 10,
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+
+              // calendarController.isAdded.value?const CustomLoader():
+              CustomButton(
+                onTap: () {
+                  // calendarController.addedCalender(id: '');
                 },
-                  fillColor: AppColors.buttonColor,
-                  title: 'Added Calender',
-                )
-              ],
-            );
-          }
-        ),
+                fillColor: AppColors.buttonColor,
+                title: 'Added Calender',
+              )
+            ],
+          );
+        }),
       ),
     );
   }

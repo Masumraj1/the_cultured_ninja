@@ -26,6 +26,9 @@ class ApiUrl {
   static String movieDetails({required String id}) {
     return "/movie/get-movie-details/$id";
   }
+  static String actorDetails({required String id}) {
+    return "/actor/get-actor-details/$id";
+  }
 
   ///========================Studio==============
   static const getAllStudio = "/studio/get-studio";

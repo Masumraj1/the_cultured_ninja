@@ -1,4 +1,3 @@
-import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/controller/movie_details_controller/movie_details_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/date_converter/date_converter.dart';
@@ -310,9 +309,10 @@ class _MovieDetailsState extends State<MovieDetails> {
                           data.value.actors?.length ?? 0,
                           // Ensure it's not null
                           (index) {
+                            var actorList = data.value.actors?[index];
                             return GestureDetector(
                               onTap: (){
-                                Get.toNamed(AppRoute.actorDetails);
+                                Get.toNamed(AppRoute.actorDetails,arguments: actorList?.id);
                               },
                               child: customWidget.customActorAndDirector(
                                 image: data.value.actors?[index].profilePath ??
