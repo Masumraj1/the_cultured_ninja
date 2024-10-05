@@ -103,6 +103,14 @@ class SideDrawer extends StatelessWidget {
                           Get.toNamed(AppRoute.termsAndCondition);
                         }),
 
+                    ///======================History===============
+                    customRow(
+                        image: AppIcons.home,
+                        title: AppStrings.history,
+                        onTap: () {
+                          Get.toNamed(AppRoute.termsAndCondition);
+                        }),
+
 
 
                     ///==============================Sign Out======================
