@@ -155,7 +155,7 @@ class _ActorDetailsState extends State<ActorDetails> {
                         child: customWidget.customActorAndDirector(
                             image: AppConstants.onlineImage,
                             title: 'actor',
-                            designation: 'director'),
+                           ),
                       );
                     }),
               ),

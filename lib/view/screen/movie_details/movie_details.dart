@@ -1,4 +1,5 @@
 import 'package:final_movie/controller/home_controller/home_controller.dart';
+import 'package:final_movie/controller/movie_details_controller/movie_details_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/date_converter/date_converter.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
@@ -25,7 +26,7 @@ class _MovieDetailsState extends State<MovieDetails> {
   ///============================CustomWidgets========================
   final CustomWidgets customWidget = CustomWidgets();
 
-  final HomeController homeController = Get.find<HomeController>();
+  final MovieDetailsController homeController = Get.find<MovieDetailsController>();
 
   final id = Get.arguments[0]; // The movie ID
   final rating = Get.arguments[1]; // The movie ID
@@ -66,9 +67,6 @@ class _MovieDetailsState extends State<MovieDetails> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Obx(() {
-          var data = homeController.moviesDetailsModel;
-          var dataDetails = homeController.moviesDetailsModel.value.details;
-
           switch (homeController.rxRequestStatus.value) {
             case Status.loading:
               return const CustomLoader();
@@ -88,6 +86,8 @@ class _MovieDetailsState extends State<MovieDetails> {
               );
 
             case Status.completed:
+              var data = homeController.moviesDetailsModel;
+              var dataDetails = homeController.moviesDetailsModel.value.details;
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,7 +229,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: List.generate(
-                          dataDetails?.genres?.length??0,
+                          dataDetails?.genres?.length ?? 0,
                           // Ensure genres is a list
                           (index) {
                             return Container(
@@ -283,23 +283,16 @@ class _MovieDetailsState extends State<MovieDetails> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children:
-                            List.generate(data.value.platform!.length, (index) {
-                          var platformList = data.value.platform![index];
-                          return GestureDetector(
-                            onTap: (){
-                              Get.toNamed(AppRoute.actorDetails);
-                            },
-                            child: customWidget.customImageText(
-
-                                image: platformList.logoPath ?? "",
-                                movieName: platformList.providerName ?? ""),
-                          );
+                        children: List.generate(
+                            data.value.platform?.length ?? 0, (index) {
+                          var platformList = data.value.platform?[index];
+                          return customWidget.customImageText(
+                              image: platformList?.logoPath ?? "",
+                              movieName: platformList?.providerName ?? "");
                         }),
                       ),
                     ),
                     SizedBox(height: 15.h),
-
 
                     ///================Actor and Director================
                     CustomText(
@@ -314,20 +307,24 @@ class _MovieDetailsState extends State<MovieDetails> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: List.generate(
-                           data.value.actors?.length??0  ,  // Ensure it's not null
-                              (index) {
-                            var actorList = data.value.actors?[index];
-
-                            return customWidget.customActorAndDirector(
-                              image: actorList?.profilePath ?? "",  // Safely handle profilePath being null
-                              title: actorList?.name ?? 'Unknown Actor',  // Use a default if name is null
-                              designation:  'Unknown Director',  // Fallback value
+                          data.value.actors?.length ?? 0,
+                          // Ensure it's not null
+                          (index) {
+                            return GestureDetector(
+                              onTap: (){
+                                Get.toNamed(AppRoute.actorDetails);
+                              },
+                              child: customWidget.customActorAndDirector(
+                                image: data.value.actors?[index].profilePath ??
+                                    "", // Safely handle profilePath being null
+                                title: data.value.actors?[index].name ??
+                                    "", // Use a default if name is null
+                              ),
                             );
                           },
                         ),
                       ),
                     ),
-
 
                     ///================Related Movies================
                     customWidget.customRow(
@@ -338,18 +335,17 @@ class _MovieDetailsState extends State<MovieDetails> {
                       },
                     ),
                     SizedBox(height: 16.h),
-                    SizedBox(
-                      height: 170.h,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 4,
-                        itemBuilder: (context, index) {
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(data.value.similarMovies?.length??0, (index) {
+                          var similarMovies = data.value.similarMovies?[index];
                           return customWidget.customImageText(
-                              image: AppConstants.movieImage,
-                              movieName: "Universal Studios");
-                        },
+                              image: similarMovies?.posterPath??"",
+                              movieName: similarMovies?.title??" no name");
+                        }),
                       ),
-                    ),
+                    )
                   ],
                 ),
               );

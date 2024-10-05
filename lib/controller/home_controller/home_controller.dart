@@ -34,17 +34,9 @@ class HomeController extends GetxController {
   Rx<PageController> pageController = PageController().obs;
 
   ///=======================================Movie details screen============================
-  var isFavorite = false.obs;
 
-  void toggleFavorite() {
-    isFavorite.value = !isFavorite.value;
-  }
 
-  RxBool isTap = false.obs;
 
-  void toggleTap() {
-    isTap.value = !isTap.value;
-  }
 
   ///====================================top rating movies ======================
   var selectedIndex = 0.obs;
@@ -169,32 +161,9 @@ class HomeController extends GetxController {
     }
   }
 
-  ///====================================Get Details================
-  Rx<DetailsData> moviesDetailsModel = DetailsData().obs;
 
-  movieDetails({required String id}) async {
-    setRxRequestStatus(Status.loading);
-    refresh();
-    var response = await ApiClient.getData(ApiUrl.movieDetails(id: id));
 
-    if (response.statusCode == 200) {
-      moviesDetailsModel.value =
-          DetailsData.fromJson(response.body["data"]);
-      print('data fetch==================="${response.body["data"]}"');
-      print('backdrop_path==================="${response.body["data"]['details']["backdrop_path"]}"');
-      print('actorList==================="${response.body["data"]['actors']}"');
 
-      setRxRequestStatus(Status.completed);
-      refresh();
-    } else {
-      if (response.statusText == ApiClient.noInternetMessage) {
-        setRxRequestStatus(Status.internetError);
-      } else {
-        setRxRequestStatus(Status.error);
-      }
-      ApiChecker.checkApi(response);
-    }
-  }
 
 
 

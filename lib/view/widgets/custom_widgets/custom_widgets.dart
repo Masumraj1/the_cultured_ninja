@@ -301,7 +301,6 @@ class CustomWidgets {
   Widget customActorAndDirector({
     required String image,
     required String title,
-    required String designation,
   }) {
     return SizedBox(
       height: 124.h,
@@ -317,17 +316,13 @@ class CustomWidgets {
               imageUrl: image,
             ),
             CustomText(
+
                 text: title,
-                top: 8,
+                top: 16,
                 fontSize: 12.sp,
                 color: AppColors.lightWhite,
                 fontWeight: FontWeight.w400),
-            CustomText(
-                maxLines: 5,
-                text: designation,
-                fontSize: 14.sp,
-                color: AppColors.lightWhite,
-                fontWeight: FontWeight.w400),
+
           ],
         ),
       ),

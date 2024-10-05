@@ -5,6 +5,7 @@ import 'package:final_movie/controller/filter_controller/filter_controller.dart'
 import 'package:final_movie/controller/following_controller/following_controller.dart';
 import 'package:final_movie/controller/genarel_controller/genarel_controller.dart';
 import 'package:final_movie/controller/home_controller/home_controller.dart';
+import 'package:final_movie/controller/movie_details_controller/movie_details_controller.dart';
 import 'package:final_movie/controller/profile_controller/profile_controller.dart';
 import 'package:final_movie/controller/streaming_controller/streaming_controller.dart';
 import 'package:final_movie/controller/studios_controller/studios_controller.dart';
@@ -24,6 +25,7 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => StudiosController(), fenix: true);
     Get.lazyPut(() => GeneralController(), fenix: true);
     Get.lazyPut(() => StreamingController(), fenix: true);
+    Get.lazyPut(() => MovieDetailsController(), fenix: true);
 
   }
 }
