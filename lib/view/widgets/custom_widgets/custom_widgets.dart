@@ -177,7 +177,6 @@ class CustomWidgets {
     required String image,
     required String movieName,
     required String releaseDate,
-    required String year,
   }) {
     return Container(
       padding: const EdgeInsets.all(12),
@@ -209,15 +208,10 @@ class CustomWidgets {
                   color: AppColors.lightWhite,
                   fontWeight: FontWeight.w500,
                   fontSize: 14.sp,
-                  bottom: 7,
+                  bottom: 12,
                 ),
 
                 CustomText(
-                  text: year,
-                  color: AppColors.favoriteContainerTextColor,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14,
-                ), CustomText(
                   text: releaseDate,
                   color: AppColors.favoriteContainerTextColor,
                   fontWeight: FontWeight.w400,

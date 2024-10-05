@@ -81,7 +81,7 @@ class CalendarScreen extends StatelessWidget {
                   image: AppConstants.movieImage,
                   movieName: "the stupid",
                   releaseDate: "10 august ",
-                  year: '2022'),
+                 ),
             );
           }),
         )
