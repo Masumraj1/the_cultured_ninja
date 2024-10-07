@@ -12,6 +12,7 @@ import 'package:final_movie/view/screen/authentication/successfully_screen/succe
 import 'package:final_movie/view/screen/favorite_screen/favorite_screen.dart';
 import 'package:final_movie/view/screen/filter_screen/filter_screen.dart';
 import 'package:final_movie/view/screen/filter_screen/filter_selected_genres_screen/filter_selected_genres_screen.dart';
+import 'package:final_movie/view/screen/history_screen/history_screen.dart';
 import 'package:final_movie/view/screen/home_screen/home_screen.dart';
 import 'package:final_movie/view/screen/movie_details/movie_details.dart';
 import 'package:final_movie/view/screen/notification_screen/notification_screen.dart';
@@ -72,6 +73,7 @@ static const String privacyPolicyScreen = '/PrivacyPolicyScreen';
 static const String termsAndCondition = '/TermsAndCondition';
 static const String selectStreamingScreen = '/SelectStreamingScreen';
 static const String spinScreen = '/SpinScreen';
+static const String historyScreen = '/HistoryScreen';
 
 
 
@@ -101,6 +103,7 @@ static const String spinScreen = '/SpinScreen';
     GetPage(name: notificationScreen, page: () =>    const NotificationScreen()),
     GetPage(name: privacyPolicyScreen, page: () =>    const PrivacyPolicyScreen()),
     GetPage(name: termsAndCondition, page: () =>    const TermsAndCondition()),
+    GetPage(name: historyScreen, page: () =>     HistoryScreen()),
 
     ///==============================editProfile=====================
     GetPage(name: editProfileScreen, page: () =>     EditProfileScreen()),

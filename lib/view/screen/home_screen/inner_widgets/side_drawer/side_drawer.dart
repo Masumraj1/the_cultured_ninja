@@ -108,7 +108,7 @@ class SideDrawer extends StatelessWidget {
                         image: AppIcons.home,
                         title: AppStrings.history,
                         onTap: () {
-                          Get.toNamed(AppRoute.termsAndCondition);
+                          Get.toNamed(AppRoute.historyScreen);
                         }),
 
 
