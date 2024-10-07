@@ -94,7 +94,7 @@ class FavoriteScreen extends StatelessWidget {
                                   showCustomDeleteDialog(
                                     context,
                                     () {
-                                      favoriteController.addFavorite(
+                                      favoriteController.removeFavorite(
                                           id: data.movieId.toString() ?? "");
                                     },
                                   );

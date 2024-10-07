@@ -1,3 +1,4 @@
+import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/model/actor_details_model.dart';
 import 'package:final_movie/model/movie_details.dart';
 import 'package:final_movie/services/api_check.dart';
@@ -82,6 +83,31 @@ class MovieDetailsController extends GetxController {
     }
   }
 
+
+
+  ///===========================Add Favorite================
+
+  RxBool isFavorites = false.obs;
+
+  addFavorite({required String id}) async {
+    isFavorites.value = true;
+    refresh();
+
+    var response = await ApiClient.postData(
+        ApiUrl.addFavorite(id: id),{}
+
+    );
+    if (response.statusCode == 200) {
+      Get.back();
+      toastMessage(
+        message: response.body["message"],
+      );
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isFavorites.value = false;
+    refresh();
+  }
 
 
 }

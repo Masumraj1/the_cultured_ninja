@@ -25,7 +25,7 @@ class _MovieDetailsState extends State<MovieDetails> {
   ///============================CustomWidgets========================
   final CustomWidgets customWidget = CustomWidgets();
 
-  final MovieDetailsController homeController = Get.find<MovieDetailsController>();
+  final MovieDetailsController movieDetailsController = Get.find<MovieDetailsController>();
 
   final id = Get.arguments[0]; // The movie ID
   final rating = Get.arguments[1]; // The movie ID
@@ -34,7 +34,7 @@ class _MovieDetailsState extends State<MovieDetails> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      homeController.movieDetails(id: id);
+      movieDetailsController.movieDetails(id: id);
     });
   }
 
@@ -66,27 +66,27 @@ class _MovieDetailsState extends State<MovieDetails> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Obx(() {
-          switch (homeController.rxRequestStatus.value) {
+          switch (movieDetailsController.rxRequestStatus.value) {
             case Status.loading:
               return const CustomLoader();
 
             case Status.internetError:
               return GeneralErrorScreen(
                 onTap: () {
-                  homeController.movieDetails(id: id);
+                  movieDetailsController.movieDetails(id: id);
                 },
               );
 
             case Status.error:
               return GeneralErrorScreen(
                 onTap: () {
-                  homeController.movieDetails(id: id);
+                  movieDetailsController.movieDetails(id: id);
                 },
               );
 
             case Status.completed:
-              var data = homeController.moviesDetailsModel;
-              var dataDetails = homeController.moviesDetailsModel.value.details;
+              var data = movieDetailsController.moviesDetailsModel;
+              var dataDetails = movieDetailsController.moviesDetailsModel.value.details;
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +100,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                     ),
                     SizedBox(height: 14.h),
 
-                    ///=========================Follow button======================
+                    ///=========================Favorite button======================
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(14),
@@ -109,7 +109,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                       height: 50.h,
                       width: double.infinity,
                       child: GestureDetector(
-                        onTap: homeController.toggleFavorite,
+                        onTap:movieDetailsController.toggleFavorite,
                         child: Center(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -122,11 +122,16 @@ class _MovieDetailsState extends State<MovieDetails> {
                                 fontSize: 16.sp,
                                 right: 10,
                               ),
-                              Icon(
-                                homeController.isFavorite.value
-                                    ? Icons.favorite
-                                    : Icons.favorite_border,
-                                color: AppColors.lightWhite,
+                              GestureDetector(
+                                onTap: (){
+                                  movieDetailsController.addFavorite(id: id);
+                                },
+                                child: Icon(
+                                  movieDetailsController.isFavorite.value
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: AppColors.lightWhite,
+                                ),
                               ),
                             ],
                           ),
@@ -175,17 +180,17 @@ class _MovieDetailsState extends State<MovieDetails> {
                         const Spacer(),
 
                         ///=======================Watch Button===============
-                        homeController.isTap.value
+                        movieDetailsController.isTap.value
                             ? CustomButton(
                                 width: 87,
-                                onTap: homeController.toggleTap,
+                                onTap: movieDetailsController.toggleTap,
                                 title: "Watched",
                                 fillColor: AppColors.lightWhite,
                                 textColor: AppColors.buttonColor,
                               )
                             : CustomButton(
                                 width: 87,
-                                onTap: homeController.toggleTap,
+                                onTap: movieDetailsController.toggleTap,
                                 title: 'Watched',
                                 fillColor: AppColors.buttonColor,
                                 textColor: AppColors.lightWhite,

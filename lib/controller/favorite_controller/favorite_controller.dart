@@ -49,7 +49,7 @@ class FavoriteController extends GetxController {
 
   RxBool isFavorite = false.obs;
 
-  addFavorite({required String id}) async {
+  removeFavorite({required String id}) async {
     isFavorite.value = true;
     refresh();
     Map<String, String> body = {
