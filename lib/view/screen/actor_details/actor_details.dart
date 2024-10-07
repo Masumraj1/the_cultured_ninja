@@ -101,8 +101,8 @@ class _ActorDetailsState extends State<ActorDetails> {
                     height: 16.h,
                   ),
 
-                  data.upcomingMovies!.isEmpty
-                      ? SizedBox(
+                data.upcomingMovies == null || data.upcomingMovies!.isEmpty
+                    ?                        SizedBox(
                     height: MediaQuery.of(context).size.height/2,
                         child: const Center(
                           child: CustomText(
@@ -120,13 +120,14 @@ class _ActorDetailsState extends State<ActorDetails> {
                             itemCount: movieDetailsController
                                 .actorDetails.value.upcomingMovies?.length,
                             itemBuilder: (context, index) {
+                              var  upcomingData = movieDetailsController.actorDetails.value.upcomingMovies?[index];
                               return customWidget.customUpcomingMovies(
                                 onTap: () {
                                   showDialogBox(context);
                                 },
-                                image: AppConstants.movieImage,
-                                movieName: "The Talented People",
-                                releaseDate: '10 august 2023',
+                                image: upcomingData?.posterPath??"",
+                                movieName: upcomingData?.title??"",
+                                releaseDate: upcomingData?.releaseDate.toString()??"",
                                 button: AppStrings.addToCalender,
                               );
                             },

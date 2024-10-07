@@ -39,19 +39,14 @@ class ActorMovie extends StatelessWidget {
         child: ListView.builder(
             itemCount: 6,
             itemBuilder: (context,index){
-              return   GestureDetector(
+              return   customWidget.customActorMovie(
                 onTap: (){
-                  Get.toNamed(AppRoute.movieDetails);
+                  showDialogBox(context);
                 },
-                child: customWidget.customActorMovie(
-                  onTap: (){
-                    showDialogBox(context);
-                  },
-                    image: AppConstants.movieImage,
-                    movieName: 'Star Wars:',
-                    releaseDate: '3h 12m',
-                    button: AppStrings.addToCalender),
-              );
+                  image: AppConstants.movieImage,
+                  movieName: 'Star Wars:',
+                  releaseDate: '3h 12m',
+                  button: AppStrings.addToCalender);
             }),
       ),
     );

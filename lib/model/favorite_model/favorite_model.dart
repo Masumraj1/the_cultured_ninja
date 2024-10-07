@@ -1,12 +1,4 @@
-// To parse this JSON data, do
-//
-//     final favoriteModel = favoriteModelFromJson(jsonString);
-
 import 'dart:convert';
-
-FavoriteModel favoriteModelFromJson(String str) => FavoriteModel.fromJson(json.decode(str));
-
-String favoriteModelToJson(FavoriteModel data) => json.encode(data.toJson());
 
 class FavoriteModel {
   bool? success;
@@ -16,6 +8,10 @@ class FavoriteModel {
     this.success,
     this.data,
   });
+
+  factory FavoriteModel.fromRawJson(String str) => FavoriteModel.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 
   factory FavoriteModel.fromJson(Map<String, dynamic> json) => FavoriteModel(
     success: json["success"],
@@ -29,43 +25,6 @@ class FavoriteModel {
 }
 
 class FavoriteData {
-  String? id;
-  String? user;
-  Movie? movie;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  int? v;
-
-  FavoriteData({
-    this.id,
-    this.user,
-    this.movie,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
-  });
-
-  factory FavoriteData.fromJson(Map<String, dynamic> json) => FavoriteData(
-    id: json["_id"],
-    user: json["user"],
-    movie: json["movie"] == null ? null : Movie.fromJson(json["movie"]),
-    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-    v: json["__v"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "_id": id,
-    "user": user,
-    "movie": movie?.toJson(),
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
-    "__v": v,
-  };
-}
-
-class Movie {
-  String? id;
   bool? adult;
   String? backgroundColor;
   List<int>? movieTypes;
@@ -80,14 +39,8 @@ class Movie {
   bool? video;
   double? rating;
   int? vote;
-  String? studioId;
-  String? type;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  int? v;
 
-  Movie({
-    this.id,
+  FavoriteData({
     this.adult,
     this.backgroundColor,
     this.movieTypes,
@@ -102,15 +55,13 @@ class Movie {
     this.video,
     this.rating,
     this.vote,
-    this.studioId,
-    this.type,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
   });
 
-  factory Movie.fromJson(Map<String, dynamic> json) => Movie(
-    id: json["_id"],
+  factory FavoriteData.fromRawJson(String str) => FavoriteData.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory FavoriteData.fromJson(Map<String, dynamic> json) => FavoriteData(
     adult: json["adult"],
     backgroundColor: json["background_color"],
     movieTypes: json["movie_types"] == null ? [] : List<int>.from(json["movie_types"]!.map((x) => x)),
@@ -125,15 +76,9 @@ class Movie {
     video: json["video"],
     rating: json["rating"]?.toDouble(),
     vote: json["vote"],
-    studioId: json["studio_id"],
-    type: json["type"],
-    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
-    v: json["__v"],
   );
 
   Map<String, dynamic> toJson() => {
-    "_id": id,
     "adult": adult,
     "background_color": backgroundColor,
     "movie_types": movieTypes == null ? [] : List<dynamic>.from(movieTypes!.map((x) => x)),
@@ -143,15 +88,10 @@ class Movie {
     "overview": overview,
     "popularity": popularity,
     "poster": poster,
-    "release_date": releaseDate?.toIso8601String(),
+    "release_date": "${releaseDate!.year.toString().padLeft(4, '0')}-${releaseDate!.month.toString().padLeft(2, '0')}-${releaseDate!.day.toString().padLeft(2, '0')}",
     "title": title,
     "video": video,
     "rating": rating,
     "vote": vote,
-    "studio_id": studioId,
-    "type": type,
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
-    "__v": v,
   };
 }

@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
 import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/services/app_url.dart';
@@ -27,6 +28,7 @@ class HomeScreen extends StatelessWidget {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final CustomWidgets customWidget = CustomWidgets();
   final HomeController homeController = Get.find<HomeController>();
+  final FavoriteController favoriteController = Get.find<FavoriteController>();
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,9 @@ class HomeScreen extends StatelessWidget {
             return GeneralErrorScreen(
               onTap: () {
                 homeController
-                    .customMethod(); // Retry fetching movies and banners
+                    .customMethod();
+                favoriteController
+                    .getFavorite(); // Retry fetching movies and banners
               },
             );
           case Status.completed:
@@ -52,6 +56,7 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+
                   ///====================== Home AppBar and Banner =======================
                   HomeAppBar(scaffoldKey: scaffoldKey),
                   SizedBox(height: 10.w),
@@ -115,6 +120,7 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+
                         ///======================== Top Rating Movies =========================
 
                         customWidget.customRow(
@@ -133,16 +139,17 @@ class HomeScreen extends StatelessWidget {
                         IndexedStack(
                           index: homeController.selectedIndex.value,
                           children: [
+
                             ///========================Movies================
                             homeController.moviesList.isEmpty
                                 ? const CustomText(
-                                    text: 'No Movie Found',
-                                    color: AppColors.lightWhite,
-                                    fontWeight: FontWeight.w500,
-                                  )
+                              text: 'No Movie Found',
+                              color: AppColors.lightWhite,
+                              fontWeight: FontWeight.w500,
+                            )
                                 : HomeScreenTopRatingMovies(
-                                    customWidget: customWidget,
-                                  ),
+                              customWidget: customWidget,
+                            ),
 
                             ///========================Tv Series================
                             HomeScreenTvSeries(customWidget: customWidget)
@@ -164,24 +171,28 @@ class HomeScreen extends StatelessWidget {
 
                         SizedBox(height: 16.h),
 
-                        SizedBox(
-                          height: 170.h,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: homeController.tvSeriesList.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(AppRoute.movieDetails);
-                                },
-                                child: customWidget.customImageText(
-                                  image: homeController.tvSeriesList[index],
-                                  movieName: "Bad Boy",
-                                ),
-                              );
-                            },
+
+                        favoriteController.favoriteList.isEmpty ? SizedBox(
+                          height: MediaQuery.of(context).size.height/3.5,
+                          child: const Center(
+                            child: CustomText(
+                              text: 'No Favorite Data Founded',
+                              color: AppColors.lightWhite,
+                              fontWeight: FontWeight.w500,),
                           ),
+                        ):
+                        Row(
+                          children: List.generate(favoriteController
+                              .favoriteList.length, (index) {
+                            var favoriteList = favoriteController
+                                .favoriteList[index];
+                            return customWidget.customImageText(
+                              image: favoriteList.poster ?? "",
+                              movieName: favoriteList.title ?? "",
+                            );
+                          }),
                         ),
+                        SizedBox(height: 16.h),
 
                         ///============================ Studios ============================
                         customWidget.customRow(
@@ -197,12 +208,14 @@ class HomeScreen extends StatelessWidget {
                         SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: List.generate(homeController.studioDataList.length, (index)
-                            {
-                              var studioData = homeController.studioDataList[index];
+                            children: List.generate(
+                                homeController.studioDataList.length, (index) {
+                              var studioData = homeController
+                                  .studioDataList[index];
                               return customWidget.customImageText(
-                                image:"${ApiUrl.networkImageUrl}${studioData.logo??""}",
-                                movieName: studioData.name??"",
+                                image: "${ApiUrl.networkImageUrl}${studioData
+                                    .logo ?? ""}",
+                                movieName: studioData.name ?? "",
                               );
                             }),
                           ),

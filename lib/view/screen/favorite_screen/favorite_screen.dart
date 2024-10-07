@@ -1,6 +1,5 @@
 import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
 import 'package:final_movie/helpar/date_converter/date_converter.dart';
-import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/view/widgets/custom_delete_dialoge/custom_delete_dialoge.dart';
@@ -85,10 +84,10 @@ class FavoriteScreen extends StatelessWidget {
                           return Padding(
                               padding: const EdgeInsets.only(bottom: 12.0),
                               child: CustomFavoriteWidget(
-                                image: data.movie?.poster ?? "",
-                                movieName: data.movie?.title ?? "",
+                                image: data.poster??"",
+                                movieName: data.title??"",
                                 releaseDate: DateConverter.formatDate(
-                                    data.movie?.releaseDate ?? ""),
+                                    data.releaseDate ?? "22"),
                                 isExpanded: true,
                                 // or false depending on the condition
                                 onTap: () {
@@ -96,7 +95,7 @@ class FavoriteScreen extends StatelessWidget {
                                     context,
                                     () {
                                       favoriteController.addFavorite(
-                                          id: data.movie?.id ?? "");
+                                          id: data.movieId.toString() ?? "");
                                     },
                                   );
                                 },
