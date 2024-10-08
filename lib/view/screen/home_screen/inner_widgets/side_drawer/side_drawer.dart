@@ -6,6 +6,7 @@ import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
+import 'package:final_movie/view/widgets/parmission_button/parmission_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -29,7 +30,7 @@ class SideDrawer extends StatelessWidget {
                 right: BorderSide(color: AppColors.borderDrawer)),
           ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 39),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 39),
             child: Row(
               children: [
                 CustomImage(
@@ -62,16 +63,18 @@ class SideDrawer extends StatelessWidget {
       child: Column(
         children: [
           ///================================ APP LOGO ==============================///
-          const CustomText(text: "LogoHere",color: AppColors.lightWhite,),
+          const CustomText(
+            text: "LogoHere",
+            color: AppColors.lightWhite,
+          ),
 
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.only(top: 30.h,  right: 20.w),
+                padding: EdgeInsets.only(top: 30.h, right: 20.w),
                 child: Column(
                   children: [
                     ///=======================Profile =====================
-
 
                     customRow(
                         image: AppIcons.user,
@@ -95,6 +98,7 @@ class SideDrawer extends StatelessWidget {
                         onTap: () {
                           Get.toNamed(AppRoute.privacyPolicyScreen);
                         }),
+
                     ///======================Terms and condition ===============
                     customRow(
                         image: AppIcons.privacy,
@@ -111,20 +115,32 @@ class SideDrawer extends StatelessWidget {
                           Get.toNamed(AppRoute.historyScreen);
                         }),
 
-
-
                     ///==============================Sign Out======================
 
                     SizedBox(
-                      height: MediaQuery.of(context).size.height/3.5,
+                      height: MediaQuery.of(context).size.height / 3.5,
                     ),
                     customRow(
                         image: AppIcons.logOut,
                         title: AppStrings.logOut,
-                        onTap: () async{
-                          await SharePrefsHelper.remove(AppConstants.bearerToken);
-                          await SharePrefsHelper.remove(AppConstants.profileID);
-                         Get.toNamed(AppRoute.signInScreen);
+                        onTap: () async {
+                          permissionPopUp(
+                            title: 'Are you sure you want to log out',
+                              context: context,
+                              ontapNo: () {
+                                Get.back();
+                              },
+                              ontapYes: () async{
+                                await SharePrefsHelper.remove(
+                                    AppConstants.bearerToken);
+                                await SharePrefsHelper.remove(AppConstants.profileID);
+
+                                print('remove token========================"${AppConstants.bearerToken}"');
+
+                                Get.toNamed(AppRoute.signInScreen);
+                              });
+
+
                         }),
                   ],
                 ),
