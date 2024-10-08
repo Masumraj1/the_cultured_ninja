@@ -116,7 +116,7 @@ class SideDrawer extends StatelessWidget {
                     ///==============================Sign Out======================
 
                     SizedBox(
-                      height: 350.h,
+                      height: MediaQuery.of(context).size.height/3.5,
                     ),
                     customRow(
                         image: AppIcons.logOut,

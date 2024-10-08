@@ -1,5 +1,6 @@
 class AppConstants {
   static String bearerToken = "BearerToken";
+  static String resetToken = "BearerToken";
   // static String userId = "UserId";
   static String onBoard = "Onboard";
   static String isRememberMe = "isRememberMe";

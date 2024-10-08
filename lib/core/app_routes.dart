@@ -92,8 +92,8 @@ static const String historyScreen = '/HistoryScreen';
     GetPage(name: signInScreen, page: () =>  SignInScreen()),
     GetPage(name: signUpScreen, page: () =>  SignUpScreen()),
     GetPage(name: forgetPassword, page: () =>   ForgetPassword()),
-    GetPage(name: forgetOtp, page: () =>   ForgetOtp()),
-    GetPage(name: resetPassword, page: () =>  const ResetPassword()),
+    GetPage(name: forgetOtp, page: () =>   const ForgetOtp()),
+    GetPage(name: resetPassword, page: () =>   ResetPassword()),
     GetPage(name: successfullyScreen, page: () =>  const SuccessfullyScreen()),
 
     ///=============================HomeScreen===================

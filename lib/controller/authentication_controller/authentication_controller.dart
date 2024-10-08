@@ -103,6 +103,43 @@ class AuthenticationController extends GetxController {
     refresh();
   }
 
+  ///==============================Forget otp=================
+  var otp = "";
+  RxBool isForget = false.obs;
+
+
+  forgetOtp() async {
+    isForget.value = true;
+    refresh();
+    Map<dynamic, String> body = {
+      "email": emailController.text,
+      "code": otp
+    };
+
+    var response =
+        await ApiClient.postData(ApiUrl.verifyCOde, jsonEncode(body));
+    isForget.value = false;
+    refresh();
+    if (response.statusCode == 200) {
+
+      SharePrefsHelper.setString(
+          AppConstants.resetToken, response.body["password_reset_token"]);
+      // print(
+      //     '======================This is  User Name ${response.body["data"]['name']}');
+      print(
+          '======================User Token Saved::: ${response.body['password_reset_token']}');
+
+      Get.offAllNamed(AppRoute.resetPassword);
+      toastMessage(
+        message: response.body["message"],
+      );
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isForget.value = false;
+    refresh();
+  }
+
   ///============================ Forget Password ==========================
 
   RxBool isForgetLoading = false.obs;
@@ -118,7 +155,7 @@ class AuthenticationController extends GetxController {
     isForgetLoading.value = false;
     refresh();
     if (response.statusCode == 200) {
-      emailController.clear();
+      // emailController.clear();
       Get.toNamed(AppRoute.forgetOtp, parameters: {AppStrings.signUp: "false"});
 
       toastMessage(
@@ -132,28 +169,60 @@ class AuthenticationController extends GetxController {
   }
 
   ///============================= reset Password =============================
+
   RxBool isResetLoading = false.obs;
 
   resetPassword() async {
-    isResetLoading.value = true;
-    refresh();
-    Map<String, String> body = {
-      "password": passwordController.text,
-      "confirm_password": confirmPasswordController.text
-    };
+    try {
+      isResetLoading.value = true;
 
-    var response =
-        await ApiClient.postData(ApiUrl.resetPasswordAuth, jsonEncode(body));
-    if (response.statusCode == 200) {
-      passwordController.clear();
-      confirmPasswordController.clear();
-      Get.toNamed(AppRoute.signInScreen);
-      toastMessage(message: response.body["message"]);
-    } else {
-      ApiChecker.checkApi(response);
+      // Retrieve the saved token from shared preferences (make sure to use 'await' as it's asynchronous)
+      String? passwordResetToken = await SharePrefsHelper.getString(AppConstants.resetToken);
+
+      if (passwordResetToken.isEmpty) {
+        toastMessage(message: "No password reset token found. Please try again.");
+        isResetLoading.value = false;
+        return;
+      }
+
+      Map<String, String> body = {
+        "password": passwordController.text,
+        "confirm_password": confirmPasswordController.text
+      };
+
+      var response = await ApiClient.postData(
+        ApiUrl.resetPasswordAuth,
+        jsonEncode(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $passwordResetToken'
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Clear the input fields
+        passwordController.clear();
+        confirmPasswordController.clear();
+        emailController.clear();
+        pinCodeController.clear();
+
+        // Navigate to success screen
+        Get.toNamed(AppRoute.successfullyScreen);
+        toastMessage(message: response.body["message"]);
+      } else {
+        ApiChecker.checkApi(response);
+      }
+    } catch (e) {
+      // Handle potential errors (e.g., network issues)
+      toastMessage(message: "An error occurred, please try again.");
+      print("Error resetting password: $e");
+    } finally {
+      isResetLoading.value = false;
     }
-    isResetLoading.value = false;
   }
+
+
+
 
   ///============================== LogIn ================================
   RxBool isSignInLoading = false.obs;
@@ -214,5 +283,11 @@ class AuthenticationController extends GetxController {
     }
     isDeleteLoading.value = false;
     refresh();
+  }
+
+  @override
+  void onInit() {
+
+    super.onInit();
   }
 }

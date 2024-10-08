@@ -1,5 +1,5 @@
+import 'dart:async';
 import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
-import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
@@ -11,11 +11,49 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class ForgetOtp extends StatelessWidget {
-   ForgetOtp({super.key});
+class ForgetOtp extends StatefulWidget {
+  const ForgetOtp({super.key});
 
+  @override
+  State<ForgetOtp> createState() => _ForgetOtpState();
+}
 
+class _ForgetOtpState extends State<ForgetOtp> {
   final AuthenticationController authenticationController = Get.find<AuthenticationController>();
+  final String isSignUp = Get.parameters[AppStrings.signUp] ?? "true";
+  final formKey = GlobalKey<FormState>();
+  int _secondsRemaining = 180;
+  late Timer _timer;
+
+  void startTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted) {
+        setState(() {
+          if (_secondsRemaining > 0) {
+            _secondsRemaining--;
+          } else {
+            _timer.cancel();
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    startTimer();
+  }
+
+  @override
+  void dispose() {
+    // Cancel the timer when the widget is disposed
+    if (_timer.isActive) {
+      _timer.cancel();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,39 +66,44 @@ class ForgetOtp extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(
-                  AppImages.background,
-                ),
+                image: AssetImage(AppImages.background),
               ),
             ),
           ),
+
+          ///=============================Back Button==============================
           Positioned(
-              top: 44,
-              left: 20,
-              child: InkWell(
-                  onTap: (){
-                    Get.back();
-                  },
-                  child: const Icon(Icons.arrow_back,color: Colors.white,))),
+            top: 44,
+            left: 20,
+            child: InkWell(
+              onTap: () {
+                Get.back();
+              },
+              child: const Icon(Icons.arrow_back, color: Colors.white),
+            ),
+          ),
+
+          ///=============================OTP Form==============================
           Positioned(
             top: 134,
             left: 0,
             right: 0,
             child: Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Obx(
-                () {
-                  return Column(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              child: Obx(() {
+                return Form(
+                  key: formKey,
+                  child: Column(
                     children: [
-                      ///===============================forget Password=====================
+                      ///=============================Header Text=============================
                       CustomText(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
                         text: AppStrings.checkYourEmail,
                         color: AppColors.lightWhite,
                         bottom: 12,
-                      ), CustomText(
+                      ),
+                      CustomText(
                         fontSize: 14.sp,
                         maxLines: 3,
                         fontWeight: FontWeight.w400,
@@ -69,16 +112,20 @@ class ForgetOtp extends StatelessWidget {
                         bottom: 73,
                       ),
 
-                               ///====================================Pin Code text field=============================
+                      ///=============================Pin Code Text Field=============================
                       PinCodeTextField(
                         textStyle: const TextStyle(color: AppColors.lightWhite),
                         keyboardType: TextInputType.phone,
                         autoDisposeControllers: false,
                         cursorColor: AppColors.buttonColor,
-                        appContext: (context),
-                        // controller: authenticationController.pinController,
+                        appContext: context,
+                        controller: authenticationController.pinCodeController,
                         onCompleted: (value) {
-                          authenticationController.activationCode = value;
+                          if (isSignUp == "true") {
+                            authenticationController.activationCode = value;
+                          } else {
+                            authenticationController.otp = value;
+                          }
                         },
                         validator: (value) {
                           if (value!.length == 4) {
@@ -107,30 +154,28 @@ class ForgetOtp extends StatelessWidget {
                         enableActiveFill: true,
                       ),
 
-                        const Row(
-                          children: [
-                            SizedBox(),
-                            Spacer(),
-                            CustomText(text: AppStrings.resendOtp,color: AppColors.lightWhite,)
-                          ],
-                        ),
-                        SizedBox(
-                          height: 165.h,
-                        ),
-                      ///======================================send A code Button==================
+                      SizedBox(height: 165.h),
 
-                   authenticationController.isOtpLoading.value?const CustomLoader():
-                      CustomButton(
+                      ///=============================Verify Code Button=============================
+                      authenticationController.isOtpLoading.value || authenticationController.isForget.value
+                          ? const CustomLoader()
+                          : CustomButton(
                         onTap: () {
-                         authenticationController.signUpVerifyOTP();
+                          if (formKey.currentState!.validate()) {
+                            if (isSignUp == "true" && isSignUp.isNotEmpty) {
+                              authenticationController.signUpVerifyOTP();
+                            } else {
+                              authenticationController.forgetOtp();
+                            }
+                          }
                         },
                         title: AppStrings.verifyCode,
                         fillColor: AppColors.buttonColor,
                       ),
                     ],
-                  );
-                }
-              ),
+                  ),
+                );
+              }),
             ),
           ),
         ],
