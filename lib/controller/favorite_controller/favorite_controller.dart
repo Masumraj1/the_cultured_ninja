@@ -60,7 +60,7 @@ class FavoriteController extends GetxController {
 
     );
     if (response.statusCode == 200) {
-        Get.back();
+     getFavorite();
       toastMessage(
         message: response.body["message"],
       );
