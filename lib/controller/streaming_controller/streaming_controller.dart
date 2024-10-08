@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
-import 'package:final_movie/model/all_streaming_model.dart';
-import 'package:final_movie/model/movie_genre_model.dart';
+import 'package:final_movie/model/streaming_model/all_streaming_model.dart';
+import 'package:final_movie/model/streaming_model/movie_genre_model.dart';
 import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/api_client.dart';
 import 'package:final_movie/services/app_url.dart';

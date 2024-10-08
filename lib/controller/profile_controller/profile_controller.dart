@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
-import 'package:final_movie/model/profile_model.dart';
+import 'package:final_movie/model/profile_model/profile_model.dart';
 import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/api_client.dart';
 import 'package:final_movie/services/app_url.dart';

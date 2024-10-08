@@ -1,8 +1,8 @@
 import 'package:final_movie/controller/movie_details_controller/movie_details_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/date_converter/date_converter.dart';
+import 'package:final_movie/model/actor_details_model/actor_details_model.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
-import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
@@ -95,7 +95,9 @@ class _ActorDetailsState extends State<ActorDetails> {
                       startTitle: AppStrings.upcomingMovie,
                       endTitle: AppStrings.viewAll,
                       onTap: () {
-                        Get.toNamed(AppRoute.actorMovie);
+                        List<Movie> upcomingMovies = data.upcomingMovies ?? [];
+
+                        Get.toNamed(AppRoute.actorMovie,arguments: upcomingMovies);
                       }),
                   SizedBox(
                     height: 16.h,
@@ -141,7 +143,8 @@ class _ActorDetailsState extends State<ActorDetails> {
                       startTitle: AppStrings.hisWork,
                       endTitle: AppStrings.viewAll,
                       onTap: () {
-                        Get.toNamed(AppRoute.actorMovie);
+                        List<Movie> popularWork = data.popularMovies ?? [];
+                        Get.toNamed(AppRoute.actorMovie,arguments: popularWork);
                       }),
                   SizedBox(
                     height: 16.h,
@@ -238,3 +241,7 @@ class _ActorDetailsState extends State<ActorDetails> {
     );
   }
 }
+
+
+
+

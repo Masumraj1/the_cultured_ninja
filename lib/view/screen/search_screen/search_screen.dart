@@ -96,7 +96,7 @@ class SearchScreen extends StatelessWidget {
                         return GestureDetector(
                           onTap: () {
                             Get.toNamed(AppRoute.movieDetails,  arguments: [
-                              data.id,
+                              data.movieId.toString(),
                               data.rating
                             ]);
                           },

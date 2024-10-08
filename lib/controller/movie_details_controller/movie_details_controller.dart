@@ -1,6 +1,6 @@
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
-import 'package:final_movie/model/actor_details_model.dart';
-import 'package:final_movie/model/movie_details.dart';
+import 'package:final_movie/model/actor_details_model/actor_details_model.dart';
+import 'package:final_movie/model/movie_details_model/movie_details.dart';
 import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/api_client.dart';
 import 'package:final_movie/services/app_url.dart';

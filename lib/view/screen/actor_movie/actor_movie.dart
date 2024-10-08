@@ -1,4 +1,6 @@
 import 'package:final_movie/core/app_routes.dart';
+import 'package:final_movie/helpar/date_converter/date_converter.dart';
+import 'package:final_movie/model/actor_details_model/actor_details_model.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
@@ -17,7 +19,7 @@ class ActorMovie extends StatelessWidget {
 
 
   final CustomWidgets customWidget = CustomWidgets();
-
+ final List<Movie>? movies = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -37,15 +39,16 @@ class ActorMovie extends StatelessWidget {
       body:  Padding(
         padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 20),
         child: ListView.builder(
-            itemCount: 6,
+            itemCount: movies?.length ?? 0,
             itemBuilder: (context,index){
+              var data = movies?[index];
               return   customWidget.customActorMovie(
                 onTap: (){
                   showDialogBox(context);
                 },
-                  image: AppConstants.movieImage,
-                  movieName: 'Star Wars:',
-                  releaseDate: '3h 12m',
+                  image: data?.posterPath??"",
+                  movieName:data?.title??"",
+                  releaseDate: DateConverter.formatDate(data?.releaseDate.toString()),
                   button: AppStrings.addToCalender);
             }),
       ),

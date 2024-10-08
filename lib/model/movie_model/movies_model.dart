@@ -1,25 +1,23 @@
-// To parse this JSON data, do
-//
-//     final baneerModel = baneerModelFromJson(jsonString);
+
 
 import 'dart:convert';
 
-BaneerModel baneerModelFromJson(String str) => BaneerModel.fromJson(json.decode(str));
+MoviesModel moviesModelFromJson(String str) => MoviesModel.fromJson(json.decode(str));
 
-String baneerModelToJson(BaneerModel data) => json.encode(data.toJson());
+String moviesModelToJson(MoviesModel data) => json.encode(data.toJson());
 
-class BaneerModel {
+class MoviesModel {
   bool? success;
-  List<BannerData>? data;
+  List<MoviesData>? data;
 
-  BaneerModel({
+  MoviesModel({
     this.success,
     this.data,
   });
 
-  factory BaneerModel.fromJson(Map<String, dynamic> json) => BaneerModel(
+  factory MoviesModel.fromJson(Map<String, dynamic> json) => MoviesModel(
     success: json["success"],
-    data: json["data"] == null ? [] : List<BannerData>.from(json["data"]!.map((x) => BannerData.fromJson(x))),
+    data: json["data"] == null ? [] : List<MoviesData>.from(json["data"]!.map((x) => MoviesData.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -28,7 +26,7 @@ class BaneerModel {
   };
 }
 
-class BannerData {
+class MoviesData {
   String? id;
   bool? adult;
   String? backgroundColor;
@@ -39,6 +37,7 @@ class BannerData {
   String? overview;
   double? popularity;
   String? poster;
+  num? runtime;
   DateTime? releaseDate;
   String? title;
   bool? video;
@@ -50,7 +49,7 @@ class BannerData {
   DateTime? updatedAt;
   int? v;
 
-  BannerData({
+  MoviesData({
     this.id,
     this.adult,
     this.backgroundColor,
@@ -61,6 +60,7 @@ class BannerData {
     this.overview,
     this.popularity,
     this.poster,
+    this.runtime,
     this.releaseDate,
     this.title,
     this.video,
@@ -73,7 +73,7 @@ class BannerData {
     this.v,
   });
 
-  factory BannerData.fromJson(Map<String, dynamic> json) => BannerData(
+  factory MoviesData.fromJson(Map<String, dynamic> json) => MoviesData(
     id: json["_id"],
     adult: json["adult"],
     backgroundColor: json["background_color"],
@@ -84,6 +84,7 @@ class BannerData {
     overview: json["overview"],
     popularity: json["popularity"]?.toDouble(),
     poster: json["poster"],
+    runtime: json["runtime"],
     releaseDate: json["release_date"] == null ? null : DateTime.parse(json["release_date"]),
     title: json["title"],
     video: json["video"],
@@ -107,6 +108,7 @@ class BannerData {
     "overview": overview,
     "popularity": popularity,
     "poster": poster,
+    "runtime": runtime,
     "release_date": releaseDate?.toIso8601String(),
     "title": title,
     "video": video,
