@@ -22,7 +22,7 @@ class _ForgetOtpState extends State<ForgetOtp> {
   final AuthenticationController authenticationController = Get.find<AuthenticationController>();
   final String isSignUp = Get.parameters[AppStrings.signUp] ?? "true";
   final formKey = GlobalKey<FormState>();
-  int _secondsRemaining = 180;
+  int _secondsRemaining = 200;
   late Timer _timer;
 
   void startTimer() {
@@ -96,6 +96,8 @@ class _ForgetOtpState extends State<ForgetOtp> {
                   child: Column(
                     children: [
                       ///=============================Header Text=============================
+                      SizedBox(height: 50.h,),
+
                       CustomText(
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w600,
@@ -103,14 +105,15 @@ class _ForgetOtpState extends State<ForgetOtp> {
                         color: AppColors.lightWhite,
                         bottom: 12,
                       ),
-                      CustomText(
-                        fontSize: 14.sp,
-                        maxLines: 3,
-                        fontWeight: FontWeight.w400,
-                        text: AppStrings.weSentAResetLink,
-                        color: AppColors.normalWhite,
-                        bottom: 73,
-                      ),
+                      // CustomText(
+                      //   fontSize: 14.sp,
+                      //   maxLines: 3,
+                      //   fontWeight: FontWeight.w400,
+                      //   text: AppStrings.weSentAResetLink,
+                      //   color: AppColors.normalWhite,
+                      //   bottom: 73,
+                      // ),
+                      SizedBox(height: 50.h,),
 
                       ///=============================Pin Code Text Field=============================
                       PinCodeTextField(
@@ -153,8 +156,35 @@ class _ForgetOtpState extends State<ForgetOtp> {
                         length: 4,
                         enableActiveFill: true,
                       ),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: _secondsRemaining == 0
+                              ? () {
+                            _secondsRemaining = 200; // Reset timer
+                            startTimer(); // Start the timer again
 
-                      SizedBox(height: 165.h),
+                            // Call the resend function
+                            authenticationController.resentUser().then((value) {
+                              if (!value) {
+                                setState(() {
+                                  _timer.cancel(); // Cancel timer if resend failed
+                                  _secondsRemaining = 0;
+                                });
+                              }
+                            });
+                          }
+                              : null,
+                          child: CustomText(
+                            text: _secondsRemaining == 0
+                                ? "Resend OTP"
+                                : "Resend OTP in $_secondsRemaining seconds",
+                            color: AppColors.lightWhite,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 100.h),
 
                       ///=============================Verify Code Button=============================
                       authenticationController.isOtpLoading.value || authenticationController.isForget.value

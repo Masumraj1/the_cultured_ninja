@@ -168,6 +168,32 @@ class AuthenticationController extends GetxController {
     refresh();
   }
 
+
+
+  ///=====================================Resend=======================
+  final rxRequestStatus = Status.loading.obs;
+
+  void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
+  ///============================Forget Resent=================
+  resentUser() async {
+    setRxRequestStatus(Status.loading);
+    update();
+    Map<String, String> body = {"email": emailController.text};
+
+    var response = await ApiClient.postData(
+      ApiUrl.forgotPasswordAuth, jsonEncode(body),
+    );
+    if (response.statusCode == 200) {
+      setRxRequestStatus(Status.completed);
+      toastMessage(message: response.body["message"]);
+      update();
+      return true;
+    } else {
+      ApiChecker.checkApi(response);
+      update();
+      return false;
+    }
+  }
   ///============================= reset Password =============================
 
   RxBool isResetLoading = false.obs;
