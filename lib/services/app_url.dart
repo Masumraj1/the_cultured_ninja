@@ -45,5 +45,11 @@ class ApiUrl {
     return "/favorite/add-favorite/$id";
   }
 
+  ///===========================History===============
+  static const getHistory = "/history/get-history";
+  static String addHistory({required String id}) {
+    return "/history/add-history/$id";
+  }
+
 
 }

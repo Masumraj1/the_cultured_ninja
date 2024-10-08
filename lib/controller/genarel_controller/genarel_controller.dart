@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
+import 'package:final_movie/model/history_model/history_model.dart';
 import 'package:final_movie/model/privacy_model.dart';
 import 'package:final_movie/model/terms_model.dart';
 import 'package:final_movie/services/api_check.dart';
@@ -92,5 +93,65 @@ class GeneralController extends GetxController {
     }
   }
 
+
+
+///==============================History==================
+  RxList<HistoryData> historyList = <HistoryData>[].obs;
+
+  getHistory() async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    var response = await ApiClient.getData(ApiUrl.getHistory);
+
+    if (response.statusCode == 200) {
+      historyList.value = List<HistoryData>.from(
+          response.body["data"].map((x) => HistoryData.fromJson(x)));
+      print('historyList=========================="${historyList.length}"');
+
+      setRxRequestStatus(Status.completed);
+      refresh();
+    } else {
+      if (response.statusText == ApiClient.noInternetMessage) {
+        setRxRequestStatus(Status.internetError);
+      } else {
+        setRxRequestStatus(Status.error);
+      }
+      ApiChecker.checkApi(response);
+    }
+  }
+
+   ///==============================Remove History==============
+  RxBool isHistory = false.obs;
+
+  removeHistory({required String id}) async {
+    isHistory.value = true;
+    refresh();
+    Map<String, String> body = {
+
+    };
+    var response = await ApiClient.postData(
+        ApiUrl.addHistory(id: id),jsonEncode(body)
+
+    );
+    if (response.statusCode == 200) {
+        getHistory();
+      toastMessage(
+        message: response.body["message"],
+      );
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isHistory.value = false;
+    refresh();
+  }
+
+
+  @override
+  void onInit() {
+    getPrivacy();
+    getTerms();
+    getHistory();
+    super.onInit();
+  }
 
 }

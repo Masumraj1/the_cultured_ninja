@@ -367,6 +367,7 @@ class CustomWidgets {
                   color: AppColors.favoriteContainerTextColor,
                   fontWeight: FontWeight.w400),
               CustomText(
+                top: 10,
                   text: releaseDate,
                   fontSize: 12.sp,
                   color: AppColors.favoriteContainerTextColor,
