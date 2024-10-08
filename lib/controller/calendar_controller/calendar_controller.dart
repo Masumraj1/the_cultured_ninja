@@ -14,27 +14,33 @@ class CalendarController extends GetxController {
     dates.value = newDates;
   }
 
+  var selectedDate = DateTime.now().obs; // Add this observable for the selected date
 
+  void addCalender({required String id}) {
+    isAdded.value = true; // Just an example, update this according to your logic
+  }
 
   ///===============================Added Calender=====================
+
   RxBool isAdded = false.obs;
 
-  addedCalender({required String id}) async {
+  addedCalender({required String id,required String date}) async {
     isAdded.value = true;
     refresh();
     Map<String, String> body = {
       "movie": id,
-      "date":"24-11-2024"
+      "date":date
     };
     var response = await ApiClient.postData(
-      ApiUrl.getCalenderMovie,
+      ApiUrl.addedCalender,
       jsonEncode(body),
     );
     if (response.statusCode == 200) {
-          Get.back();
       toastMessage(
         message: response.body["message"],
       );
+          Get.back();
+
     } else {
       ApiChecker.checkApi(response);
     }

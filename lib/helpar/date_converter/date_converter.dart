@@ -22,6 +22,18 @@ class DateConverter {
     }
   }
 
+  static String calender(DateTime date) {
+    return "${date.day.toString().padLeft(2, '0')}-"
+        "${date.month.toString().padLeft(2, '0')}-"
+        "${date.year.toString()}";
+  }
+
+  /// Existing method to estimate the date string, if applicable
+  static String estimateCalender(DateTime date) {
+    // Your existing implementation here (if needed)
+    return formatDate(date); // Call formatDate if you want the same format
+  }
+
   // Method to estimate or modify dates (example purpose)
   static String estimatedDates(dynamic dateStr) {
     return formatDate(dateStr);

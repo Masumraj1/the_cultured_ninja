@@ -69,6 +69,7 @@ class MovieDetailsController extends GetxController {
 
       print('actor data ========================="${response.body['data']}"');
       print('Upcoming list ========================="${actorDetails.value.upcomingMovies?.length}"');
+      // print('Upcoming movie Id ========================="${response.body['data']['upcoming_movies']['id']}"');
       print('popular Movies ========================="${actorDetails.value.popularMovies?.length}"');
 
       setRxRequestStatus(Status.completed);
