@@ -81,6 +81,16 @@ class ResetPassword extends StatelessWidget {
 
                       ///====================================Password Field======================
                       CustomTextField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return AppStrings.fieldCantBeEmpty;
+                          } else if (value.length < 8 ||
+                              !AppStrings.passRegexp.hasMatch(value)) {
+                            return AppStrings.passwordLengthAndContain;
+                          } else {
+                            return null;
+                          }
+                        },
                         textEditingController:
                         authenticationController.passwordController,
                         fillColor: AppColors.lightWhite,
@@ -92,6 +102,17 @@ class ResetPassword extends StatelessWidget {
 
                       ///===============================Confirm Password========================
                       CustomTextField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return AppStrings.fieldCantBeEmpty;
+                          }
+
+                          else if (authenticationController.passwordController.text !=
+                              authenticationController.confirmPasswordController  .text) {
+                            return "Password should be match";
+                          }
+                          return null;
+                        },
                         textEditingController:
                         authenticationController.confirmPasswordController,
                         fillColor: AppColors.lightWhite,
