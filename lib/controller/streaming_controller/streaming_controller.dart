@@ -103,6 +103,16 @@ class StreamingController extends GetxController{
   }
 
 
+  RxString selectedGenre = ''.obs; // Use a reactive String to track selected genre
+
+  void selectGenre(String genreId, String genreName) {
+    if (selectedGenre.value == genreName) {
+      selectedGenre.value = ''; // Deselect if the same genre is tapped again
+    } else {
+      selectedGenre.value = genreName; // Select the tapped genre
+    }
+  }
+
 
 
   @override

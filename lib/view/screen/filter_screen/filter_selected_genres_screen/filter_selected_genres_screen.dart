@@ -1,9 +1,13 @@
-import 'package:final_movie/controller/filter_controller/filter_controller.dart';
+import 'package:final_movie/controller/streaming_controller/streaming_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
+import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
+import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
+import 'package:final_movie/view/widgets/genarel_error/genarel_error.dart';
+import 'package:final_movie/view/widgets/no_internet_screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,16 +17,7 @@ class FilterSelectedGenresScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final FilterController filterController = Get.find<FilterController>();
-    final List<String> genres = [
-      "Action",
-      "Adventure",
-      "Comedy",
-      "Drama",
-      "Horror",
-      "Musicals",
-      "Mystery"
-    ];
+    final StreamingController streamingController = Get.find<StreamingController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -43,77 +38,94 @@ class FilterSelectedGenresScreen extends StatelessWidget {
         centerTitle: true,
       ),
       backgroundColor: AppColors.backgroundColor,
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ///============================Genres=====================
-              CustomText(
-                text: AppStrings.genres,
-                fontWeight: FontWeight.w500,
-                fontSize: 20.sp,
-                color: AppColors.lightWhite,
-              ),
-              SizedBox(height: 10.h),
-              Wrap(
-                spacing: 10.0,
-                runSpacing: 10.0,
-                children: genres.map((genre) {
-                  return GestureDetector(
-                    onTap: () => filterController.toggleGenreSelection(genre),
-                    child: Obx(() {
-                      final bool isSelected =
-                          filterController.selectedGenres.contains(genre);
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 13.0, vertical: 12),
-                        decoration: BoxDecoration(
-                          color: isSelected
-                              ? AppColors.buttonColor
-                              : AppColors.genreUnselectedColor,
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CustomText(
-                              text: genre,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 12.sp,
-                              color: AppColors.lightWhite,
-                            ),
-                            if (isSelected) const SizedBox(width: 5.0),
-                            if (isSelected)
-                              Icon(
-                                Icons.close,
-                                color: AppColors.lightWhite,
-                                size: 16.sp,
+      body: Obx(() {
+        switch (streamingController.rxRequestStatus.value) {
+          case Status.loading:
+            return const CustomLoader(); // Show loading indicator
+
+          case Status.internetError:
+            return NoInternetScreen(onTap: () {
+              streamingController.getAllGenre();
+            });
+
+          case Status.error:
+            return GeneralErrorScreen(
+              onTap: () {
+                streamingController.getAllGenre();
+              },
+            );
+
+          case Status.completed:
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ///============================Genres=====================
+                    CustomText(
+                      text: AppStrings.genres,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20.sp,
+                      color: AppColors.lightWhite,
+                    ),
+                    SizedBox(height: 10.h),
+                    Wrap(
+                      spacing: 10.0,
+                      runSpacing: 10.0,
+                      children: streamingController.genreData.map((genre) {
+                        return GestureDetector(
+                          onTap: () => streamingController.selectGenre(genre.id.toString(), genre.name ?? ""),
+                          child: Obx(() {
+                            final bool isSelected = streamingController.selectedGenre.value == genre.name;
+                            return Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 13.0, vertical: 12),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? AppColors.buttonColor
+                                    : AppColors.genreUnselectedColor,
+                                borderRadius: BorderRadius.circular(20.0),
                               ),
-                          ],
-                        ),
-                      );
-                    }),
-                  );
-                }).toList(),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CustomText(
+                                    text: genre.name ?? "",
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 12.sp,
+                                    color: AppColors.lightWhite,
+                                  ),
+                                  if (isSelected) const SizedBox(width: 5.0),
+                                  if (isSelected)
+                                    Icon(
+                                      Icons.close,
+                                      color: AppColors.lightWhite,
+                                      size: 16.sp,
+                                    ),
+                                ],
+                              ),
+                            );
+                          }),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(
+                      height: 320.h,
+                    ),
+                    CustomButton(
+                      onTap: () {
+                        Get.toNamed(AppRoute.filterScreen);
+                      },
+                      fillColor: AppColors.buttonColor,
+                      title: AppStrings.search,
+                      textColor: AppColors.lightWhite,
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(
-                height: 320.h,
-              ),
-              CustomButton(
-                onTap: () {
-                  Get.toNamed(AppRoute.filterScreen
-                  );
-                },
-                fillColor: AppColors.buttonColor,
-                title: AppStrings.search,
-                textColor: AppColors.lightWhite,
-              )
-            ],
-          ),
-        ),
-      ),
+            );
+        }
+      }),
     );
   }
 }
