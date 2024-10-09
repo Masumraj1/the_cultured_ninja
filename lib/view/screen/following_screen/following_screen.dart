@@ -1,10 +1,14 @@
 import 'package:final_movie/controller/following_controller/following_controller.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
+import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/following_screen/inner_widgets/following_studios.dart';
+import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
+import 'package:final_movie/view/widgets/genarel_error/genarel_error.dart';
 import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
+import 'package:final_movie/view/widgets/no_internet_screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -41,29 +45,51 @@ final FollowingController followingController = Get.find<FollowingController>();
         ),
         centerTitle: true,
       ),
-      body: Obx(
-         () {
-          return Padding(
-              padding: const EdgeInsets.all(20),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ///=================================Actor and studios tabBar================
-                    FollowingTabBar(followingController: followingController),
-                IndexedStack(
-                  index: followingController.selectedIndex.value,
-                  children: [
-                    FollowingActor(customWidget: customWidget),
-                    FollowingStudios(customWidget: customWidget)
-                  ],
-                )
+      body: Obx(() {
+        switch (followingController.rxRequestStatus.value) {
+          case Status.loading:
+            return const CustomLoader(); // Show loading indicator
 
-                  ],
-                ),
-              )
-          );
+          case Status.internetError:
+            return NoInternetScreen(onTap: () {
+             followingController.getFlowing();
+            });
+
+          case Status.error:
+            return GeneralErrorScreen(
+              onTap: () {
+                followingController.getFlowing();
+              },
+            );
+
+          case Status.completed:
+            return  Padding(
+                padding: const EdgeInsets.all(20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      ///=================================Actor and studios tabBar================
+                      FollowingTabBar(followingController: followingController),
+                      IndexedStack(
+                        index: followingController.selectedIndex.value,
+                        children: [
+                          ///========================Actor========================
+                          FollowingActor(customWidget: customWidget),
+
+                          ///==========================Studio=================
+                          FollowingStudios(customWidget: customWidget)
+                        ],
+                      )
+
+                    ],
+                  ),
+                )
+            );
+
         }
-      ),
+      })
+
+
     );
   }
 }
