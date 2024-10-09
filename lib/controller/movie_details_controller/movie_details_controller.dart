@@ -91,6 +91,7 @@ class MovieDetailsController extends GetxController {
 
     if (response.statusCode == 200) {
       actorDetails.value = ActorDetailsData.fromJson(response.body["data"]);
+      isFollowed.value = actorDetails.value.isFollowed ?? false;
 
       print('actor data ========================="${response.body['data']}"');
       print(
@@ -113,7 +114,44 @@ class MovieDetailsController extends GetxController {
 
 
 
+///=============================actor Follow======================
 
+
+
+  var isFollowed = false.obs;
+
+  void toggleActorFlow(String actorId) {
+    isFollowed.value = !isFollowed.value;
+
+    // Optionally: Call an API to persist this watched state
+    addFollow(id: actorId);
+  }
+
+  RxBool isTap = false.obs;
+
+  addFollow({required String id}) async {
+    isTap.value = true;
+    refresh();
+    Map<String, String> body = {
+      "actorId": id,
+      "type": "actor"
+    };
+    var response = await ApiClient.postData(
+        ApiUrl.addFlow,jsonEncode(body)
+
+    );
+    if (response.statusCode == 201) {
+      toastMessage(
+        message: response.body["message"],
+      );
+    } else if(response.statusCode ==200) {
+      showCustomSnackBar(response.body['message'],);
+    }else{
+      ApiChecker.checkApi(response);
+    }
+    isTap.value = false;
+    refresh();
+  }
 
   ///===========================Add Favorite================
   FavoriteController favoriteController = Get.find<FavoriteController>();

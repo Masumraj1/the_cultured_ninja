@@ -34,11 +34,13 @@ class ActorDetailsData {
   dynamic homepage;
   int? id;
   String? imdbId;
+
   String? knownForDepartment;
   String? name;
   String? placeOfBirth;
   double? popularity;
   String? profilePath;
+  bool? isFollowed;
   List<Movie>? upcomingMovies;
   List<Movie>? popularMovies;
 
@@ -57,6 +59,7 @@ class ActorDetailsData {
     this.placeOfBirth,
     this.popularity,
     this.profilePath,
+    this.isFollowed,
     this.upcomingMovies,
     this.popularMovies,
   });
@@ -80,6 +83,7 @@ class ActorDetailsData {
     placeOfBirth: json["place_of_birth"],
     popularity: json["popularity"]?.toDouble(),
     profilePath: json["profile_path"],
+    isFollowed: json["isFollowed"],
     upcomingMovies: json["upcoming_movies"] == null ? [] : List<Movie>.from(json["upcoming_movies"]!.map((x) => Movie.fromJson(x))),
     popularMovies: json["popular_movies"] == null ? [] : List<Movie>.from(json["popular_movies"]!.map((x) => Movie.fromJson(x))),
   );
@@ -99,6 +103,7 @@ class ActorDetailsData {
     "place_of_birth": placeOfBirth,
     "popularity": popularity,
     "profile_path": profilePath,
+    "isFollowed":isFollowed,
     "upcoming_movies": upcomingMovies == null ? [] : List<dynamic>.from(upcomingMovies!.map((x) => x.toJson())),
     "popular_movies": popularMovies == null ? [] : List<dynamic>.from(popularMovies!.map((x) => x.toJson())),
   };

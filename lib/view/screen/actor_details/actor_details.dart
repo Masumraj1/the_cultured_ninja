@@ -10,13 +10,13 @@ import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
 import 'package:final_movie/view/widgets/custom_image_text/custom_image_text.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
+import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../widgets/custom_following/custom_following.dart';
 
 class ActorDetails extends StatefulWidget {
   const ActorDetails({super.key});
@@ -27,7 +27,8 @@ class ActorDetails extends StatefulWidget {
 
 class _ActorDetailsState extends State<ActorDetails> {
   final CustomWidgets customWidget = CustomWidgets();
-  final MovieDetailsController movieDetailsController = Get.find<MovieDetailsController>();
+  final MovieDetailsController movieDetailsController =
+  Get.find<MovieDetailsController>();
   final CalendarController calendarController = Get.find<CalendarController>();
 
   final String id = Get.arguments.toString(); // Ensure id is converted to a string
@@ -72,9 +73,75 @@ class _ActorDetailsState extends State<ActorDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomFollowing(
-                  image: data.profilePath ?? "",
-                  movieName: data.name ?? "",
+                Container(
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.fromRgb,
+                    borderRadius: BorderRadius.circular(15),
+                    border: Border.all(color: AppColors.borderRgb),
+                  ),
+                  child: Row(
+                    children: [
+                      CustomNetworkImage(
+                        boxShape: BoxShape.circle,
+                        imageUrl: data.profilePath ?? "",
+                        height: 97,
+                        width: 142,
+                      ),
+                      SizedBox(
+                        width: 14.w,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            textAlign: TextAlign.start,
+                            maxLines: 3,
+                            text: data.name ?? "",
+                            color: AppColors.lightWhite,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.sp,
+                            bottom: 7,
+                          ),
+                          Obx(
+                                () => GestureDetector(
+                              onTap: () {
+                                movieDetailsController.toggleActorFlow(id);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                height: 40.h,
+                                width: 114.w,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: AppColors.blackDeep,
+                                ),
+                                child: Row(
+                                  children: [
+                                    CustomImage(
+                                      imageSrc: movieDetailsController.isFollowed.value
+                                          ? AppIcons.unFollow
+                                          : AppIcons.profileSelected,
+                                    ),
+                                    CustomText(
+                                      left: 10,
+                                      text: movieDetailsController.isFollowed.value
+                                          ? AppStrings.unfollow
+                                          : AppStrings.follow,
+                                      color: Colors.white,
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
 
                 ///===================================Upcoming movies====================
@@ -104,12 +171,12 @@ class _ActorDetailsState extends State<ActorDetails> {
                   height: MediaQuery.of(context).size.height / 2,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: movieDetailsController.actorDetails.value.upcomingMovies?.length,
+                    itemCount: data.upcomingMovies?.length ?? 0,
                     itemBuilder: (context, index) {
-                      var upcomingData = movieDetailsController.actorDetails.value.upcomingMovies?[index];
+                      var upcomingData = data.upcomingMovies?[index];
                       return customWidget.customUpcomingMovies(
                         onTap: () {
-                          showDialogBox(context, upcomingData?.id.toString()??""); // Pass actor's id here
+                          showDialogBox(context, upcomingData?.id.toString() ?? "");
                         },
                         image: upcomingData?.posterPath ?? "",
                         movieName: upcomingData?.title ?? "",
@@ -135,9 +202,9 @@ class _ActorDetailsState extends State<ActorDetails> {
                   scrollDirection: Axis.horizontal,
                   child: Row(
                     children: List.generate(
-                      movieDetailsController.actorDetails.value.popularMovies?.length ?? 0,
+                      data.popularMovies?.length ?? 0,
                           (index) {
-                        var popularData = movieDetailsController.actorDetails.value.popularMovies?[index];
+                        var popularData = data.popularMovies?[index];
                         return CustomImageText(
                           image: popularData?.posterPath ?? "",
                           movieName: popularData?.title ?? "",
@@ -154,7 +221,7 @@ class _ActorDetailsState extends State<ActorDetails> {
     );
   }
 
-  void showDialogBox(BuildContext context, String actorId) { // Add actorId parameter
+  void showDialogBox(BuildContext context, String actorId) {
     Get.dialog(
       AlertDialog(
         backgroundColor: AppColors.backgroundColor,
@@ -205,17 +272,17 @@ class _ActorDetailsState extends State<ActorDetails> {
               ),
               SizedBox(height: 15.h),
 
-              calendarController.isAdded.value
+              Obx(() => calendarController.isAdded.value
                   ? const CustomLoader()
                   : CustomButton(
                 onTap: () {
-
-                  calendarController.addedCalender(id: actorId, date:
-                  DateConverter.calender(calendarController.selectedDate.value)); // Use the passed actorId
+                  calendarController.addedCalender(
+                      id: actorId,
+                      date: DateConverter.calender(calendarController.selectedDate.value));
                 },
                 fillColor: AppColors.buttonColor,
                 title: 'Added Calendar',
-              ),
+              )),
             ],
           );
         }),
