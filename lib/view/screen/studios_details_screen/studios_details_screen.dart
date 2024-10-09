@@ -4,6 +4,7 @@ import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
+import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_image_text/custom_image_text.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
@@ -96,23 +97,35 @@ class _StudiosDetailsScreenState extends State<StudiosDetailsScreen> {
 
                     ///=========================Follow button======================
 
-                    // studiosController.isTap.value
-                    //     ? CustomButton(
-                    //         onTap: () {
-                    //           studiosController.toggleTap();
-                    //         },
-                    //         title: AppStrings.follow,
-                    //         fillColor: AppColors.lightWhite,
-                    //         textColor: AppColors.buttonColor,
-                    //       )
-                    //     : CustomButton(
-                    //         onTap: () {
-                    //           studiosController.toggleTap();
-                    //         },
-                    //         title: AppStrings.following,
-                    //         fillColor: AppColors.buttonColor,
-                    //         textColor: AppColors.lightWhite,
-                    //       ),
+                    GestureDetector(
+                      onTap: (){
+                        studiosController.toggleWatched(id);
+
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          color: studiosController.isFollowed.value?AppColors.lightWhite:AppColors.buttonColor,
+                        ),
+                        height: 50.h,
+                        width: double.infinity,
+                        child: Center(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              CustomText(
+                                text: studiosController.isFollowed.value?'Followed':"Following",
+                                color:studiosController.isFollowed.value?AppColors.buttonColor:AppColors.lightWhite,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16.sp,
+                                right: 10,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 15.h,
                     ),

@@ -36,6 +36,12 @@ class ApiUrl {
   static String getStudioDetails({required String id}) {
     return "/studio/get-studio/$id";
   }
+
+
+  ///====================Add Flow================
+  static const addFlow = "/follow/add-follow";
+  static const getFlow = "/follow/get-follow";
+
   ///=====================calender==============
   static const addedCalender = "/calender/add-to-calender";
   static const getCalenderMovie = "/calender/get-calendered-movie";
