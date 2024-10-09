@@ -1,16 +1,82 @@
+import 'package:final_movie/controller/notification_controller/notification_controller.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
-import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
+import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
+import 'package:final_movie/view/widgets/genarel_error/genarel_error.dart';
+import 'package:final_movie/view/widgets/no_internet_screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class NotificationScreen extends StatelessWidget {
-  const NotificationScreen({super.key});
+  NotificationScreen({super.key});
+
+  final NotificationController notificationController = Get.find<NotificationController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+
+        ///===============================Notification Appbar=====================
+        appBar: AppBar(
+          backgroundColor: AppColors.blackDeep,
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(Icons.arrow_back),
+            color: AppColors.lightWhite,
+          ),
+          title: CustomText(
+            text: AppStrings.notifications,
+            color: AppColors.lightWhite,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w500,
+          ),
+          centerTitle: true,
+        ),
+        body: Obx(() {
+          switch (notificationController.rxRequestStatus.value) {
+            case Status.loading:
+              return const CustomLoader(); // Show loading indicator
+
+            case Status.internetError:
+              return NoInternetScreen(onTap: () {
+                notificationController.getNotification();
+              });
+
+            case Status.error:
+              return GeneralErrorScreen(
+                onTap: () {
+                  notificationController.getNotification();
+                },
+              );
+
+            case Status.completed:
+              return Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: List.generate(
+                        notificationController.notificationList.length, (index) {
+                          var data = notificationController.notificationList[index];
+                      return customFollowing(
+                          image:data.movie?.poster??"" ,
+                          movieName: data.movie?.title ?? 'No Title',
+                          onTap: () {},
+                      title: notificationController.notificationList[index].title ?? "No Title");
+                    }),
+                  ),
+                ),
+              );
+          }
+        }));
+  }
 
   Widget customFollowing(
       {required String image,
@@ -37,73 +103,25 @@ class NotificationScreen extends StatelessWidget {
               height: 97,
               width: 142,
             ),
-            CustomText(
-              left: 20,
-              textAlign: TextAlign.start,
-              maxLines: 3,
-              text: movieName,
-              color: AppColors.lightWhite,
-              fontWeight: FontWeight.w500,
-              fontSize: 14.sp,
-              bottom: 7,
+            SizedBox(
+              width: 142,
+              child: CustomText(
+                left: 20,
+                textAlign: TextAlign.start,
+                maxLines: 10,
+                text: movieName,
+                color: AppColors.lightWhite,
+                fontWeight: FontWeight.w500,
+                fontSize: 14.sp,
+                bottom: 7,
+              ),
             ),
           ],
         ),
+        SizedBox(
+          height: 20,
+        )
       ],
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-
-      ///===============================Notification Appbar=====================
-      appBar: AppBar(
-        backgroundColor: AppColors.blackDeep,
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back),
-          color: AppColors.lightWhite,
-        ),
-        title: CustomText(
-          text: AppStrings.notifications,
-          color: AppColors.lightWhite,
-          fontSize: 20.sp,
-          fontWeight: FontWeight.w500,
-        ),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Column(
-          children: [
-            customFollowing(
-                image: AppConstants.movieImage,
-                movieName: "Avengers: Endgame",
-                onTap: () {},
-                title: 'New Reals movie 2024 '),
-            SizedBox(
-              height: 20.h,
-            ),
-            customFollowing(
-                image: AppConstants.movieImage,
-                movieName: "Avengers: Endgame",
-                onTap: () {},
-                title: 'Reminder'),
-            SizedBox(
-              height: 20.h,
-            ),
-            customFollowing(
-                image: AppConstants.movieImage,
-                movieName: "Avengers: Endgame",
-                onTap: () {},
-                title: 'Reviews & Ratings'),
-          ],
-        ),
-      ),
     );
   }
 }

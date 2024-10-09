@@ -1,33 +1,27 @@
-import 'package:final_movie/model/studio/studio_model.dart';
-import 'package:final_movie/model/studio_details_model/studio_details_model.dart';
+import 'package:final_movie/model/notification_model/notification_model.dart';
 import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/api_client.dart';
 import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:get/get.dart';
 
-class StudiosController extends GetxController {
-
-
-
-
+class NotificationController extends GetxController{
   final rxRequestStatus = Status.loading.obs;
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
-  Rx<StudioDetails> studioModel = StudioDetails().obs;
+  ///==============================Notification==================
+  RxList<NotificationData> notificationList = <NotificationData>[].obs;
 
-  studioDetails({required String id}) async {
+  getNotification() async {
     setRxRequestStatus(Status.loading);
     refresh();
-    var response = await ApiClient.getData(ApiUrl.getStudioDetails(id: id));
+    var response = await ApiClient.getData(ApiUrl.notificationList);
 
     if (response.statusCode == 200) {
-      studioModel.value = StudioDetails.fromJson(response.body["data"]);
-
-      print('Studio ========================="${response.body['data']['details']}"');
-      print(
-          'relatedStudios========================="${studioModel.value.relatedStudios?.length}"');
-
+      notificationList.value = List<NotificationData>.from(
+          response.body["data"].map((x) => NotificationData.fromJson(x)));
+      print('NotificationList=========================="${notificationList.length}"');
+      // print('NotificationList=========================="${response.body['data']['title']}"');
 
       setRxRequestStatus(Status.completed);
       refresh();
@@ -42,4 +36,9 @@ class StudiosController extends GetxController {
   }
 
 
+  @override
+  void onInit() {
+    getNotification();
+    super.onInit();
+  }
 }

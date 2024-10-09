@@ -33,7 +33,9 @@ class ApiUrl {
   ///========================Studio==============
   static const getAllStudio = "/studio/get-studio";
   static const search = "/movie/all-movies?search";
-
+  static String getStudioDetails({required String id}) {
+    return "/studio/get-studio/$id";
+  }
   ///=====================calender==============
   static const addedCalender = "/calender/add-to-calender";
   static const getCalenderMovie = "/calender/get-calendered-movie";
@@ -44,6 +46,12 @@ class ApiUrl {
   static String addFavorite({required String id}) {
     return "/favorite/add-favorite/$id";
   }
+
+
+
+  ///=========================Notification ===============
+  static const notificationList = "/notification/get-notifications";
+
 
   ///===========================History===============
   static const getHistory = "/history/get-history";

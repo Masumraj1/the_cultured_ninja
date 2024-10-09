@@ -19,9 +19,6 @@ class FollowingActor extends StatelessWidget {
             image: AppConstants.onlineImage,
             movieName: "Leonardo");
 
-          // customWidget.customFollowing(
-          // image: AppConstants.onlineImage,
-          // movieName: 'Leonardo ', onTap: () {  },);
       }),
     );
   }

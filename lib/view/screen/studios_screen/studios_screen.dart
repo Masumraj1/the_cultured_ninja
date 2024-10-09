@@ -89,11 +89,7 @@ class StudiosScreen extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           Get.toNamed(AppRoute.studiosDetailsScreen,
-                              arguments: [
-                                data.logo,
-                                data.name,
-                                data.totalMovies
-                              ]);
+                              arguments: [data.id,data.name]);
                         },
                         child: CustomImageText(
                           image: "${ApiUrl.networkImageUrl}${data.logo ?? ""}",
