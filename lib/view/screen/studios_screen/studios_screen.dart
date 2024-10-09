@@ -3,6 +3,7 @@ import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
+import 'package:final_movie/view/widgets/custom_image_text/custom_image_text.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
@@ -94,7 +95,7 @@ class StudiosScreen extends StatelessWidget {
                                 data.totalMovies
                               ]);
                         },
-                        child: customWidget.customImageText(
+                        child: CustomImageText(
                           image: "${ApiUrl.networkImageUrl}${data.logo ?? ""}",
                           movieName: data.name ?? "",
                         ),

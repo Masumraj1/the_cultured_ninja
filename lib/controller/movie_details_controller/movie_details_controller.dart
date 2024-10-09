@@ -147,7 +147,12 @@ class MovieDetailsController extends GetxController {
 
 
   ///===========================Add History================
+  void toggleWatched(String movieId) {
+    isWatched.value = !isWatched.value;
 
+    // Optionally: Call an API to persist this watched state
+    addHistory(id: movieId);
+  }
   RxBool isHistory = false.obs;
 
   addHistory({required String id}) async {

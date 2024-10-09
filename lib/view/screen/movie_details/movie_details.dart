@@ -5,6 +5,7 @@ import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
+import 'package:final_movie/view/widgets/custom_image_text/custom_image_text.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
@@ -179,28 +180,39 @@ class _MovieDetailsState extends State<MovieDetails> {
 
                         ///=======================Watch Button===============
 
-                      data.value.favorite==false?
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(14),
+                              color: movieDetailsController.isWatched.value?AppColors.lightWhite:AppColors.buttonColor,
+                            ),
+                            height: 50.h,
+                            width: double.infinity,
+                            child: GestureDetector(
+                              onTap: () {
+                                movieDetailsController.toggleWatched(id);
+                              },
+                              child: Center(
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CustomText(
+                                      text: movieDetailsController.isWatched.value
+                                          ? 'Watched'
+                                          : 'Watched',
+                                      color: movieDetailsController.isWatched.value?AppColors.buttonColor:AppColors.lightWhite,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16.sp,
+                                      right: 10,
+                                    ),
 
-                             CustomButton(
-                                width: 87,
-                                onTap: (){
-                                  // movieDetailsController.toggleTap;
-                                  movieDetailsController.addHistory(id: id);
-                                },
-                                title: "Watched",
-                                fillColor: AppColors.lightWhite,
-                                textColor: AppColors.buttonColor,
-                              )
-                            : CustomButton(
-                                width: 87,
-                                onTap: (){
-                                  // movieDetailsController.toggleTap;
-                                  movieDetailsController.addHistory(id: id);
-                                },
-                                title: 'Watched',
-                                fillColor: AppColors.buttonColor,
-                                textColor: AppColors.lightWhite,
+                                  ],
+                                ),
                               ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                     SizedBox(height: 15.h),
@@ -296,7 +308,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                         children: List.generate(
                             data.value.platform?.length ?? 0, (index) {
                           var platformList = data.value.platform?[index];
-                          return customWidget.customImageText(
+                          return CustomImageText(
                               image: platformList?.logoPath ?? "",
                               movieName: platformList?.providerName ?? "");
                         }),
@@ -351,7 +363,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                       child: Row(
                         children: List.generate(data.value.similarMovies?.length??0, (index) {
                           var similarMovies = data.value.similarMovies?[index];
-                          return customWidget.customImageText(
+                          return CustomImageText(
                               image: similarMovies?.posterPath??"",
                               movieName: similarMovies?.title??" no name");
                         }),

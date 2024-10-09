@@ -5,6 +5,7 @@ import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
+import 'package:final_movie/view/widgets/custom_image_text/custom_image_text.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
@@ -141,7 +142,7 @@ class StudiosDetailsScreen extends StatelessWidget {
                       scrollDirection: Axis.horizontal,
                       itemCount: 4,
                       itemBuilder: (context, index) {
-                        return customWidget.customImageText(
+                        return CustomImageText(
                             image: AppConstants.movieStudio,
                             movieName: "Universal Studios");
                       }),

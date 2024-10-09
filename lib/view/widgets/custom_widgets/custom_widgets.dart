@@ -139,36 +139,7 @@ class CustomWidgets {
   }
 
 
-  ///===============================================CustomImageText====================
-  Widget customImageText({
-    required String image,
-    required String movieName,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 13),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomNetworkImage(
-            borderRadius: BorderRadius.circular(13),
-            height: 106.h,
-            width: 142.w,
-            imageUrl: image,
-          ),
-          SizedBox(
-            height: 12.h,
-          ),
-          CustomText(
-              textAlign: TextAlign.start,
-              maxLines: 3,
-              text: movieName,
-              fontSize: 12.sp,
-              color: AppColors.lightWhite,
-              fontWeight: FontWeight.w400),
-        ],
-      ),
-    );
-  }
+
 
   ///====================================Custom Movie=============================
   Widget customMovie({

@@ -8,6 +8,7 @@ import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
+import 'package:final_movie/view/widgets/custom_image_text/custom_image_text.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
@@ -137,7 +138,7 @@ class _ActorDetailsState extends State<ActorDetails> {
                       movieDetailsController.actorDetails.value.popularMovies?.length ?? 0,
                           (index) {
                         var popularData = movieDetailsController.actorDetails.value.popularMovies?[index];
-                        return customWidget.customImageText(
+                        return CustomImageText(
                           image: popularData?.posterPath ?? "",
                           movieName: popularData?.title ?? "",
                         );

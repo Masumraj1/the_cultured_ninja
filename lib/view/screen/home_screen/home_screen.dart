@@ -9,6 +9,7 @@ import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/screen/home_screen/inner_widgets/homeScreen_top_rating_movies/home_screen_top_rating_movies.dart';
 import 'package:final_movie/view/screen/home_screen/inner_widgets/home_screen_tv_series/home_screen_tv_series.dart';
 import 'package:final_movie/view/screen/home_screen/inner_widgets/top_rating_tabbar/top_rating_movies_tabbar.dart';
+import 'package:final_movie/view/widgets/custom_image_text/custom_image_text.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
@@ -193,7 +194,7 @@ class HomeScreen extends StatelessWidget {
                                      favoriteList.rating
                                     ]);
                               },
-                              child: customWidget.customImageText(
+                              child:CustomImageText(
                                 image: favoriteList.poster ?? "",
                                 movieName: favoriteList.title ?? "",
                               ),
@@ -220,7 +221,7 @@ class HomeScreen extends StatelessWidget {
                                 homeController.studioDataList.length, (index) {
                               var studioData = homeController
                                   .studioDataList[index];
-                              return customWidget.customImageText(
+                              return CustomImageText(
                                 image: "${ApiUrl.networkImageUrl}${studioData
                                     .logo ?? ""}",
                                 movieName: studioData.name ?? "",
