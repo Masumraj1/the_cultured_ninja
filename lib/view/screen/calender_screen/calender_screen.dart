@@ -69,8 +69,8 @@ class CalendarScreen extends StatelessWidget {
 
             // Log the total count of dates
             print('Total Dates to be displayed:========================= ${scheduleDates.length}');
-            print('Total Dates to be displayed:========================= ${scheduleDates.first}');
-            print('Total Dates to be displayed:========================= ${scheduleDates.last}');
+            print('Total Dates to be First:========================= ${scheduleDates.first}');
+            print('Total Dates to be Last:========================= ${scheduleDates.last}');
 
             return Column(
               children: [
@@ -94,9 +94,7 @@ class CalendarScreen extends StatelessWidget {
                       // Optionally set other styles
                     ),
                     value: scheduleDates,
-                    onValueChanged: (value){
-
-                    },// Pass the list of DateTime
+                    // Pass the list of DateTime
                   ),
                 ),
 

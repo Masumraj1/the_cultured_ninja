@@ -172,7 +172,7 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(height: 16.h),
 
 
-                        favoriteController.favoriteList.isEmpty ? SizedBox(
+                        if (favoriteController.favoriteList.isEmpty) SizedBox(
                           height: MediaQuery.of(context).size.height/3.5,
                           child: const Center(
                             child: CustomText(
@@ -180,15 +180,23 @@ class HomeScreen extends StatelessWidget {
                               color: AppColors.lightWhite,
                               fontWeight: FontWeight.w500,),
                           ),
-                        ):
-                        Row(
+                        ) else Row(
                           children: List.generate(favoriteController
                               .favoriteList.length, (index) {
                             var favoriteList = favoriteController
                                 .favoriteList[index];
-                            return customWidget.customImageText(
-                              image: favoriteList.poster ?? "",
-                              movieName: favoriteList.title ?? "",
+                            return GestureDetector(
+                              onTap: (){
+                                Get.toNamed(AppRoute.movieDetails,
+                                    arguments: [
+                                      favoriteList.movieId.toString(),
+                                     favoriteList.rating
+                                    ]);
+                              },
+                              child: customWidget.customImageText(
+                                image: favoriteList.poster ?? "",
+                                movieName: favoriteList.title ?? "",
+                              ),
                             );
                           }),
                         ),

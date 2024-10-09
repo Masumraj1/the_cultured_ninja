@@ -33,13 +33,17 @@ class DetailsData {
   List<Platform>? platform;
   List<Actor>? actors;
   List<SimilarMovies>? similarMovies;
+  bool? favorite;
+  bool? watched;
 
   DetailsData({
     this.details,
     this.trailer,
     this.platform,
     this.actors,
-    this.similarMovies
+    this.similarMovies,
+    this.favorite,
+    this.watched
   });
 
   factory DetailsData.fromRawJson(String str) =>
@@ -61,6 +65,9 @@ class DetailsData {
 
         similarMovies: json["similarMovies"] == null ? <SimilarMovies>[] : List<SimilarMovies>.from(
             json["similarMovies"].map((x) => SimilarMovies.fromJson(x))),
+
+        favorite: json["favorite"],
+        watched: json["watched"],
       );
 
   Map<String, dynamic> toJson() =>
@@ -74,6 +81,9 @@ class DetailsData {
             actors!.map((x) => x.toJson())),
         "similarMovies": similarMovies == null ? [] : List<dynamic>.from(
             similarMovies!.map((x) => x.toJson())),
+
+        "favorite": favorite,
+        "watched": watched,
       };
 }
 

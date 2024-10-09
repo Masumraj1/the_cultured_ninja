@@ -109,29 +109,28 @@ class _MovieDetailsState extends State<MovieDetails> {
                       height: 50.h,
                       width: double.infinity,
                       child: GestureDetector(
-                        onTap:movieDetailsController.toggleFavorite,
+                        onTap: () {
+                          movieDetailsController.toggleFavorite(id);
+                        },
                         child: Center(
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               CustomText(
-                                text: AppStrings.addToFavorite,
+                                text: movieDetailsController.isFavorite.value
+                                    ? 'Remove Favorite'
+                                    : AppStrings.addToFavorite,
                                 color: AppColors.lightWhite,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16.sp,
                                 right: 10,
                               ),
-                              GestureDetector(
-                                onTap: (){
-                                  movieDetailsController.addFavorite(id: id);
-                                },
-                                child: Icon(
-                                  movieDetailsController.isFavorite.value
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                  color: AppColors.lightWhite,
-                                ),
+                              Icon(
+                                movieDetailsController.isFavorite.value
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: AppColors.lightWhite,
                               ),
                             ],
                           ),
@@ -151,7 +150,6 @@ class _MovieDetailsState extends State<MovieDetails> {
                       bottom: 12,
                     ),
 
-                    ///==================Watched Button==============
                     Row(
                       children: [
                         const Icon(Icons.timelapse, color: Colors.white),
@@ -180,17 +178,25 @@ class _MovieDetailsState extends State<MovieDetails> {
                         const Spacer(),
 
                         ///=======================Watch Button===============
-                        movieDetailsController.isTap.value
-                            ? CustomButton(
+
+                      data.value.favorite==false?
+
+                             CustomButton(
                                 width: 87,
-                                onTap: movieDetailsController.toggleTap,
+                                onTap: (){
+                                  // movieDetailsController.toggleTap;
+                                  movieDetailsController.addHistory(id: id);
+                                },
                                 title: "Watched",
                                 fillColor: AppColors.lightWhite,
                                 textColor: AppColors.buttonColor,
                               )
                             : CustomButton(
                                 width: 87,
-                                onTap: movieDetailsController.toggleTap,
+                                onTap: (){
+                                  // movieDetailsController.toggleTap;
+                                  movieDetailsController.addHistory(id: id);
+                                },
                                 title: 'Watched',
                                 fillColor: AppColors.buttonColor,
                                 textColor: AppColors.lightWhite,

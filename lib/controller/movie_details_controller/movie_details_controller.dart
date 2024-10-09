@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/model/actor_details_model/actor_details_model.dart';
 import 'package:final_movie/model/movie_details_model/movie_details.dart';
@@ -9,52 +12,74 @@ import 'package:get/get.dart';
 
 class MovieDetailsController extends GetxController {
   final rxRequestStatus = Status.loading.obs;
-
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   var isFavorite = false.obs;
+  var isWatched = false.obs;
 
-  void toggleFavorite() {
-    isFavorite.value = !isFavorite.value;
-  }
 
-  RxBool isTap = false.obs;
-
-  void toggleTap() {
-    isTap.value = !isTap.value;
-  }
 
   ///====================================Movie Details================
+
+  // movieDetails({required String id}) async {
+  //   setRxRequestStatus(Status.loading);
+  //   refresh();
+  //   var response = await ApiClient.getData(ApiUrl.movieDetails(id: id));
+  //
+  //   if (response.statusCode == 200) {
+  //     moviesDetailsModel.value = DetailsData.fromJson(response.body["data"]);
+  //
+  //     print('data fetch==================="${response.body["data"]}"');
+  //     print(
+  //         'backdrop_path==================="${response.body["data"]['details']["backdrop_path"]}"');
+  //     print(
+  //         'actorList==================="${moviesDetailsModel.value.actors?.length}');
+  //     print(
+  //         'SimilarMovies==================="${moviesDetailsModel.value.similarMovies?.length}');
+  //
+  //     // print('Length================="${actorList.length}"');
+  //
+  //     setRxRequestStatus(Status.completed);
+  //     refresh();
+  //   } else {
+  //     if (response.statusText == ApiClient.noInternetMessage) {
+  //       setRxRequestStatus(Status.internetError);
+  //     } else {
+  //       setRxRequestStatus(Status.error);
+  //     }
+  //     ApiChecker.checkApi(response);
+  //   }
+  // }
   Rx<DetailsData> moviesDetailsModel = DetailsData().obs;
 
-  movieDetails({required String id}) async {
+  Future<void> movieDetails({required String id}) async {
     setRxRequestStatus(Status.loading);
-    refresh();
-    var response = await ApiClient.getData(ApiUrl.movieDetails(id: id));
 
-    if (response.statusCode == 200) {
-      moviesDetailsModel.value = DetailsData.fromJson(response.body["data"]);
+    try {
+      var response = await ApiClient.getData(ApiUrl.movieDetails(id: id));
 
-      print('data fetch==================="${response.body["data"]}"');
-      print(
-          'backdrop_path==================="${response.body["data"]['details']["backdrop_path"]}"');
-      print(
-          'actorList==================="${moviesDetailsModel.value.actors?.length}');
-      print(
-          'SimilarMovies==================="${moviesDetailsModel.value.similarMovies?.length}');
+      if (response.statusCode == 200) {
+        moviesDetailsModel.value = DetailsData.fromJson(response.body["data"]);
 
-      // print('Length================="${actorList.length}"');
+        // Set favorite and watched states based on API response
+        isFavorite.value = moviesDetailsModel.value.favorite ?? false;
+        isWatched.value = moviesDetailsModel.value.watched ?? false;
 
-      setRxRequestStatus(Status.completed);
-      refresh();
-    } else {
-      if (response.statusText == ApiClient.noInternetMessage) {
-        setRxRequestStatus(Status.internetError);
+        setRxRequestStatus(Status.completed);
       } else {
-        setRxRequestStatus(Status.error);
+        if (response.statusText == ApiClient.noInternetMessage) {
+          setRxRequestStatus(Status.internetError);
+        } else {
+          setRxRequestStatus(Status.error);
+        }
+        ApiChecker.checkApi(response);
       }
-      ApiChecker.checkApi(response);
+    } catch (e) {
+      setRxRequestStatus(Status.error);
     }
   }
+
+
+
 
   ///====================================Actor Details================
   Rx<ActorDetailsData> actorDetails = ActorDetailsData().obs;
@@ -68,9 +93,11 @@ class MovieDetailsController extends GetxController {
       actorDetails.value = ActorDetailsData.fromJson(response.body["data"]);
 
       print('actor data ========================="${response.body['data']}"');
-      print('Upcoming list ========================="${actorDetails.value.upcomingMovies?.length}"');
+      print(
+          'Upcoming list ========================="${actorDetails.value.upcomingMovies?.length}"');
       // print('Upcoming movie Id ========================="${response.body['data']['upcoming_movies']['id']}"');
-      print('popular Movies ========================="${actorDetails.value.popularMovies?.length}"');
+      print(
+          'popular Movies ========================="${actorDetails.value.popularMovies?.length}"');
 
       setRxRequestStatus(Status.completed);
       refresh();
@@ -86,20 +113,26 @@ class MovieDetailsController extends GetxController {
 
 
 
-  ///===========================Add Favorite================
 
+
+  ///===========================Add Favorite================
+  FavoriteController favoriteController = Get.find<FavoriteController>();
+  void toggleFavorite(String movieId) {
+    isFavorite.value = !isFavorite.value;
+
+    // Optionally: Call an API to persist this favorite state
+    addFavorite(id: movieId);
+  }
   RxBool isFavorites = false.obs;
 
   addFavorite({required String id}) async {
     isFavorites.value = true;
     refresh();
-
-    var response = await ApiClient.postData(
-        ApiUrl.addFavorite(id: id),{}
-
-    );
+    Map<String, String> body = {};
+    var response =
+        await ApiClient.postData(ApiUrl.addFavorite(id: id), jsonEncode(body));
     if (response.statusCode == 200) {
-      Get.back();
+      favoriteController.getFavorite();
       toastMessage(
         message: response.body["message"],
       );
@@ -109,6 +142,32 @@ class MovieDetailsController extends GetxController {
     isFavorites.value = false;
     refresh();
   }
+
+
+
+
+  ///===========================Add History================
+
+  RxBool isHistory = false.obs;
+
+  addHistory({required String id}) async {
+    isHistory.value = true;
+    refresh();
+    Map<String, String> body = {};
+    var response =
+        await ApiClient.postData(ApiUrl.addHistory(id: id), jsonEncode(body));
+    if (response.statusCode == 200) {
+      // Get.back();
+      toastMessage(
+        message: response.body["message"],
+      );
+    } else {
+      ApiChecker.checkApi(response);
+    }
+    isHistory.value = false;
+    refresh();
+  }
+
 
 
 }
