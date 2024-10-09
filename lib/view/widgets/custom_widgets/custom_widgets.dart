@@ -1,6 +1,3 @@
-
-
-
 import 'dart:ui';
 
 import 'package:final_movie/core/app_routes.dart';
@@ -93,7 +90,6 @@ class CustomWidgets {
     required String releaseDate,
     required String button,
     void Function()? onTap,
-
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: 13),
@@ -129,17 +125,14 @@ class CustomWidgets {
           CustomButton(
             height: 50,
             width: 160.w,
-            onTap:  onTap ?? () {},
-            title: button,fillColor: AppColors.buttonColor,),
-
-
+            onTap: onTap ?? () {},
+            title: button,
+            fillColor: AppColors.buttonColor,
+          ),
         ],
       ),
     );
   }
-
-
-
 
   ///====================================Custom Movie=============================
   Widget customMovie({
@@ -157,7 +150,6 @@ class CustomWidgets {
       child: Row(
         children: [
           CustomNetworkImage(
-
             imageUrl: image,
             height: 97,
             width: 142,
@@ -170,7 +162,6 @@ class CustomWidgets {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-
                   textAlign: TextAlign.start,
                   maxLines: 3,
                   text: movieName,
@@ -179,7 +170,6 @@ class CustomWidgets {
                   fontSize: 14.sp,
                   bottom: 12,
                 ),
-
                 CustomText(
                   text: releaseDate,
                   color: AppColors.favoriteContainerTextColor,
@@ -193,7 +183,6 @@ class CustomWidgets {
       ),
     );
   }
-
 
   ///=================================custom Actor movies=======================
 
@@ -214,7 +203,6 @@ class CustomWidgets {
       child: Row(
         children: [
           CustomNetworkImage(
-
             imageUrl: image,
             height: 97,
             width: 142,
@@ -227,7 +215,6 @@ class CustomWidgets {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
-
                   textAlign: TextAlign.start,
                   maxLines: 3,
                   text: movieName,
@@ -236,21 +223,20 @@ class CustomWidgets {
                   fontSize: 14.sp,
                   bottom: 7,
                 ),
-                   CustomText(
+                CustomText(
                   text: releaseDate,
                   color: AppColors.favoriteContainerTextColor,
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
-                     bottom: 10,
+                  bottom: 10,
                 ),
                 CustomButton(
                   onTap: onTap ?? () {},
-                title: button,
+                  title: button,
                   width: 134.w,
                   height: 37.h,
                   fillColor: AppColors.buttonColor,
                 )
-
               ],
             ),
           )
@@ -259,41 +245,35 @@ class CustomWidgets {
     );
   }
 
-
   ///============================custom Actor and director========================
   Widget customActorAndDirector({
     required String image,
     required String title,
   }) {
-    return SizedBox(
-      height: 124.h,
-      width: 90.w,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 13),
-        child: Column(
-          children: [
-            CustomNetworkImage(
-              boxShape: BoxShape.circle,
-              height: 56.h,
-              width: 56.w,
-              imageUrl: image,
-            ),
-            CustomText(
-
+    return Padding(
+      padding: const EdgeInsets.only(left: 13,right: 13),
+      child: Column(
+        children: [
+          CustomNetworkImage(
+            boxShape: BoxShape.circle,
+            height: 56.h,
+            width: 56.w,
+            imageUrl: image,
+          ),
+          SizedBox(
+            width: 56.w,
+            child: CustomText(
+                maxLines: 5,
                 text: title,
                 top: 16,
                 fontSize: 12.sp,
                 color: AppColors.lightWhite,
                 fontWeight: FontWeight.w400),
-
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
-
-
-
 
   ///====================================Custom favorite ====================
   Widget customFilter({
@@ -307,8 +287,7 @@ class CustomWidgets {
       decoration: BoxDecoration(
           color: AppColors.fromRgb,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: AppColors.borderDrawer)
-      ),
+          border: Border.all(color: AppColors.borderDrawer)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -338,7 +317,7 @@ class CustomWidgets {
                   color: AppColors.favoriteContainerTextColor,
                   fontWeight: FontWeight.w400),
               CustomText(
-                top: 10,
+                  top: 10,
                   text: releaseDate,
                   fontSize: 12.sp,
                   color: AppColors.favoriteContainerTextColor,
@@ -350,18 +329,15 @@ class CustomWidgets {
     );
   }
 
-
-///=========================================custom Rating movies====================
-  Widget customRatingMovies({
-    required String image,
-    required String ratingBar
-  }) {
+  ///=========================================custom Rating movies====================
+  Widget customRatingMovies(
+      {required String image, required String ratingBar}) {
     return Padding(
-      padding: const EdgeInsets.only(right: 13,top: 10),
+      padding: const EdgeInsets.only(right: 13, top: 10),
       child: Stack(
         children: [
           GestureDetector(
-            onTap: (){
+            onTap: () {
               Get.toNamed(AppRoute.movieDetails);
             },
             child: CustomNetworkImage(
@@ -375,7 +351,11 @@ class CustomWidgets {
               right: 15,
               child: Row(
                 children: [
-                  const Icon(Icons.star,color: Colors.amber,size: 20,),
+                  const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                    size: 20,
+                  ),
                   CustomText(
                     left: 5,
                     text: ratingBar,
@@ -390,14 +370,12 @@ class CustomWidgets {
     );
   }
 
-
-
   ///====================================Custom Row=============================
 
   Widget customRow(
       {required String startTitle,
-        required String endTitle,
-        required VoidCallback onTap}) {
+      required String endTitle,
+      required VoidCallback onTap}) {
     return Row(
       children: [
         CustomText(
@@ -419,9 +397,6 @@ class CustomWidgets {
       ],
     );
   }
-
-
-
 
   ///===========================custom top rating movies=========================
   Widget customTopRatingMovies({

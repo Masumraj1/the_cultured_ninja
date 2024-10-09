@@ -361,6 +361,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: List.generate(data.value.similarMovies?.length??0, (index) {
                           var similarMovies = data.value.similarMovies?[index];
                           return CustomImageText(
