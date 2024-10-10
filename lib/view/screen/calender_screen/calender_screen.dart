@@ -61,13 +61,9 @@ class CalendarScreen extends StatelessWidget {
               },
             );
           case Status.completed:
-
-          // Convert the date values to DateTime objects
-            List<DateTime?> scheduleDates = calendarController.calenderModel.value.dates
+            List<DateTime?> scheduleDates = calendarController.calenderModel.value.movies
                 ?.map((dateData) {
-              // Convert string month to integer month
-              int month = _getMonthFromString(dateData.month?.toString() ?? "");
-              return DateTime(dateData.year ?? 0, month, dateData.date ?? 1);
+              return DateTime.tryParse(dateData.calenderedFor.toString()) ;
             })
                 .toList() ?? [];
 
@@ -95,8 +91,10 @@ class CalendarScreen extends StatelessWidget {
                       yearTextStyle: const TextStyle(color: AppColors.lightWhite),
                       weekdayLabelTextStyle: const TextStyle(color: AppColors.lightWhite),
                       selectedDayHighlightColor: AppColors.buttonColor,
+                      // Optionally set other styles
                     ),
-                    value: scheduleDates, // Pass the list of DateTime objects
+                    value: scheduleDates,
+                    // Pass the list of DateTime
                   ),
                 ),
 
@@ -119,37 +117,5 @@ class CalendarScreen extends StatelessWidget {
         }
       }),
     );
-  }
-
-  // Helper method to convert month names to integer values
-  int _getMonthFromString(String monthName) {
-    switch (monthName.toLowerCase()) {
-      case "january":
-        return 1;
-      case "february":
-        return 2;
-      case "march":
-        return 3;
-      case "april":
-        return 4;
-      case "may":
-        return 5;
-      case "june":
-        return 6;
-      case "july":
-        return 7;
-      case "august":
-        return 8;
-      case "september":
-        return 9;
-      case "october":
-        return 10;
-      case "november":
-        return 11;
-      case "december":
-        return 12;
-      default:
-        return 1; // Default to January if no valid match
-    }
   }
 }
