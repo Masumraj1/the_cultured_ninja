@@ -75,7 +75,7 @@ class AllMovies extends StatelessWidget {
                     onTap: () {
                       Get.toNamed(
                         AppRoute.movieDetails,
-                        arguments: [data.id, data.rating],
+                        arguments: [data.movieId.toString(), data.rating],
                       );
                     },
                     child: customWidget.customMovie(
