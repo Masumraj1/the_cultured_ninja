@@ -17,77 +17,107 @@ import 'inner_widgets/following_actor.dart';
 import 'inner_widgets/tabBar_widget.dart';
 
 class FollowingScreen extends StatelessWidget {
-   FollowingScreen({super.key});
+  FollowingScreen({super.key});
 
   final CustomWidgets customWidget = CustomWidgets();
-final FollowingController followingController = Get.find<FollowingController>();
+  final FollowingController followingController = Get.find<
+      FollowingController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      bottomNavigationBar: const NavBar(currentIndex: 1),
-      ///============================Flowing screen Appbar======================
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back),
-          color: AppColors.lightWhite,
-        ),
-        backgroundColor: AppColors.blackDeep,
-        title: CustomText(
-          text: AppStrings.following,
-          color: AppColors.lightWhite,
-          fontSize: 20.sp,
-          fontWeight: FontWeight.w600,
-        ),
-        centerTitle: true,
-      ),
-      body: Obx(() {
-        switch (followingController.rxRequestStatus.value) {
-          case Status.loading:
-            return const CustomLoader(); // Show loading indicator
+        backgroundColor: AppColors.backgroundColor,
+        bottomNavigationBar: const NavBar(currentIndex: 1),
 
-          case Status.internetError:
-            return NoInternetScreen(onTap: () {
-             followingController.getFlowing();
-            });
+        ///============================Flowing screen Appbar======================
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: const Icon(Icons.arrow_back),
+            color: AppColors.lightWhite,
+          ),
+          backgroundColor: AppColors.blackDeep,
+          title: CustomText(
+            text: AppStrings.following,
+            color: AppColors.lightWhite,
+            fontSize: 20.sp,
+            fontWeight: FontWeight.w600,
+          ),
+          centerTitle: true,
+        ),
+        body: Obx(() {
+          switch (followingController.rxRequestStatus.value) {
+            case Status.loading:
+              return const CustomLoader(); // Show loading indicator
 
-          case Status.error:
-            return GeneralErrorScreen(
-              onTap: () {
+            case Status.internetError:
+              return NoInternetScreen(onTap: () {
                 followingController.getFlowing();
-              },
-            );
+              });
 
-          case Status.completed:
-            return  Padding(
-                padding: const EdgeInsets.all(20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      ///=================================Actor and studios tabBar================
-                      FollowingTabBar(followingController: followingController),
-                      IndexedStack(
-                        index: followingController.selectedIndex.value,
-                        children: [
-                          ///========================Actor========================
-                          FollowingActor(customWidget: customWidget),
+            case Status.error:
+              return GeneralErrorScreen(
+                onTap: () {
+                  followingController.getFlowing();
+                },
+              );
 
-                          ///==========================Studio=================
-                          FollowingStudios(customWidget: customWidget)
-                        ],
-                      )
+            case Status.completed:
+              return Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
 
-                    ],
-                  ),
-                )
-            );
+                        ///=================================Actor and studios tabBar================
+                        FollowingTabBar(
+                            followingController: followingController),
+                        IndexedStack(
+                          index: followingController.selectedIndex.value,
+                          children: [
 
-        }
-      })
+                            ///========================Actor========================
+                            followingController.flowData.value.actors!.isEmpty
+                                ? Padding(
+                              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3),
+                              child: const Center(
+                                child: CustomText(
+                                  text: 'No actor is following.',
+                                  color: AppColors.lightWhite,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            )
+                                : FollowingActor(customWidget: customWidget),
+
+
+                            ///==========================Studio=================
+                           followingController.flowData.value.studios!.isEmpty?Padding(
+                             padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.3),
+                             child: const Center(
+                               child: CustomText(
+                                 text: 'No Studio is following.',
+                                 color: AppColors.lightWhite,
+                                 fontSize: 16,
+                                 fontWeight: FontWeight.w500,
+                               ),
+                             ),
+                           ):
+                            FollowingStudios(customWidget: customWidget)
+
+
+                          ],
+                        )
+
+                      ],
+                    ),
+                  )
+              );
+          }
+        })
 
 
     );

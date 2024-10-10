@@ -1,4 +1,6 @@
+import 'package:final_movie/controller/profile_controller/profile_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
+import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
@@ -9,7 +11,7 @@ import 'package:get/get.dart';
 import '../../../../../utils/app_const/app_const.dart';
 import '../../../../widgets/custom_text/custom_text.dart';
 
-class HomeAppBar extends StatelessWidget {
+class HomeAppBar extends StatefulWidget {
   const HomeAppBar({
     super.key,
     required this.scaffoldKey,
@@ -17,6 +19,21 @@ class HomeAppBar extends StatelessWidget {
 
   final GlobalKey<ScaffoldState> scaffoldKey;
 
+  @override
+  State<HomeAppBar> createState() => _HomeAppBarState();
+}
+
+class _HomeAppBarState extends State<HomeAppBar> {
+
+
+  ProfileController profileController = Get.find<ProfileController>();
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      profileController.getProfile();
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,7 +54,7 @@ class HomeAppBar extends StatelessWidget {
                   ///==================== Profile =====================
                   CustomNetworkImage(
                       boxShape: BoxShape.circle,
-                      imageUrl: AppConstants.onlineImage,
+                      imageUrl: "${ApiUrl.networkImageUrl}${profileController.profileModel.value.img ?? ""}",
                       height: 60,
                       width: 60),
 
@@ -56,7 +73,7 @@ class HomeAppBar extends StatelessWidget {
                       ),
                       ///========================name=============================
                       CustomText(
-                        text: AppStrings.williamson,
+                        text: profileController.profileModel.value.name??"",
                         fontWeight: FontWeight.w400,
                         fontSize: 20.sp,
                         color: AppColors.lightWhite,
@@ -80,7 +97,7 @@ class HomeAppBar extends StatelessWidget {
                   ///<==================== Menu Bar ====================>
                   IconButton(
                       onPressed: () {
-                        scaffoldKey.currentState?.openDrawer();
+                        widget.scaffoldKey.currentState?.openDrawer();
                       },
                       icon: const Icon(
                         Icons.menu,

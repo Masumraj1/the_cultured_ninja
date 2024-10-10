@@ -46,8 +46,7 @@ class HomeScreen extends StatelessWidget {
           case Status.error:
             return GeneralErrorScreen(
               onTap: () {
-                homeController
-                    .customMethod();
+                homeController.customMethod();
                 favoriteController
                     .getFavorite(); // Retry fetching movies and banners
               },
@@ -57,7 +56,6 @@ class HomeScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
                   ///====================== Home AppBar and Banner =======================
                   HomeAppBar(scaffoldKey: scaffoldKey),
                   SizedBox(height: 10.w),
@@ -79,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                               homeController.pageController.value =
                                   PageController(
                                       initialPage:
-                                      homeController.bannerIndex.value);
+                                          homeController.bannerIndex.value);
                             },
                           ),
                           items: homeController.bannerList.map((banner) {
@@ -102,23 +100,19 @@ class HomeScreen extends StatelessWidget {
                         ),
                       SizedBox(height: 16.h),
                       // SmoothPageIndicator
-                      Obx(
-                      () {
-                          return SmoothPageIndicator(
-                            controller: homeController.pageController.value,
-                            count: homeController.bannerList.length,
-                            axisDirection: Axis.horizontal,
-                            effect: const ExpandingDotsEffect(
-                              expansionFactor: 2,
-                              spacing: 8.0,
-                              dotWidth: 10,
-                              dotHeight: 6.0,
-                              paintStyle: PaintingStyle.fill,
-                              dotColor: AppColors.lightWhite,
-                              activeDotColor: AppColors.buttonColor,
-                            ),
-                          );
-                        }
+                      SmoothPageIndicator(
+                        controller: homeController.pageController.value,
+                        count: homeController.bannerList.length,
+                        axisDirection: Axis.horizontal,
+                        effect: const ExpandingDotsEffect(
+                          expansionFactor: 2,
+                          spacing: 8.0,
+                          dotWidth: 10,
+                          dotHeight: 6.0,
+                          paintStyle: PaintingStyle.fill,
+                          dotColor: AppColors.lightWhite,
+                          activeDotColor: AppColors.buttonColor,
+                        ),
                       ),
                     ],
                   ),
@@ -131,7 +125,6 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         ///======================== Top Rating Movies =========================
 
                         customWidget.customRow(
@@ -150,17 +143,16 @@ class HomeScreen extends StatelessWidget {
                         IndexedStack(
                           index: homeController.selectedIndex.value,
                           children: [
-
                             ///========================Movies================
                             homeController.moviesList.isEmpty
                                 ? const CustomText(
-                              text: 'No Movie Found',
-                              color: AppColors.lightWhite,
-                              fontWeight: FontWeight.w500,
-                            )
+                                    text: 'No Movie Found',
+                                    color: AppColors.lightWhite,
+                                    fontWeight: FontWeight.w500,
+                                  )
                                 : HomeScreenTopRatingMovies(
-                              customWidget: customWidget,
-                            ),
+                                    customWidget: customWidget,
+                                  ),
 
                             ///========================Tv Series================
                             HomeScreenTvSeries(customWidget: customWidget)
@@ -182,35 +174,39 @@ class HomeScreen extends StatelessWidget {
 
                         SizedBox(height: 16.h),
 
-
-                        if (favoriteController.favoriteList.isEmpty) SizedBox(
-                          height: MediaQuery.of(context).size.height/3.5,
-                          child: const Center(
-                            child: CustomText(
-                              text: 'No Favorite Data Founded',
-                              color: AppColors.lightWhite,
-                              fontWeight: FontWeight.w500,),
-                          ),
-                        ) else Row(
-                          children: List.generate(favoriteController
-                              .favoriteList.length, (index) {
-                            var favoriteList = favoriteController
-                                .favoriteList[index];
-                            return GestureDetector(
-                              onTap: (){
-                                Get.toNamed(AppRoute.movieDetails,
-                                    arguments: [
-                                      favoriteList.movieId.toString(),
-                                     favoriteList.rating
-                                    ]);
-                              },
-                              child:CustomImageText(
-                                image: favoriteList.poster ?? "",
-                                movieName: favoriteList.title ?? "",
+                        if (favoriteController.favoriteList.isEmpty)
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 3.5,
+                            child: const Center(
+                              child: CustomText(
+                                text: 'No Favorite Data Founded',
+                                color: AppColors.lightWhite,
+                                fontWeight: FontWeight.w500,
                               ),
-                            );
-                          }),
-                        ),
+                            ),
+                          )
+                        else
+                          Row(
+                            children: List.generate(
+                                favoriteController.favoriteList.length,
+                                (index) {
+                              var favoriteList =
+                                  favoriteController.favoriteList[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoute.movieDetails,
+                                      arguments: [
+                                        favoriteList.movieId.toString(),
+                                        favoriteList.rating
+                                      ]);
+                                },
+                                child: CustomImageText(
+                                  image: favoriteList.poster ?? "",
+                                  movieName: favoriteList.title ?? "",
+                                ),
+                              );
+                            }),
+                          ),
                         SizedBox(height: 16.h),
 
                         ///============================ Studios ============================
@@ -229,11 +225,11 @@ class HomeScreen extends StatelessWidget {
                           child: Row(
                             children: List.generate(
                                 homeController.studioDataList.length, (index) {
-                              var studioData = homeController
-                                  .studioDataList[index];
+                              var studioData =
+                                  homeController.studioDataList[index];
                               return CustomImageText(
-                                image: "${ApiUrl.networkImageUrl}${studioData
-                                    .logo ?? ""}",
+                                image:
+                                    "${ApiUrl.networkImageUrl}${studioData.logo ?? ""}",
                                 movieName: studioData.name ?? "",
                               );
                             }),
