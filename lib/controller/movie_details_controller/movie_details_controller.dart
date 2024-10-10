@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
+import 'package:final_movie/controller/following_controller/following_controller.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/model/actor_details_model/actor_details_model.dart';
 import 'package:final_movie/model/movie_details_model/movie_details.dart';
@@ -12,11 +14,10 @@ import 'package:get/get.dart';
 
 class MovieDetailsController extends GetxController {
   final rxRequestStatus = Status.loading.obs;
+
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
   var isFavorite = false.obs;
   var isWatched = false.obs;
-
-
 
   ///====================================Movie Details================
 
@@ -78,9 +79,6 @@ class MovieDetailsController extends GetxController {
     }
   }
 
-
-
-
   ///====================================Actor Details================
   Rx<ActorDetailsData> actorDetails = ActorDetailsData().obs;
 
@@ -112,55 +110,58 @@ class MovieDetailsController extends GetxController {
     }
   }
 
-
-
-///=============================actor Follow======================
+  ///=============================actor Follow======================
 
 
 
   var isFollowed = false.obs;
 
-  void toggleActorFlow(String actorId) {
+  Future<bool> toggleActorFlow(String actorId) async {
     isFollowed.value = !isFollowed.value;
 
     // Optionally: Call an API to persist this watched state
-    addFollow(id: actorId);
+    return await addFollow(id: actorId);
   }
 
+  // final FollowingController followingController = Get.find<FollowingController>();
   RxBool isTap = false.obs;
 
-  addFollow({required String id}) async {
+  Future<bool> addFollow({required String id}) async {
     isTap.value = true;
     refresh();
-    Map<String, String> body = {
-      "actorId": id,
-      "type": "actor"
-    };
-    var response = await ApiClient.postData(
-        ApiUrl.addFlow,jsonEncode(body)
-
-    );
+    Map<String, String> body = {"actorId": id, "type": "actor"};
+    var response = await ApiClient.postData(ApiUrl.addFlow, jsonEncode(body));
     if (response.statusCode == 201) {
+      // followingController.getFlowing();
       toastMessage(
         message: response.body["message"],
       );
-    } else if(response.statusCode ==200) {
-      showCustomSnackBar(response.body['message'],);
-    }else{
+      return false;
+    } else if (response.statusCode == 200) {
+      toastMessage(
+        message: response.body["message"],
+      );
+      return true;
+    } else {
       ApiChecker.checkApi(response);
+      return false;
     }
-    isTap.value = false;
-    refresh();
   }
+
+
+
+
 
   ///===========================Add Favorite================
   FavoriteController favoriteController = Get.find<FavoriteController>();
+
   void toggleFavorite(String movieId) {
     isFavorite.value = !isFavorite.value;
 
     // Optionally: Call an API to persist this favorite state
     addFavorite(id: movieId);
   }
+
   RxBool isFavorites = false.obs;
 
   addFavorite({required String id}) async {
@@ -181,9 +182,6 @@ class MovieDetailsController extends GetxController {
     refresh();
   }
 
-
-
-
   ///===========================Add History================
   void toggleWatched(String movieId) {
     isWatched.value = !isWatched.value;
@@ -191,6 +189,7 @@ class MovieDetailsController extends GetxController {
     // Optionally: Call an API to persist this watched state
     addHistory(id: movieId);
   }
+
   RxBool isHistory = false.obs;
 
   addHistory({required String id}) async {
@@ -210,7 +209,4 @@ class MovieDetailsController extends GetxController {
     isHistory.value = false;
     refresh();
   }
-
-
-
 }

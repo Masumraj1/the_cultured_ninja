@@ -10,10 +10,6 @@ import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:get/get.dart';
 
 class StudiosController extends GetxController {
-
-
-
-
   final rxRequestStatus = Status.loading.obs;
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
@@ -28,10 +24,10 @@ class StudiosController extends GetxController {
       studioModel.value = StudioDetails.fromJson(response.body["data"]);
       isFollowed.value = studioModel.value.details?.isFollowed ?? false;
 
-      print('Studio ========================="${response.body['data']['details']}"');
+      print(
+          'Studio ========================="${response.body['data']['details']}"');
       print(
           'relatedStudios========================="${studioModel.value.relatedStudios?.length}"');
-
 
       setRxRequestStatus(Status.completed);
       refresh();
@@ -45,42 +41,37 @@ class StudiosController extends GetxController {
     }
   }
 
-
   ///===============================Add Flow =================
 
   var isFollowed = false.obs;
 
-  void toggleWatched(String studioId) {
+  Future<bool> toggleWatched(String studioId) async {
     isFollowed.value = !isFollowed.value;
 
     // Optionally: Call an API to persist this watched state
-    addFollow(id: studioId);
+    return await addFollow(id: studioId);
   }
 
   RxBool isTap = false.obs;
 
-  addFollow({required String id}) async {
+  Future<bool> addFollow({required String id}) async {
     isTap.value = true;
     refresh();
-    Map<String, String> body = {
-      "studioId": id,
-      "type": "studio"
-    };
-    var response = await ApiClient.postData(
-        ApiUrl.addFlow,jsonEncode(body)
-
-    );
+    Map<String, String> body = {"studioId": id, "type": "studio"};
+    var response = await ApiClient.postData(ApiUrl.addFlow, jsonEncode(body));
     if (response.statusCode == 201) {
       toastMessage(
         message: response.body["message"],
       );
-    } else if(response.statusCode ==200) {
-      showCustomSnackBar(response.body['message'],);
-    }else{
+      return false;
+    } else if (response.statusCode == 200) {
+      toastMessage(
+        message: response.body["message"],
+      );
+      return true;
+    } else {
       ApiChecker.checkApi(response);
+      return false;
     }
-    isTap.value = false;
-    refresh();
   }
-
 }
