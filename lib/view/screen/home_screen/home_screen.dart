@@ -73,7 +73,13 @@ class HomeScreen extends StatelessWidget {
                             autoPlay: true,
                             autoPlayCurve: Curves.ease,
                             onPageChanged: (int index, reason) {
-                              homeController.currentBannerIndex.value = index;
+                              // homeController.currentBannerIndex.value = index;
+                              homeController.bannerIndex.value = index;
+
+                              homeController.pageController.value =
+                                  PageController(
+                                      initialPage:
+                                      homeController.bannerIndex.value);
                             },
                           ),
                           items: homeController.bannerList.map((banner) {
@@ -96,19 +102,23 @@ class HomeScreen extends StatelessWidget {
                         ),
                       SizedBox(height: 16.h),
                       // SmoothPageIndicator
-                      SmoothPageIndicator(
-                        controller: homeController.pageController.value,
-                        count: homeController.bannerList.length,
-                        axisDirection: Axis.horizontal,
-                        effect: const ExpandingDotsEffect(
-                          expansionFactor: 3,
-                          spacing: 8.0,
-                          dotWidth: 10,
-                          dotHeight: 6.0,
-                          paintStyle: PaintingStyle.fill,
-                          dotColor: AppColors.lightWhite,
-                          activeDotColor: AppColors.buttonColor,
-                        ),
+                      Obx(
+                      () {
+                          return SmoothPageIndicator(
+                            controller: homeController.pageController.value,
+                            count: homeController.bannerList.length,
+                            axisDirection: Axis.horizontal,
+                            effect: const ExpandingDotsEffect(
+                              expansionFactor: 2,
+                              spacing: 8.0,
+                              dotWidth: 10,
+                              dotHeight: 6.0,
+                              paintStyle: PaintingStyle.fill,
+                              dotColor: AppColors.lightWhite,
+                              activeDotColor: AppColors.buttonColor,
+                            ),
+                          );
+                        }
                       ),
                     ],
                   ),
