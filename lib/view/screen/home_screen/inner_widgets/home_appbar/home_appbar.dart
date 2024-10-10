@@ -8,7 +8,6 @@ import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../../utils/app_const/app_const.dart';
 import '../../../../widgets/custom_text/custom_text.dart';
 
 class HomeAppBar extends StatefulWidget {

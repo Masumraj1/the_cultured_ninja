@@ -302,14 +302,18 @@ class CustomWidgets {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomText(
-                  textAlign: TextAlign.start,
-                  bottom: 8,
-                  maxLines: 5,
-                  text: movieName,
-                  fontSize: 15.sp,
-                  color: AppColors.lightWhite,
-                  fontWeight: FontWeight.w400),
+              SizedBox(
+                width: 142,
+                child: CustomText(
+                    textAlign: TextAlign.start,
+                    bottom: 8,
+                    maxLines: 5,
+                    text: movieName,
+
+                    fontSize: 15.sp,
+                    color: AppColors.lightWhite,
+                    fontWeight: FontWeight.w400),
+              ),
               CustomText(
                   maxLines: 2,
                   text: AppStrings.releaseDate,

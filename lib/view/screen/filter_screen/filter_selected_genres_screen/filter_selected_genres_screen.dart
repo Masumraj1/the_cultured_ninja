@@ -13,13 +13,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class FilterSelectedGenresScreen extends StatelessWidget {
-  const FilterSelectedGenresScreen({super.key});
+  FilterSelectedGenresScreen({super.key});
+
+  final StreamingController streamingController =
+      Get.find<StreamingController>();
 
   @override
   Widget build(BuildContext context) {
-    final StreamingController streamingController = Get.find<StreamingController>();
-
     return Scaffold(
+      ///=============================Filter Appbar==================
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -75,11 +77,22 @@ class FilterSelectedGenresScreen extends StatelessWidget {
                       runSpacing: 10.0,
                       children: streamingController.genreData.map((genre) {
                         return GestureDetector(
-                          onTap: () => streamingController.selectGenre(genre.id.toString(), genre.name ?? ""),
+                          onTap: () {
+                            // Print the genre id
+                            print('Selected Genre ID:======================== ${genre.id.toString()}');
+
+                            streamingController.selectGenre(
+                              genre.id.toString(),
+                              genre.name ?? "",
+                            );
+                          },
                           child: Obx(() {
-                            final bool isSelected = streamingController.selectedGenre.value == genre.name;
+                            final bool isSelected =
+                                streamingController.selectedGenre.value ==
+                                    genre.name;
                             return Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 13.0, vertical: 12),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 13.0, vertical: 12),
                               decoration: BoxDecoration(
                                 color: isSelected
                                     ? AppColors.buttonColor
@@ -112,14 +125,27 @@ class FilterSelectedGenresScreen extends StatelessWidget {
                     SizedBox(
                       height: 320.h,
                     ),
+
+                    ///=============================Search Button=================
                     CustomButton(
                       onTap: () {
-                        Get.toNamed(AppRoute.filterScreen);
+                        // Check if a genre is selected and pass the genre.id as argument
+                        final selectedGenreId = streamingController.genreData
+                            .firstWhere((genre) => genre.name == streamingController.selectedGenre.value)
+                            .id
+                            .toString();
+
+                        // Navigate to the filter screen and pass the selected genre ID as argument
+                        Get.toNamed(AppRoute.filterScreen, arguments: selectedGenreId);
+
+
+                        debugPrint('===========================$selectedGenreId');
                       },
                       fillColor: AppColors.buttonColor,
                       title: AppStrings.search,
                       textColor: AppColors.lightWhite,
                     ),
+
                   ],
                 ),
               ),

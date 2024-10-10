@@ -37,6 +37,10 @@ class ApiUrl {
     return "/studio/get-studio/$id";
   }
 
+  static String filterMovie({required String id}) {
+    return "/movie/admin-tmdb-movie-list?genre_id=$id";
+  }
+
 
   ///====================Add Flow================
   static const addFlow = "/follow/add-follow";

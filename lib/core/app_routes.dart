@@ -123,7 +123,7 @@ static const String historyScreen = '/HistoryScreen';
     GetPage(name: actorDetails, page: () =>       ActorDetails()),
     GetPage(name: actorMovie, page: () =>        ActorMovie()),
     GetPage(name: profileScreen, page: () =>         ProfileScreen()),
-    GetPage(name: filterSelectedGenresScreen, page: () => const FilterSelectedGenresScreen()),
+    GetPage(name: filterSelectedGenresScreen, page: () =>  FilterSelectedGenresScreen()),
     GetPage(name: selectStreamingScreen, page: () =>  SelectStreamingScreen()),
     GetPage(name: spinScreen, page: () =>   SpinScreen()),
   ];

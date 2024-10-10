@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
+import 'package:final_movie/model/filter_model/filter_model.dart';
 import 'package:final_movie/model/streaming_model/all_streaming_model.dart';
 import 'package:final_movie/model/streaming_model/movie_genre_model.dart';
 import 'package:final_movie/services/api_check.dart';
@@ -39,7 +40,7 @@ class StreamingController extends GetxController{
     }
   }
 
-  ///====================================Get All Studio===========
+  ///====================================Get All Genre===========
   RxList<MovieGenreData> genreData = <MovieGenreData>[].obs;
   getAllGenre() async {
     setRxRequestStatus(Status.loading);
@@ -103,6 +104,7 @@ class StreamingController extends GetxController{
   }
 
 
+  ///===================================Genre Filtering===================
   RxString selectedGenre = ''.obs; // Use a reactive String to track selected genre
 
   void selectGenre(String genreId, String genreName) {
@@ -110,6 +112,32 @@ class StreamingController extends GetxController{
       selectedGenre.value = ''; // Deselect if the same genre is tapped again
     } else {
       selectedGenre.value = genreName; // Select the tapped genre
+    }
+  }
+
+
+
+  RxList<FilterData> filterList = <FilterData>[].obs;
+
+  getFilter({required String id}) async {
+    setRxRequestStatus(Status.loading);
+    refresh();
+    var response = await ApiClient.getData(ApiUrl.filterMovie(id: id));
+
+    if (response.statusCode == 200) {
+      filterList.value = List<FilterData>.from(
+          response.body["data"].map((x) => FilterData.fromJson(x)));
+      print('FilterList=========================="${filterList.length}"');
+
+      setRxRequestStatus(Status.completed);
+      refresh();
+    } else {
+      if (response.statusText == ApiClient.noInternetMessage) {
+        setRxRequestStatus(Status.internetError);
+      } else {
+        setRxRequestStatus(Status.error);
+      }
+      ApiChecker.checkApi(response);
     }
   }
 
