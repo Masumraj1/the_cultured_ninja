@@ -58,7 +58,7 @@ class CalendarController extends GetxController {
 
   ///======================== Method to fetch calendar data====================
   Rx<CalenderData> calenderModel = CalenderData().obs;
-  RxList<CalenderData> calenderList = <CalenderData>[].obs;
+  // RxList<CalenderData> calenderList = <CalenderData>[].obs;
 
   Future<void> getCalender() async {
     setRxRequestStatus(Status.loading); // Set loading status

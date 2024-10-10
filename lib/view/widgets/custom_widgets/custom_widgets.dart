@@ -172,9 +172,10 @@ class CustomWidgets {
                 ),
                 CustomText(
                   text: releaseDate,
-                  color: AppColors.favoriteContainerTextColor,
+                  color: AppColors.yesButtonColor,
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
+
                 ),
               ],
             ),

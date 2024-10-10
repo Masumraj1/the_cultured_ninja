@@ -51,33 +51,33 @@ class TopRatingMovies extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ///==========================Search field=============================
-                  Row(
-                    children: [
-                      const Expanded(
-                        flex: 8,
-                        child: CustomTextField(
-                          fillColor: AppColors.fromRgb,
-                          fieldBorderColor: AppColors.fromRgb,
-                          hintText: AppStrings.search,
-                          hintStyle: TextStyle(color: AppColors.searchHintText),
-                          isPrefixIcon: true,
-                          prefixIcon: Padding(
-                            padding: EdgeInsets.only(left: 12),
-                            child: Icon(
-                              Icons.search,
-                              color: AppColors.searchHintText,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 14.h,
-                      ),
-
-                    ],
-                  ),
+                  // Row(
+                  //   children: [
+                  //     const Expanded(
+                  //       flex: 8,
+                  //       child: CustomTextField(
+                  //         fillColor: AppColors.fromRgb,
+                  //         fieldBorderColor: AppColors.fromRgb,
+                  //         hintText: AppStrings.search,
+                  //         hintStyle: TextStyle(color: AppColors.searchHintText),
+                  //         isPrefixIcon: true,
+                  //         prefixIcon: Padding(
+                  //           padding: EdgeInsets.only(left: 12),
+                  //           child: Icon(
+                  //             Icons.search,
+                  //             color: AppColors.searchHintText,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       width: 14.h,
+                  //     ),
+                  //
+                  //   ],
+                  // ),
                   SizedBox(
-                    height: 50.h,
+                    height: 20.h,
                   ),
 
                   ///================================Top rating movies=============================

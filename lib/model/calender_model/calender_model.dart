@@ -102,6 +102,7 @@ class Movie {
   String? poster;
   DateTime? releaseDate;
   String? title;
+  String? calenderedFor;
   bool? video;
   double? rating;
   int? vote;
@@ -121,6 +122,7 @@ class Movie {
     this.video,
     this.rating,
     this.vote,
+    this.calenderedFor
   });
 
   factory Movie.fromRawJson(String str) => Movie.fromJson(json.decode(str));
@@ -139,6 +141,7 @@ class Movie {
     poster: json["poster"],
     releaseDate: json["release_date"] == null ? null : DateTime.parse(json["release_date"]),
     title: json["title"],
+    calenderedFor: json["calenderedFor"],
     video: json["video"],
     rating: json["rating"]?.toDouble(),
     vote: json["vote"],
@@ -156,6 +159,7 @@ class Movie {
     "poster": poster,
     "release_date": "${releaseDate!.year.toString().padLeft(4, '0')}-${releaseDate!.month.toString().padLeft(2, '0')}-${releaseDate!.day.toString().padLeft(2, '0')}",
     "title": title,
+    "calenderedFor":calenderedFor,
     "video": video,
     "rating": rating,
     "vote": vote,
