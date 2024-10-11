@@ -4,6 +4,8 @@ import 'package:final_movie/helpar/date_converter/date_converter.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
+import 'package:final_movie/view/widgets/custom_delete_dialoge/custom_delete_dialoge.dart';
+import 'package:final_movie/view/widgets/custom_favorite_widget/custom_favorite_widget.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
@@ -13,6 +15,7 @@ import 'package:final_movie/view/widgets/no_internet_screen/no_internet_screen.d
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class CalendarScreen extends StatelessWidget {
   CalendarScreen({super.key});
@@ -99,19 +102,61 @@ class CalendarScreen extends StatelessWidget {
                 ),
 
                 ///==========================movie list====================
+                // Expanded(
+                //   child: ListView.builder(
+                //     itemCount: calendarController.calenderModel.value.movies?.length ?? 0,
+                //     itemBuilder: (context, index) {
+                //       var data = calendarController.calenderModel.value.movies?[index];
+                //       return customWidget.customMovie(
+                //         image: data?.poster ?? "",
+                //         movieName: data?.title ?? "",
+                //         releaseDate: DateConverter.formatDate(data?.calenderedFor),
+                //       );
+                //     },
+                //   ),
+                // ),
+
                 Expanded(
                   child: ListView.builder(
                     itemCount: calendarController.calenderModel.value.movies?.length ?? 0,
                     itemBuilder: (context, index) {
                       var data = calendarController.calenderModel.value.movies?[index];
-                      return customWidget.customMovie(
-                        image: data?.poster ?? "",
-                        movieName: data?.title ?? "",
-                        releaseDate: DateConverter.formatDate(data?.calenderedFor),
-                      );
+                      return Padding(
+                          padding: const EdgeInsets.only(bottom: 12.0),
+                          child: CustomFavoriteWidget(
+                            image: data?.poster??"",
+                            movieName: data?.title??"",
+                            releaseDate: DateConverter.formatDate(
+                                data?.calenderedFor ?? "22"),
+                            isExpanded: true,
+                            // or false depending on the condition
+                            onTap: () {
+                              if (scheduleDates.isNotEmpty) {
+                                showCustomDeleteDialog(
+                                  context,
+                                      () {
+                                    // Example: using the first available date from scheduleDates
+                                    final selectedDate = scheduleDates.firstWhere((date) => date != null, orElse: () => DateTime.now());
+
+                                    // Format the date to 'dd-MM-yyyy'
+                                    final selectedDateString = DateFormat('dd-MM-yyyy').format(selectedDate ?? DateTime.now());
+
+                                    calendarController.addedCalender(
+                                      id: data!.movieId.toString(),
+                                      date: selectedDateString,  // Pass the formatted date string
+                                    );
+                                  },
+                                );
+                              } else {
+                                // Handle the case where no valid dates are found
+                                print('No dates available to add to the calendar.');
+                              }
+                            }, date: DateConverter.formatDate(
+                              data?.calenderedFor ?? "22"),
+                          ));
                     },
                   ),
-                ),
+                )
               ],
             );
         }

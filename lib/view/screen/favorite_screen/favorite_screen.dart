@@ -84,6 +84,7 @@ class FavoriteScreen extends StatelessWidget {
                           return Padding(
                               padding: const EdgeInsets.only(bottom: 12.0),
                               child: CustomFavoriteWidget(
+                                isDate: true,
                                 image: data.poster??"",
                                 movieName: data.title??"",
                                 releaseDate: DateConverter.formatDate(
@@ -98,7 +99,7 @@ class FavoriteScreen extends StatelessWidget {
                                           id: data.movieId.toString() ?? "");
                                     },
                                   );
-                                },
+                                }, date: '',
                               ));
                         },
                       ));

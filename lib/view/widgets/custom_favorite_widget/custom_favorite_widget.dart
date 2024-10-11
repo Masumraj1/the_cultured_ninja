@@ -8,7 +8,9 @@ class CustomFavoriteWidget extends StatelessWidget {
   final String image;
   final String movieName;
   final String releaseDate;
+  final String date;
   final bool? isExpanded;
+  final bool? isDate;
   final VoidCallback onTap;
 
   const CustomFavoriteWidget({
@@ -17,7 +19,7 @@ class CustomFavoriteWidget extends StatelessWidget {
     required this.movieName,
     required this.releaseDate,
     required this.isExpanded,
-    required this.onTap,
+    required this.onTap, this.isDate, required this.date,
   });
 
   @override
@@ -54,18 +56,36 @@ class CustomFavoriteWidget extends StatelessWidget {
                   color: AppColors.lightWhite,
                   fontWeight: FontWeight.w400,
                 ),
-                CustomText(
-                  maxLines: 2,
-                  text: 'Release Date', // Use static text or AppStrings.releaseDate
-                  fontSize: 12.sp,
-                  color: AppColors.favoriteContainerTextColor,
-                  fontWeight: FontWeight.w400,
-                ),
+               isDate==true?
+               Column(
+                 children: [
+                   CustomText(
+                     maxLines: 2,
+                     text: 'Release Date', // Use static text or AppStrings.releaseDate
+                     fontSize: 12.sp,
+                     color: AppColors.favoriteContainerTextColor,
+                     fontWeight: FontWeight.w400,
+                   ),
+                   CustomText(
+                     top: 10,
+                     text: releaseDate,
+                     fontSize: 12.sp,
+                     color: AppColors.favoriteContainerTextColor,
+                     fontWeight: FontWeight.w400,
+                   ),
+                 ],
+               ): CustomText(
+                 maxLines: 2,
+                 text: 'Remember Date', // Use static text or AppStrings.releaseDate
+                 fontSize: 12.sp,
+                 color: AppColors.favoriteContainerTextColor,
+                 fontWeight: FontWeight.w400,
+               ),
                 CustomText(
                   top: 10,
-                  text: releaseDate,
+                  text: date,
                   fontSize: 12.sp,
-                  color: AppColors.favoriteContainerTextColor,
+                  color: AppColors.yesButtonColor,
                   fontWeight: FontWeight.w400,
                 ),
               ],
