@@ -3,6 +3,7 @@ import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
+import 'package:final_movie/utils/app_images/app_images.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
@@ -53,7 +54,7 @@ class SideDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 64),
+      padding: const EdgeInsets.only(top: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(8.r), bottomRight: Radius.circular(8.r)),
@@ -63,17 +64,25 @@ class SideDrawer extends StatelessWidget {
       child: Column(
         children: [
           ///================================ APP LOGO ==============================///
-          const CustomText(
-            text: "LogoHere",
-            color: AppColors.lightWhite,
+          Container(
+            height: MediaQuery.of(context).size.height/5,
+            color: AppColors.newColor,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: CustomImage(
+                imageSrc: AppImages.icons,
+                imageType: ImageType.png,
+              ),
+            ),
           ),
 
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.only(top: 30.h, right: 20.w),
+                padding: EdgeInsets.only(top: 10.h, right: 20.w),
                 child: Column(
                   children: [
+
                     ///=======================Profile =====================
 
                     customRow(
@@ -125,22 +134,22 @@ class SideDrawer extends StatelessWidget {
                         title: AppStrings.logOut,
                         onTap: () async {
                           permissionPopUp(
-                            title: 'Are you sure you want to log out',
+                              title: 'Are you sure you want to log out',
                               context: context,
                               ontapNo: () {
                                 Get.back();
                               },
-                              ontapYes: () async{
+                              ontapYes: () async {
                                 await SharePrefsHelper.remove(
                                     AppConstants.bearerToken);
-                                await SharePrefsHelper.remove(AppConstants.profileID);
+                                await SharePrefsHelper.remove(
+                                    AppConstants.profileID);
 
-                                print('remove token========================"${AppConstants.bearerToken}"');
+                                print(
+                                    'remove token========================"${AppConstants.bearerToken}"');
 
                                 Get.toNamed(AppRoute.signInScreen);
                               });
-
-
                         }),
                   ],
                 ),

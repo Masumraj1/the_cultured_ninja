@@ -10,6 +10,7 @@ class AppColors {
   static const Color normalWhite = Color(0xffE7E7E7);
   static const Color borderColor = Color(0xff838383);
   static const Color spinColor = Color(0xff5B18B1);
+  static const Color newColor = Color(0xff180D19);
   static const Color spinColor2 = Color(0xff53199E);
   static const Color spinBackgroundColor = Color(0xff090C11);
   static const Color changeColor = Color(0xffCEB0E6);
