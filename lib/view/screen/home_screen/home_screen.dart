@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:final_movie/controller/admob_controller/admob_controller.dart';
 import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
 import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
@@ -18,18 +19,36 @@ import 'package:final_movie/view/widgets/nav_bar/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'inner_widgets/home_appbar/home_appbar.dart';
 import 'inner_widgets/side_drawer/side_drawer.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
   final CustomWidgets customWidget = CustomWidgets();
+
   final HomeController homeController = Get.find<HomeController>();
+
   final FavoriteController favoriteController = Get.find<FavoriteController>();
+
+  final AdmobController admobController = Get.find<AdmobController>();
+
+  @override
+  void initState() {
+    admobController.loadBannerAd(
+        'ca-app-pub-3940256099942544/6300978111'); // Test Banner Ad ID
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +90,7 @@ class HomeScreen extends StatelessWidget {
                             autoPlay: true,
                             autoPlayCurve: Curves.ease,
                             onPageChanged: (int index, reason) {
-                              // homeController.currentBannerIndex.value = index;
                               homeController.bannerIndex.value = index;
-
                               homeController.pageController.value =
                                   PageController(
                                       initialPage:
@@ -99,7 +116,6 @@ class HomeScreen extends StatelessWidget {
                           }).toList(),
                         ),
                       SizedBox(height: 16.h),
-                      // SmoothPageIndicator
                       SmoothPageIndicator(
                         controller: homeController.pageController.value,
                         count: homeController.bannerList.length,
@@ -126,18 +142,18 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ///======================== Top Rating Movies =========================
-
                         customWidget.customRow(
                           startTitle: AppStrings.topRatingMovies,
                           endTitle: AppStrings.viewAll,
                           onTap: () {
+                            // admobController.showInterstitialAd(); // Show Interstitial Ad
                             Get.toNamed(AppRoute.topRatingMovies);
                           },
                         ),
 
                         SizedBox(height: 16.h),
 
-                        ///================ Top Rating Movies Tab Bar======
+                        ///================ Top Rating Movies Tab Bar =========================
                         TopRatingMoviesTabBar(homeController: homeController),
                         SizedBox(height: 16.h),
                         IndexedStack(
@@ -159,15 +175,14 @@ class HomeScreen extends StatelessWidget {
                           ],
                         ),
 
-                        SizedBox(
-                          height: 10.h,
-                        ),
+                        SizedBox(height: 10.h),
 
                         ///======================== My Favorites =========================
                         customWidget.customRow(
                           startTitle: AppStrings.myFavorite,
                           endTitle: AppStrings.viewAll,
                           onTap: () {
+                            // admobController.showInterstitialAd(); // Show Interstitial Ad
                             Get.toNamed(AppRoute.favoriteScreen);
                           },
                         ),
@@ -188,25 +203,27 @@ class HomeScreen extends StatelessWidget {
                         else
                           Row(
                             children: List.generate(
-                                favoriteController.favoriteList.length,
-                                (index) {
-                              var favoriteList =
-                                  favoriteController.favoriteList[index];
-                              return GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(AppRoute.movieDetails,
-                                      arguments: [
-                                        favoriteList.movieId.toString(),
-                                        favoriteList.rating
-                                      ]);
-                                },
-                                child: CustomImageText(
-                                  image: favoriteList.poster ?? "",
-                                  movieName: favoriteList.title ?? "",
-                                ),
-                              );
-                            }),
+                              favoriteController.favoriteList.length,
+                              (index) {
+                                var favoriteList =
+                                    favoriteController.favoriteList[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(AppRoute.movieDetails,
+                                        arguments: [
+                                          favoriteList.movieId.toString(),
+                                          favoriteList.rating
+                                        ]);
+                                  },
+                                  child: CustomImageText(
+                                    image: favoriteList.poster ?? "",
+                                    movieName: favoriteList.title ?? "",
+                                  ),
+                                );
+                              },
+                            ),
                           ),
+
                         SizedBox(height: 16.h),
 
                         ///============================ Studios ============================
@@ -224,17 +241,47 @@ class HomeScreen extends StatelessWidget {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: List.generate(
-                                homeController.studioDataList.length, (index) {
-                              var studioData =
-                                  homeController.studioDataList[index];
-                              return CustomImageText(
-                                image:
-                                    "${ApiUrl.networkImageUrl}${studioData.logo ?? ""}",
-                                movieName: studioData.name ?? "",
-                              );
-                            }),
+                              homeController.studioDataList.length,
+                              (index) {
+                                var studioData =
+                                    homeController.studioDataList[index];
+                                return CustomImageText(
+                                  image:
+                                      "${ApiUrl.networkImageUrl}${studioData.logo ?? ""}",
+                                  movieName: studioData.name ?? "",
+                                );
+                              },
+                            ),
                           ),
-                        )
+                        ),
+
+                        ///======================== Banner Ad (Optional) =========================
+                        Obx(() {
+                          if (admobController.isBannerAdReady.value &&
+                              admobController.bannerAd != null) {
+                            return Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    alignment: Alignment.center,
+                                    width: admobController.bannerAd!.size.width
+                                        .toDouble(),
+                                    height: admobController
+                                        .bannerAd!.size.height
+                                        .toDouble(),
+                                    child:
+                                        AdWidget(ad: admobController.bannerAd!),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            return const SizedBox.shrink();
+                          }
+                        }),
+
+                        ///======================== Rewarded Ad (Optional) =========================
                       ],
                     ),
                   ),

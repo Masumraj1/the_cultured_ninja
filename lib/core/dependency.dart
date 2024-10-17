@@ -1,3 +1,4 @@
+import 'package:final_movie/controller/admob_controller/admob_controller.dart';
 import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
 import 'package:final_movie/controller/calendar_controller/calendar_controller.dart';
 import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
@@ -28,6 +29,7 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => StreamingController(), fenix: true);
     Get.lazyPut(() => MovieDetailsController(), fenix: true);
     Get.lazyPut(() => NotificationController(), fenix: true);
+    Get.lazyPut(() => AdmobController(), fenix: true);
 
   }
 }

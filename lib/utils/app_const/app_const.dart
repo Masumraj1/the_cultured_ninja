@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class AppConstants {
   static String bearerToken = "BearerToken";
   static String resetToken = "BearerToken";
@@ -6,6 +8,14 @@ class AppConstants {
   static String isRememberMe = "isRememberMe";
 
   /// <====================== All Response Message Static==============================>
+  static String bannerAdsId = Platform.isAndroid
+      ? 'ca-app-pub-9098800682156327/5573978693'
+      : 'ca-app-pub-9098800682156327/7281710406';
+
+  static String interstitialAdsId = Platform.isAndroid
+      ? 'ca-app-pub-9098800682156327~8268085481'
+      : 'ca-app-pub-9098800682156327/4843249328';
+
 
   static String successfull = "Request Successfull";
   static String error = "Oops, something went wrong";
