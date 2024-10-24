@@ -50,7 +50,6 @@ class AuthenticationController extends GetxController {
       jsonEncode(body),
     );
     if (response.statusCode == 200) {
-
       Get.toNamed(AppRoute.forgetOtp, parameters: {AppStrings.signUp: "true"});
       toastMessage(
         message: response.body["message"],
@@ -65,7 +64,6 @@ class AuthenticationController extends GetxController {
   ///=====================Sign up Otp==================
   var activationCode = "";
   RxBool isOtpLoading = false.obs;
-
 
   signUpVerifyOTP() async {
     isOtpLoading.value = true;
@@ -107,21 +105,16 @@ class AuthenticationController extends GetxController {
   var otp = "";
   RxBool isForget = false.obs;
 
-
   forgetOtp() async {
     isForget.value = true;
     refresh();
-    Map<dynamic, String> body = {
-      "email": emailController.text,
-      "code": otp
-    };
+    Map<dynamic, String> body = {"email": emailController.text, "code": otp};
 
     var response =
         await ApiClient.postData(ApiUrl.verifyCOde, jsonEncode(body));
     isForget.value = false;
     refresh();
     if (response.statusCode == 200) {
-
       SharePrefsHelper.setString(
           AppConstants.resetToken, response.body["password_reset_token"]);
       // print(
@@ -130,6 +123,10 @@ class AuthenticationController extends GetxController {
           '======================User Token Saved::: ${response.body['password_reset_token']}');
 
       Get.offAllNamed(AppRoute.resetPassword);
+      toastMessage(
+        message: response.body["message"],
+      );
+    } else if (response.statusCode == 401) {
       toastMessage(
         message: response.body["message"],
       );
@@ -147,9 +144,7 @@ class AuthenticationController extends GetxController {
   forgetPassword() async {
     isForgetLoading.value = true;
     refresh();
-    Map<dynamic, String> body = {
-      "email": emailController.text
-    };
+    Map<dynamic, String> body = {"email": emailController.text};
     var response =
         await ApiClient.postData(ApiUrl.forgotPasswordAuth, jsonEncode(body));
     isForgetLoading.value = false;
@@ -168,12 +163,11 @@ class AuthenticationController extends GetxController {
     refresh();
   }
 
-
-
   ///=====================================Resend=======================
   final rxRequestStatus = Status.loading.obs;
 
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
+
   ///============================Forget Resent=================
   resentUser() async {
     setRxRequestStatus(Status.loading);
@@ -181,7 +175,8 @@ class AuthenticationController extends GetxController {
     Map<String, String> body = {"email": emailController.text};
 
     var response = await ApiClient.postData(
-      ApiUrl.forgotPasswordAuth, jsonEncode(body),
+      ApiUrl.forgotPasswordAuth,
+      jsonEncode(body),
     );
     if (response.statusCode == 200) {
       setRxRequestStatus(Status.completed);
@@ -194,6 +189,7 @@ class AuthenticationController extends GetxController {
       return false;
     }
   }
+
   ///============================= reset Password =============================
 
   RxBool isResetLoading = false.obs;
@@ -203,10 +199,12 @@ class AuthenticationController extends GetxController {
       isResetLoading.value = true;
 
       // Retrieve the saved token from shared preferences (make sure to use 'await' as it's asynchronous)
-      String? passwordResetToken = await SharePrefsHelper.getString(AppConstants.resetToken);
+      String? passwordResetToken =
+          await SharePrefsHelper.getString(AppConstants.resetToken);
 
       if (passwordResetToken.isEmpty) {
-        toastMessage(message: "No password reset token found. Please try again.");
+        toastMessage(
+            message: "No password reset token found. Please try again.");
         isResetLoading.value = false;
         return;
       }
@@ -247,9 +245,6 @@ class AuthenticationController extends GetxController {
     }
   }
 
-
-
-
   ///============================== LogIn ================================
   RxBool isSignInLoading = false.obs;
 
@@ -285,25 +280,21 @@ class AuthenticationController extends GetxController {
     refresh();
   }
 
-
   ///=============================================account delete==========================
   RxBool isDeleteLoading = false.obs;
 
   deleteAccount() async {
     isDeleteLoading.value = true;
     refresh();
-    Map<dynamic, String> body = {
-      "password": passwordController.text
-    };
-    var response =
-    await ApiClient.deleteData(ApiUrl.deleteAccount, body: jsonEncode(body));
+    Map<dynamic, String> body = {"password": passwordController.text};
+    var response = await ApiClient.deleteData(ApiUrl.deleteAccount,
+        body: jsonEncode(body));
 
     isDeleteLoading.value = false;
     refresh();
     if (response.statusCode == 200) {
       toastMessage(message: response.body["message"]);
       Get.toNamed(AppRoute.signInScreen);
-
     } else {
       ApiChecker.checkApi(response);
     }
@@ -313,7 +304,6 @@ class AuthenticationController extends GetxController {
 
   @override
   void onInit() {
-
     super.onInit();
   }
 }
