@@ -57,6 +57,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
                   ///<<<<========================================Current Password Field======================================
                   CustomTextField(
+                    isColor: true,
                     hintText: AppStrings.password,
                     textEditingController:
                         generalController.oldPasswordController,
@@ -88,6 +89,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
                   ///<<<<========================================NewPassword Field======================================
                   CustomTextField(
+                    isColor: true,
                     isPassword: true,
                     fillColor: AppColors.fromRgb,
                     fieldBorderColor: AppColors.fromRgb,
@@ -117,6 +119,7 @@ class ChangePasswordScreen extends StatelessWidget {
 
                   ///<<<<========================================Confirm Password Field======================================
                   CustomTextField(
+                    isColor: true,
                     textEditingController:
                         generalController.confirmPasswordController,
                     keyboardType: TextInputType.name,

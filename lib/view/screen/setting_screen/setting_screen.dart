@@ -68,6 +68,7 @@ class SettingScreen extends StatelessWidget {
 
                 ///======================================Password Field==================
                  CustomTextField(
+                   isColor: true,
                    textEditingController:authenticationController.passwordController ,
                   hintText: "password",
                   hintStyle: const TextStyle(color: Colors.white),

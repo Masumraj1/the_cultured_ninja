@@ -12,7 +12,7 @@ class CustomTextField extends StatefulWidget {
     this.focusNode,
     this.keyboardType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
-    this.cursorColor = AppColors.buttonColor,
+    this.cursorColor = AppColors.buttonColor ,
     this.isColor = false, // Default value for isColor
     this.inputTextStyle,
     this.textAlignVertical = TextAlignVertical.center,

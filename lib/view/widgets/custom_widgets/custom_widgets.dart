@@ -172,7 +172,7 @@ class CustomWidgets {
                 ),
                 CustomText(
                   text: releaseDate,
-                  color: AppColors.yesButtonColor,
+                  color: AppColors.lightWhite,
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
 
