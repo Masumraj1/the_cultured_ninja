@@ -1,10 +1,8 @@
 import 'package:final_movie/controller/following_controller/following_controller.dart';
 import 'package:final_movie/controller/movie_details_controller/movie_details_controller.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
-import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/widgets/custom_following/custom_following.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';

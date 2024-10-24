@@ -201,26 +201,29 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           )
                         else
-                          Row(
-                            children: List.generate(
-                              favoriteController.favoriteList.length,
-                              (index) {
-                                var favoriteList =
-                                    favoriteController.favoriteList[index];
-                                return GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(AppRoute.movieDetails,
-                                        arguments: [
-                                          favoriteList.movieId.toString(),
-                                          favoriteList.rating
-                                        ]);
-                                  },
-                                  child: CustomImageText(
-                                    image: favoriteList.poster ?? "",
-                                    movieName: favoriteList.title ?? "",
-                                  ),
-                                );
-                              },
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: List.generate(
+                                favoriteController.favoriteList.length,
+                                (index) {
+                                  var favoriteList =
+                                      favoriteController.favoriteList[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(AppRoute.movieDetails,
+                                          arguments: [
+                                            favoriteList.movieId.toString(),
+                                            favoriteList.rating
+                                          ]);
+                                    },
+                                    child: CustomImageText(
+                                      image: favoriteList.poster ?? "",
+                                      movieName: favoriteList.title ?? "",
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
 

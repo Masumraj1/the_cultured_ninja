@@ -4,7 +4,6 @@ import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/widgets/custom_following/custom_following.dart';
 import 'package:final_movie/view/widgets/custom_image/custom_image.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
@@ -64,40 +63,38 @@ class FollowingStudios extends StatelessWidget {
                       fontSize: 14.sp,
                       bottom: 7,
                     ),
-                    Obx(
-                      () => GestureDetector(
-                        onTap: () async {
-                          bool isRemove = await studiosController
-                              .toggleWatched(data?.id ?? "");
-                          if (isRemove) {
-                            followingController.flowData.value.studios
-                                ?.removeAt(index);
-                            followingController.flowData.refresh();
-                          }
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          height: 40.h,
-                          width: 114.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.blackDeep,
-                          ),
-                          child: Row(
-                            children: [
-                              const CustomImage(
-                                imageSrc:
-                                     AppIcons.unFollow,
-                              ),
-                              CustomText(
-                                left: 10,
-                                text: AppStrings.unfollow,
-                                color: Colors.white,
-                                fontSize: 13.sp,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ],
-                          ),
+                    GestureDetector(
+                      onTap: () async {
+                        bool isRemove = await studiosController
+                            .toggleWatched(data?.id ?? "");
+                        if (isRemove) {
+                          followingController.flowData.value.studios
+                              ?.removeAt(index);
+                          followingController.flowData.refresh();
+                        }
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10),
+                        height: 40.h,
+                        width: 114.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.blackDeep,
+                        ),
+                        child: Row(
+                          children: [
+                            const CustomImage(
+                              imageSrc:
+                              AppIcons.unFollow,
+                            ),
+                            CustomText(
+                              left: 10,
+                              text: AppStrings.unfollow,
+                              color: Colors.white,
+                              fontSize: 13.sp,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ],
                         ),
                       ),
                     ),

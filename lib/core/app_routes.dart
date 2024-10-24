@@ -82,7 +82,7 @@ static const String historyScreen = '/HistoryScreen';
 
   static List<GetPage> routes = [
     ///==================== Initial Routes ====================
-    GetPage(name: splashScreen, page: () => const SplashScreen()),
+    GetPage(name: splashScreen, page: () => const SplashScreen(),),
 
 
     ///==========================OnBoarding Screen============

@@ -38,7 +38,7 @@ class ApiUrl {
   }
 
   static String filterMovie({required String id}) {
-    return "/movie/admin-tmdb-movie-list?genre_id=$id";
+    return "/movie/all-movies?genre_id=$id";
   }
 
 
