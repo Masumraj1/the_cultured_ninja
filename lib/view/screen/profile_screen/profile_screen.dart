@@ -140,8 +140,9 @@ class ProfileScreen extends StatelessWidget {
                           /// Phone Number
                           CustomProfile(
                             title: AppStrings.phoneNumber,
-                            subTitle: data.phone.toString(),
+                            subTitle: data.phone?.toString() ?? "", // Convert 'phone' to a String and handle null
                           ),
+
 
 
                           /// Email
