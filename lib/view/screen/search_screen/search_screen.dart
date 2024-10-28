@@ -71,7 +71,7 @@ class SearchScreen extends StatelessWidget {
                     textEditingController: homeController.searchController,
                     fillColor: AppColors.fromRgb,
                     fieldBorderColor: AppColors.fromRgb,
-                    hintText: AppStrings.search,
+                    hintText: 'Use Coma for Multiple Search',
                     hintStyle: const TextStyle(color: AppColors.searchHintText),
                     isPrefixIcon: true,
                     prefixIcon: const Padding(
