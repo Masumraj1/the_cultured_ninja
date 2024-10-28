@@ -48,7 +48,7 @@ android {
         debug {
             keyAlias 'uploadkeystore'
             keyPassword '123456'
-            storeFile file('upload-keystore.jks')
+            storeFile file('keystore.jks')
             storePassword '123456'
         }
     }

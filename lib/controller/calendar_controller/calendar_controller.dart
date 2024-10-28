@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../../services/api_client.dart';
 
 class CalendarController extends GetxController {
+
   // List of dates selected in the calendar
   var dates = <DateTime?>[DateTime.now()].obs;
 

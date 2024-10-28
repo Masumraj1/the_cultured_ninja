@@ -19,70 +19,82 @@ class NotificationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColor,
 
-        ///===============================Notification Appbar=====================
-        appBar: AppBar(
-          backgroundColor: AppColors.blackDeep,
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(Icons.arrow_back),
-            color: AppColors.lightWhite,
-          ),
-          title: CustomText(
-            text: AppStrings.notifications,
-            color: AppColors.lightWhite,
-            fontSize: 20.sp,
-            fontWeight: FontWeight.w500,
-          ),
-          centerTitle: true,
+      ///=============================== Notification AppBar =====================
+      appBar: AppBar(
+        backgroundColor: AppColors.blackDeep,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(Icons.arrow_back),
+          color: AppColors.lightWhite,
         ),
-        body: Obx(() {
-          switch (notificationController.rxRequestStatus.value) {
-            case Status.loading:
-              return const CustomLoader(); // Show loading indicator
+        title: CustomText(
+          text: AppStrings.notifications,
+          color: AppColors.lightWhite,
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
+        ),
+        centerTitle: true,
+      ),
+      body: Obx(() {
+        switch (notificationController.rxRequestStatus.value) {
+          case Status.loading:
+            return const CustomLoader(); // Show loading indicator
 
-            case Status.internetError:
-              return NoInternetScreen(onTap: () {
+          case Status.internetError:
+            return NoInternetScreen(onTap: () {
+              notificationController.getNotification();
+            });
+
+          case Status.error:
+            return GeneralErrorScreen(
+              onTap: () {
                 notificationController.getNotification();
-              });
+              },
+            );
 
-            case Status.error:
-              return GeneralErrorScreen(
-                onTap: () {
-                  notificationController.getNotification();
-                },
+          case Status.completed:
+            if (notificationController.notificationList.isEmpty) {
+              return const Center(
+                child: CustomText(
+                  text: 'No Notification Found',
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.lightWhite,
+                  fontSize: 16,
+                ),
               );
-
-            case Status.completed:
+            } else {
               return Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                 child: SingleChildScrollView(
                   child: Column(
-                    children: List.generate(
-                        notificationController.notificationList.length, (index) {
-                          var data = notificationController.notificationList[index];
+                    children: List.generate(notificationController.notificationList.length, (index) {
+                      var data = notificationController.notificationList[index];
                       return customFollowing(
-                          image:data.movie?.poster??"" ,
-                          movieName: data.movie?.title ?? 'No Title',
-                          onTap: () {},
-                      title: notificationController.notificationList[index].title ?? "No Title");
+                        image: data.movie?.poster ?? "",
+                        movieName: data.movie?.title ?? 'No Title',
+                        title: data.title ?? "No Title",
+                        onTap: () {},
+                      );
                     }),
                   ),
                 ),
               );
-          }
-        }));
+            }
+        }
+      }),
+    );
   }
 
-  Widget customFollowing(
-      {required String image,
-      required String movieName,
-      required String title,
-      required VoidCallback onTap}) {
+  Widget customFollowing({
+    required String image,
+    required String movieName,
+    required String title,
+    required VoidCallback onTap,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -118,9 +130,9 @@ class NotificationScreen extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
-        )
+        ),
       ],
     );
   }

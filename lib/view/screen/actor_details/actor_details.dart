@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:final_movie/controller/calendar_controller/calendar_controller.dart';
 import 'package:final_movie/controller/movie_details_controller/movie_details_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
+import 'package:final_movie/google_sign_in_service.dart';
 import 'package:final_movie/helpar/date_converter/date_converter.dart';
 import 'package:final_movie/model/actor_details_model/actor_details_model.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
@@ -17,6 +20,11 @@ import 'package:final_movie/view/widgets/custom_widgets/custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis_auth/googleapis_auth.dart';
+import 'package:http/http.dart' as http;
+import 'package:googleapis/calendar/v3.dart' as calendar;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ActorDetails extends StatefulWidget {
   const ActorDetails({super.key});
@@ -26,12 +34,12 @@ class ActorDetails extends StatefulWidget {
 }
 
 class _ActorDetailsState extends State<ActorDetails> {
+ ///=============================Calendar=========================
   final CustomWidgets customWidget = CustomWidgets();
-  final MovieDetailsController movieDetailsController =
-  Get.find<MovieDetailsController>();
+  final MovieDetailsController movieDetailsController = Get.find<MovieDetailsController>();
   final CalendarController calendarController = Get.find<CalendarController>();
 
-  final String id = Get.arguments.toString(); // Ensure id is converted to a string
+  final String id = Get.arguments.toString();
 
   @override
   void initState() {
@@ -40,6 +48,167 @@ class _ActorDetailsState extends State<ActorDetails> {
       movieDetailsController.actorDetail(id: id);
     });
   }
+
+  /// Google Sign-In Method
+  Future<http.Client?> googleSignIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedEmail = prefs.getString('signedInEmail');
+
+    if (savedEmail != null) {
+      log("================User already signed in with email:============ $savedEmail");
+      return await _getAuthenticatedClient();
+    } else {
+      try {
+        final user = await GoogleSignInService.login();
+        final GoogleSignInAuthentication? googleAuth = await user?.authentication;
+
+        log('User: ${user!.displayName}, Email: ${user.email}');
+        final httpClient = await obtainAuthenticatedClient(googleAuth!);
+
+        if (httpClient != null) {
+          log("=============Successfully authenticated==================");
+          await prefs.setString('signedInEmail', user.email);
+          return httpClient;
+        }
+      } catch (exception) {
+        log('====================Error during Google Sign-In:============== ${exception.toString()}');
+      }
+    }
+    return null;
+  }
+
+  /// Obtain authenticated HTTP client for existing sign-ins
+  Future<http.Client?> _getAuthenticatedClient() async {
+    final user = await GoogleSignInService.getCurrentUser();
+    if (user != null) {
+      final googleAuth = await user.authentication;
+      return await obtainAuthenticatedClient(googleAuth);
+    }
+    return null;
+  }
+
+  /// Obtain authenticated HTTP client
+  Future<http.Client?> obtainAuthenticatedClient(GoogleSignInAuthentication googleAuth) async {
+    try {
+      return authenticatedClient(
+        http.Client(),
+        AccessCredentials(
+          AccessToken(
+            'Bearer',
+            googleAuth.accessToken!,
+            DateTime.now().toUtc().add(const Duration(hours: 1)),
+          ),
+          null,
+          ['https://www.googleapis.com/auth/calendar'],
+        ),
+      );
+    } catch (e) {
+      log('=================Failed to obtain an authenticated client:============= $e');
+      return null;
+    }
+  }
+
+  /// Add Event to Google Calendar
+  Future<void> addEventToGoogleCalendar(http.Client client, String eventTitle, DateTime eventDate) async {
+    try {
+      var calendarApi = calendar.CalendarApi(client);
+      final eventStart = eventDate.toUtc();
+      final eventEnd = eventStart.add(const Duration(hours: 1));
+
+      var event = calendar.Event()
+        ..summary = eventTitle
+        ..description = 'Event created from Flutter app'
+        ..start = calendar.EventDateTime(dateTime: eventStart)
+        ..end = calendar.EventDateTime(dateTime: eventEnd);
+
+      final insertedEvent = await calendarApi.events.insert(event, 'primary');
+      log('===========Event added to calendar with ID:=========== ${insertedEvent.id}');
+
+    } catch (e) {
+      log('===============Error adding event:============ $e');
+    }
+  }
+
+  /// Show Dialog Box for Date Selection and Event Addition
+  void showDialogBox(BuildContext context, String actorId, String actorName) {
+    Get.dialog(
+      AlertDialog(
+        backgroundColor: AppColors.backgroundColor,
+        content: Obx(() {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () {
+                      Get.back(); // Closes the dialog
+                    },
+                    child: const CustomImage(
+                      imageSrc: AppIcons.x,
+                      imageType: ImageType.svg,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.h),
+              CustomTextField(
+                textEditingController: TextEditingController(
+                  text: calendarController.selectedDate.value.toString(),
+                ),
+                fillColor: AppColors.lightWhite,
+                fieldBorderColor: AppColors.fromRgb,
+                suffixIcon: GestureDetector(
+                  onTap: () {
+                    _selectDate(context);
+                  },
+                  child: const Icon(Icons.calendar_today),
+                ),
+              ),
+              SizedBox(height: 15.h),
+              Obx(() => calendarController.isAdded.value
+                  ? const CustomLoader()
+                  : CustomButton(
+                onTap: () async {
+                  final httpClient = await googleSignIn();
+                  if (httpClient != null) {
+                    await addEventToGoogleCalendar(
+                      httpClient,
+                      actorName,
+                      calendarController.selectedDate.value,
+                    );
+                    calendarController.addedCalender(
+                        id: actorId,
+                        date: DateConverter.calender(calendarController.selectedDate.value));
+                  }
+                  Get.back(); // Close the dialog after adding
+                },
+                fillColor: AppColors.buttonColor,
+                title: 'Add to Calendar',
+              )),
+            ],
+          );
+        }),
+      ),
+    );
+  }
+
+  /// Date Picker for Selecting Event Date
+  void _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: calendarController.selectedDate.value,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      // Update the selected date in the controller
+      calendarController.selectedDate.value = picked;
+    }
+  }
+  ///================================Calender============================
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +345,7 @@ class _ActorDetailsState extends State<ActorDetails> {
                       var upcomingData = data.upcomingMovies?[index];
                       return customWidget.customUpcomingMovies(
                         onTap: () {
-                          showDialogBox(context, upcomingData?.id.toString() ?? "");
+                          showDialogBox(context, upcomingData?.id.toString() ?? "", upcomingData?.title ?? "Movie Event");
                         },
                         image: upcomingData?.posterPath ?? "",
                         movieName: upcomingData?.title ?? "",
@@ -221,85 +390,4 @@ class _ActorDetailsState extends State<ActorDetails> {
     );
   }
 
-  void showDialogBox(BuildContext context, String actorId) {
-    Get.dialog(
-      AlertDialog(
-        backgroundColor: AppColors.backgroundColor,
-        content: Obx(() {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  const SizedBox(),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: const CustomImage(
-                      imageSrc: AppIcons.x,
-                      imageType: ImageType.svg,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.h),
-
-              ///==========================added ===============
-              CustomTextField(
-                textEditingController: TextEditingController(
-                  text: DateConverter.formatDate(calendarController.selectedDate.value),
-                ),
-                fillColor: AppColors.lightWhite,
-                fieldBorderColor: AppColors.fromRgb,
-                suffixIcon: GestureDetector(
-                  onTap: () {
-                    _selectDate(context);
-                  },
-                  child: const Icon(Icons.calendar_month),
-                ),
-              ),
-              CustomText(
-                top: 15,
-                maxLines: 3,
-                fontSize: 14.sp,
-                text: AppStrings.thankYou,
-                fontWeight: FontWeight.w400,
-                color: AppColors.lightWhite,
-                bottom: 10,
-              ),
-              SizedBox(height: 15.h),
-
-              Obx(() => calendarController.isAdded.value
-                  ? const CustomLoader()
-                  : CustomButton(
-                onTap: () {
-                  calendarController.addedCalender(
-                      id: actorId,
-                      date: DateConverter.calender(calendarController.selectedDate.value));
-                },
-                fillColor: AppColors.buttonColor,
-                title: 'Added Calendar',
-              )),
-            ],
-          );
-        }),
-      ),
-    );
-  }
-
-  void _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: calendarController.selectedDate.value,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null) {
-      // Update the selected date in the controller
-      calendarController.selectedDate.value = picked;
-    }
-  }
 }
