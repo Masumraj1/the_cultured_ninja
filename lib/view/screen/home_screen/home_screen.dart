@@ -35,18 +35,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  // Controller instances
   final CustomWidgets customWidget = CustomWidgets();
-
   final HomeController homeController = Get.find<HomeController>();
-
   final FavoriteController favoriteController = Get.find<FavoriteController>();
-
   final AdmobController admobController = Get.find<AdmobController>();
 
   @override
   void initState() {
-    admobController.loadBannerAd(
-        'ca-app-pub-3940256099942544/6300978111'); // Test Banner Ad ID
+    admobController.loadBannerAd('ca-app-pub-3940256099942544/6300978111'); // Test Banner Ad ID
     super.initState();
   }
 
@@ -58,16 +55,16 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: const NavBar(currentIndex: 0),
       drawer: const SideDrawer(),
       body: Obx(() {
+        // Handle loading, error, and completed states for the home data
         switch (homeController.rxRequestStatus.value) {
           case Status.loading:
-            return const CustomLoader();
+            return const Center(child: CustomLoader());
           case Status.internetError:
           case Status.error:
             return GeneralErrorScreen(
               onTap: () {
                 homeController.customMethod();
-                favoriteController
-                    .getFavorite(); // Retry fetching movies and banners
+                favoriteController.getFavorite(); // Retry fetching movies and banners
               },
             );
           case Status.completed:
@@ -79,212 +76,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   HomeAppBar(scaffoldKey: scaffoldKey),
                   SizedBox(height: 10.w),
 
-                  ///=============================== This is Banner =======================
-                  Column(
-                    children: [
-                      if (homeController.bannerList.isEmpty)
-                        const Center(child: CustomLoader()) // Loading indicator
-                      else
-                        CarouselSlider(
-                          options: CarouselOptions(
-                            autoPlay: true,
-                            autoPlayCurve: Curves.ease,
-                            onPageChanged: (int index, reason) {
-                              homeController.bannerIndex.value = index;
-                              homeController.pageController.value =
-                                  PageController(
-                                      initialPage:
-                                          homeController.bannerIndex.value);
-                            },
-                          ),
-                          items: homeController.bannerList.map((banner) {
-                            return Builder(
-                              builder: (BuildContext context) {
-                                return Container(
-                                  margin: const EdgeInsets.only(right: 10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(15)),
-                                    image: DecorationImage(
-                                      image: NetworkImage(banner.poster ?? ""),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          }).toList(),
-                        ),
-                      SizedBox(height: 16.h),
-                      SmoothPageIndicator(
-                        controller: homeController.pageController.value,
-                        count: homeController.bannerList.length,
-                        axisDirection: Axis.horizontal,
-                        effect: const ExpandingDotsEffect(
-                          expansionFactor: 2,
-                          spacing: 8.0,
-                          dotWidth: 10,
-                          dotHeight: 6.0,
-                          paintStyle: PaintingStyle.fill,
-                          dotColor: AppColors.lightWhite,
-                          activeDotColor: AppColors.buttonColor,
-                        ),
-                      ),
-                    ],
-                  ),
+                  ///=============================== Carousel Banner =======================
+                  _buildBannerCarousel(),
 
                   SizedBox(height: 24.h),
 
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        ///======================== Top Rating Movies =========================
-                        customWidget.customRow(
-                          startTitle: AppStrings.topRatingMovies,
-                          endTitle: AppStrings.viewAll,
-                          onTap: () {
-                            // admobController.showInterstitialAd(); // Show Interstitial Ad
-                            Get.toNamed(AppRoute.topRatingMovies);
-                          },
-                        ),
-
-                        SizedBox(height: 16.h),
-
-                        ///================ Top Rating Movies Tab Bar =========================
-                        TopRatingMoviesTabBar(homeController: homeController),
-                        SizedBox(height: 16.h),
-                        IndexedStack(
-                          index: homeController.selectedIndex.value,
-                          children: [
-                            ///========================Movies================
-                            homeController.moviesList.isEmpty
-                                ? const CustomText(
-                                    text: 'No Movie Found',
-                                    color: AppColors.lightWhite,
-                                    fontWeight: FontWeight.w500,
-                                  )
-                                : HomeScreenTopRatingMovies(
-                                    customWidget: customWidget,
-                                  ),
-
-                            ///========================Tv Series================
-                            HomeScreenTvSeries(customWidget: customWidget)
-                          ],
-                        ),
+                        ///======================== Top Rating Movies Section =========================
+                        _buildTopRatingMoviesSection(),
 
                         SizedBox(height: 10.h),
 
-                        ///======================== My Favorites =========================
-                        customWidget.customRow(
-                          startTitle: AppStrings.myFavorite,
-                          endTitle: AppStrings.viewAll,
-                          onTap: () {
-                            // admobController.showInterstitialAd(); // Show Interstitial Ad
-                            Get.toNamed(AppRoute.favoriteScreen);
-                          },
-                        ),
+                        ///======================== My Favorites Section =========================
+                        _buildMyFavoritesSection(),
 
                         SizedBox(height: 16.h),
 
-                        if (favoriteController.favoriteList.isEmpty)
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height / 3.5,
-                            child: const Center(
-                              child: CustomText(
-                                text: 'No Favorite Data Founded',
-                                color: AppColors.lightWhite,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          )
-                        else
-                          SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: List.generate(
-                                favoriteController.favoriteList.length,
-                                (index) {
-                                  var favoriteList =
-                                      favoriteController.favoriteList[index];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(AppRoute.movieDetails,
-                                          arguments: [
-                                            favoriteList.movieId.toString(),
-                                            favoriteList.rating
-                                          ]);
-                                    },
-                                    child: CustomImageText(
-                                      image: favoriteList.poster ?? "",
-                                      movieName: favoriteList.title ?? "",
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-
-                        SizedBox(height: 16.h),
-
-                        ///============================ Studios ============================
-                        customWidget.customRow(
-                          startTitle: AppStrings.studios,
-                          endTitle: AppStrings.viewAll,
-                          onTap: () {
-                            Get.toNamed(AppRoute.studiosScreen);
-                          },
-                        ),
-
-                        SizedBox(height: 16.h),
-
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: List.generate(
-                              homeController.studioDataList.length,
-                              (index) {
-                                var studioData =
-                                    homeController.studioDataList[index];
-                                return CustomImageText(
-                                  image:
-                                      "${ApiUrl.networkImageUrl}${studioData.logo ?? ""}",
-                                  movieName: studioData.name ?? "",
-                                );
-                              },
-                            ),
-                          ),
-                        ),
+                        ///============================ Studios Section ============================
+                        _buildStudiosSection(),
 
                         ///======================== Banner Ad (Optional) =========================
-                        Obx(() {
-                          if (admobController.isBannerAdReady.value &&
-                              admobController.bannerAd != null) {
-                            return Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    alignment: Alignment.center,
-                                    width: admobController.bannerAd!.size.width
-                                        .toDouble(),
-                                    height: admobController
-                                        .bannerAd!.size.height
-                                        .toDouble(),
-                                    child:
-                                        AdWidget(ad: admobController.bannerAd!),
-                                  ),
-                                ],
-                              ),
-                            );
-                          } else {
-                            return const SizedBox.shrink();
-                          }
-                        }),
+                        _buildBannerAd(),
 
-                        ///======================== Rewarded Ad (Optional) =========================
+                        SizedBox(height: 20.h),
+
+
                       ],
                     ),
                   ),
@@ -294,5 +114,188 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }),
     );
+  }
+
+  /// Widget: Carousel Banner Section
+  Widget _buildBannerCarousel() {
+    return Column(
+      children: [
+        if (homeController.bannerList.isEmpty)
+          const Center(child: CustomLoader()) // Loading indicator
+        else
+          CarouselSlider(
+            options: CarouselOptions(
+              autoPlay: true,
+              autoPlayCurve: Curves.ease,
+              onPageChanged: (int index, reason) {
+                homeController.bannerIndex.value = index;
+                homeController.pageController.value =
+                    PageController(initialPage: homeController.bannerIndex.value);
+              },
+            ),
+            items: homeController.bannerList.map((banner) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      image: DecorationImage(
+                        image: NetworkImage(banner.poster ?? ""),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                },
+              );
+            }).toList(),
+          ),
+        SizedBox(height: 16.h),
+        SmoothPageIndicator(
+          controller: homeController.pageController.value,
+          count: homeController.bannerList.length,
+          axisDirection: Axis.horizontal,
+          effect: const ExpandingDotsEffect(
+            expansionFactor: 2,
+            spacing: 8.0,
+            dotWidth: 10,
+            dotHeight: 6.0,
+            paintStyle: PaintingStyle.fill,
+            dotColor: AppColors.lightWhite,
+            activeDotColor: AppColors.buttonColor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Widget: Top Rating Movies Section
+  Widget _buildTopRatingMoviesSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customWidget.customRow(
+          startTitle: AppStrings.topRatingMovies,
+          endTitle: AppStrings.viewAll,
+          onTap: () => Get.toNamed(AppRoute.topRatingMovies),
+        ),
+        SizedBox(height: 16.h),
+        TopRatingMoviesTabBar(homeController: homeController),
+        SizedBox(height: 16.h),
+        IndexedStack(
+          index: homeController.selectedIndex.value,
+          children: [
+            if (homeController.moviesList.isEmpty)
+              const CustomText(
+                text: 'No Movie Found',
+                color: AppColors.lightWhite,
+                fontWeight: FontWeight.w500,
+              )
+            else
+              HomeScreenTopRatingMovies(customWidget: customWidget),
+            HomeScreenTvSeries(customWidget: customWidget),
+          ],
+        ),
+      ],
+    );
+  }
+
+  /// Widget: My Favorites Section
+  Widget _buildMyFavoritesSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customWidget.customRow(
+          startTitle: AppStrings.myFavorite,
+          endTitle: AppStrings.viewAll,
+          onTap: () => Get.toNamed(AppRoute.favoriteScreen),
+        ),
+        SizedBox(height: 16.h),
+        if (favoriteController.favoriteList.isEmpty)
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 3.5,
+            child: const Center(
+              child: CustomText(
+                text: 'No Favorite Data Founded',
+                color: AppColors.lightWhite,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          )
+        else
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(
+                favoriteController.favoriteList.length,
+                    (index) {
+                  var favoriteList = favoriteController.favoriteList[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppRoute.movieDetails, arguments: [
+                        favoriteList.movieId.toString(),
+                        favoriteList.rating
+                      ]);
+                    },
+                    child: CustomImageText(
+                      image: favoriteList.poster ?? "",
+                      movieName: favoriteList.title ?? "",
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  /// Widget: Studios Section
+  Widget _buildStudiosSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        customWidget.customRow(
+          startTitle: AppStrings.studios,
+          endTitle: AppStrings.viewAll,
+          onTap: () => Get.toNamed(AppRoute.studiosScreen),
+        ),
+        SizedBox(height: 16.h),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: List.generate(
+              homeController.studioDataList.length,
+                  (index) {
+                var studioData = homeController.studioDataList[index];
+                return CustomImageText(
+                  image: "${ApiUrl.networkImageUrl}${studioData.logo ?? ""}",
+                  movieName: studioData.name ?? "",
+                );
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Widget: Banner Ad Section
+  Widget _buildBannerAd() {
+    return Obx(() {
+      if (admobController.isBannerAdReady.value && admobController.bannerAd != null) {
+        return Padding(
+          padding: const EdgeInsets.all(15),
+          child: Container(
+            alignment: Alignment.center,
+            width: admobController.bannerAd!.size.width.toDouble(),
+            height: admobController.bannerAd!.size.height.toDouble(),
+            child: AdWidget(ad: admobController.bannerAd!),
+          ),
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    });
   }
 }

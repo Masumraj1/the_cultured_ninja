@@ -312,6 +312,8 @@ class _ActorDetailsState extends State<ActorDetails> {
                     ],
                   ),
                 ),
+                ///======================== Home Widget Data Section =======================
+
 
                 ///===================================Upcoming movies====================
                 customWidget.customRow(

@@ -1,14 +1,18 @@
+import 'package:final_movie/controller/movie_details_controller/movie_details_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:home_widget/home_widget.dart';
 
+import 'controller/java_controller/java_controller.dart';
 import 'core/app_routes.dart';
 import 'core/dependency.dart';
 import 'helpar/device_utils/device_utils.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  HomeWidget.registerInteractivityCallback(interactivityCallback);
   DeviceUtils.lockDevicePortrait();
   DependencyInjection di = DependencyInjection();
   di.dependencies();
@@ -21,7 +25,13 @@ void main() {
 }
 
 
-
+// Callback function to handle HomeWidget interactivity
+Future<void> interactivityCallback(Uri? uri) async {
+  if (uri?.host == 'fetchTitle') {
+    final movieDetailsController = Get.find<MovieDetailsController>();
+    await movieDetailsController.actorDetails;
+  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

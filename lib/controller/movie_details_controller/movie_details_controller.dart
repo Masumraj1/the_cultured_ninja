@@ -11,6 +11,7 @@ import 'package:final_movie/services/api_client.dart';
 import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:get/get.dart';
+import 'package:home_widget/home_widget.dart';
 
 class MovieDetailsController extends GetxController {
   final rxRequestStatus = Status.loading.obs;
@@ -78,8 +79,12 @@ class MovieDetailsController extends GetxController {
       setRxRequestStatus(Status.error);
     }
   }
+  var title = "Loading...".obs;
 
   ///====================================Actor Details================
+
+  // RxList<Movie> upcomingList = <Movie>[].obs;
+
   Rx<ActorDetailsData> actorDetails = ActorDetailsData().obs;
 
   actorDetail({required String id}) async {
@@ -89,7 +94,18 @@ class MovieDetailsController extends GetxController {
 
     if (response.statusCode == 200) {
       actorDetails.value = ActorDetailsData.fromJson(response.body["data"]);
+      // upcomingList.value = List<Movie>.from(
+      //     response.body["data"]);
+      // print('upcomingList=========================="${upcomingList.length}"');
       isFollowed.value = actorDetails.value.isFollowed ?? false;
+      title.value = actorDetails.value.name ?? "No Title";
+
+      // Save title for HomeWidget to access
+      await HomeWidget.saveWidgetData<String>('api_title', title.value);
+      await HomeWidget.updateWidget(
+        name: 'HomeScreenWidgetProvider',
+        iOSName: 'HomeScreenWidgetProvider',
+      );
 
       print('actor data ========================="${response.body['data']}"');
       print(
