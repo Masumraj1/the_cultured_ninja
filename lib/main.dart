@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:home_widget/home_widget.dart';
 
-import 'controller/java_controller/java_controller.dart';
 import 'core/app_routes.dart';
 import 'core/dependency.dart';
 import 'helpar/device_utils/device_utils.dart';
