@@ -8,6 +8,8 @@ import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_widget/home_widget.dart';
+import 'dart:async';
 
 class HomeController extends GetxController {
 
@@ -34,7 +36,12 @@ class HomeController extends GetxController {
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
 
 
+
+
   RxList<BannerData> bannerList = <BannerData>[].obs;
+  var title = "Loading...".obs;
+  Timer? _timer;
+  int currentIndex = 0;
 
   getBanner() async {
     setRxRequestStatus(Status.loading);
@@ -45,6 +52,22 @@ class HomeController extends GetxController {
       bannerList.value = List<BannerData>.from(
           response.body["data"].map((x) => BannerData.fromJson(x)));
       print('BannerList=========================="${bannerList.length}"');
+
+      // Timer সেটআপ করা, যাতে একে একে সব title দেখানো হয়
+      if (bannerList.isNotEmpty) {
+        // প্রথম title দেখাবে
+        currentIndex = 0;
+        title.value = bannerList[currentIndex].title ?? "No Title";
+        updateWidgetTitle();
+
+        // Timer শুরু করা, যাতে প্রতিটি title নির্দিষ্ট সময় পরপর দেখানো হয়
+        _timer?.cancel(); // যদি পূর্বের কোনো timer চলে তখন সেটি বন্ধ করে নতুন timer সেট করুন
+        _timer = Timer.periodic(Duration(minutes: 1), (timer) {
+          currentIndex = (currentIndex + 1) % bannerList.length;
+          title.value = bannerList[currentIndex].title ?? "No Title";
+          updateWidgetTitle();
+        });
+      }
 
       setRxRequestStatus(Status.completed);
       refresh();
@@ -57,6 +80,18 @@ class HomeController extends GetxController {
       ApiChecker.checkApi(response);
     }
   }
+
+// Title update করার ফাংশন
+  void updateWidgetTitle() async {
+    await HomeWidget.saveWidgetData<String>('api_title', title.value);
+    await HomeWidget.updateWidget(
+      name: 'HomeScreenWidgetProvider',
+      iOSName: 'HomeScreenWidgetProvider',
+    );
+  }
+
+
+
 
 
 

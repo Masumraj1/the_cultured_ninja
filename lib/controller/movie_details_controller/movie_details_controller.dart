@@ -79,11 +79,10 @@ class MovieDetailsController extends GetxController {
       setRxRequestStatus(Status.error);
     }
   }
-  var title = "Loading...".obs;
 
   ///====================================Actor Details================
 
-  // RxList<Movie> upcomingList = <Movie>[].obs;
+  RxList<Movie> upcomingList = <Movie>[].obs;
 
   Rx<ActorDetailsData> actorDetails = ActorDetailsData().obs;
 
@@ -98,14 +97,7 @@ class MovieDetailsController extends GetxController {
       //     response.body["data"]);
       // print('upcomingList=========================="${upcomingList.length}"');
       isFollowed.value = actorDetails.value.isFollowed ?? false;
-      title.value = actorDetails.value.name ?? "No Title";
 
-      // Save title for HomeWidget to access
-      await HomeWidget.saveWidgetData<String>('api_title', title.value);
-      await HomeWidget.updateWidget(
-        name: 'HomeScreenWidgetProvider',
-        iOSName: 'HomeScreenWidgetProvider',
-      );
 
       print('actor data ========================="${response.body['data']}"');
       print(
@@ -125,6 +117,9 @@ class MovieDetailsController extends GetxController {
       ApiChecker.checkApi(response);
     }
   }
+
+
+
 
   ///=============================actor Follow======================
 

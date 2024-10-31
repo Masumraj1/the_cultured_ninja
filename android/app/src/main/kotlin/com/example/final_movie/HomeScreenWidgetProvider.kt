@@ -24,14 +24,7 @@ class HomeScreenWidgetProvider : HomeWidgetProvider() {
             "Title not found"
             views.setTextViewText(R.id.tv_title, "Title: $title")
 
-            // Set up button to fetch and update title
-            views.setOnClickPendingIntent(
-                R.id.bt_fetch,
-                HomeWidgetBackgroundIntent.getBroadcast(
-                    context,
-                    Uri.parse("myAppWidget://fetchTitle")
-                )
-            )
+
 
             appWidgetManager.updateAppWidget(widgetId, views)
         }
