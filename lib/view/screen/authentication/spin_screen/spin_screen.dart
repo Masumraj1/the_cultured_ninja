@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'package:final_movie/controller/streaming_controller/streaming_controller.dart';
-import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
-import 'package:final_movie/view/widgets/custom_text_field/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

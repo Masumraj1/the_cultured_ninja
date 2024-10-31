@@ -5,9 +5,11 @@ import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
+import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:final_movie/view/widgets/genarel_error/genarel_error.dart';
+import 'package:final_movie/view/widgets/no_internet_screen/no_internet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -49,10 +51,12 @@ class _SelectStreamingScreenState extends State<SelectStreamingScreen> {
       body: Obx(() {
         switch (streamingController.rxRequestStatus.value) {
           case Status.loading:
-            return const Center(child: CircularProgressIndicator()); // Loading State
+            return const CustomLoader();
           case Status.internetError:
-            return const Center(
-              child: Text('No Internet Connection'), // Internet Error State
+            return NoInternetScreen(
+              onTap: () {
+                streamingController.getAllStudio();
+              },
             );
           case Status.error:
             return GeneralErrorScreen(
@@ -104,7 +108,7 @@ class _SelectStreamingScreenState extends State<SelectStreamingScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CustomNetworkImage(
-                                  imageUrl: "${ApiUrl.baseUrl}/${data.logo?.replaceAll(r'\\', '/') ?? ""}",
+                                  imageUrl: data.logo?.replaceAll(r'\\', '/') ?? "",
                                   height: 48,
                                   width: 48,
                                 ),

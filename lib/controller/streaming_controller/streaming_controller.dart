@@ -5,6 +5,7 @@ import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/model/filter_model/filter_model.dart';
 import 'package:final_movie/model/streaming_model/all_streaming_model.dart';
 import 'package:final_movie/model/streaming_model/movie_genre_model.dart';
+import 'package:final_movie/model/streaming_model/select_streaming_model.dart';
 import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/api_client.dart';
 import 'package:final_movie/services/app_url.dart';
@@ -18,15 +19,15 @@ class StreamingController extends GetxController{
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
 
   ///====================================Get All Studio===========
-  RxList<StreamingData> streamList = <StreamingData>[].obs;
+  RxList<StreamingDataSelect> streamList = <StreamingDataSelect>[].obs;
   getAllStudio() async {
     setRxRequestStatus(Status.loading);
     refresh();
-    var response = await ApiClient.getData(ApiUrl.getAllStudio);
+    var response = await ApiClient.getData(ApiUrl.studioSelect);
 
     if (response.statusCode == 200) {
-      streamList.value = List<StreamingData>.from(
-          response.body["data"].map((x) => StreamingData.fromJson(x)));
+      streamList.value = List<StreamingDataSelect>.from(
+          response.body["data"].map((x) => StreamingDataSelect.fromJson(x)));
 
       setRxRequestStatus(Status.completed);
       refresh();

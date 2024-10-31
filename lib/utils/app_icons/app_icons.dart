@@ -8,6 +8,8 @@ class AppIcons {
   static const String eyeOff = "$basePath/eyeOff.svg";
   static const String eye = "$basePath/eye.svg";
   static const String home = "$basePath/home.svg";
+  static const String premium = "$basePath/premium.svg";
+  static const String spin = "$basePath/spin_svgrepo.com.svg";
   static const String flower = "$basePath/flower.svg";
   static const String settings = "$basePath/Seetings.svg";
   static const String logOut = "$basePath/logOut.svg";

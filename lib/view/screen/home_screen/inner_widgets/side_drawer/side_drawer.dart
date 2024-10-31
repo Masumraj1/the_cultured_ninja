@@ -65,7 +65,7 @@ class SideDrawer extends StatelessWidget {
         children: [
           ///================================ APP LOGO ==============================///
           Container(
-            height: MediaQuery.of(context).size.height/5,
+            height: MediaQuery.of(context).size.height / 5,
             color: AppColors.newColor,
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -82,7 +82,6 @@ class SideDrawer extends StatelessWidget {
                 padding: EdgeInsets.only(top: 10.h, right: 20.w),
                 child: Column(
                   children: [
-
                     ///=======================Profile =====================
 
                     customRow(
@@ -124,10 +123,24 @@ class SideDrawer extends StatelessWidget {
                           Get.toNamed(AppRoute.historyScreen);
                         }),
 
+                    ///======================Payment===============
+                    customRow(
+                        image: AppIcons.premium,
+                        title: "Go Premium",
+                        onTap: () {}),
+
+                    ///======================Spin===============
+                    customRow(
+                        image: AppIcons.spin,
+                        title: "Spin",
+                        onTap: () {
+                          Get.toNamed(AppRoute.selectStreamingScreen);
+                        }),
+
                     ///==============================Sign Out======================
 
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 3.5,
+                      height: MediaQuery.of(context).size.height / 3.9,
                     ),
                     customRow(
                         image: AppIcons.logOut,

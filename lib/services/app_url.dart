@@ -30,6 +30,7 @@ class ApiUrl {
 
   ///========================Studio==============
   static const getAllStudio = "/studio/get-studio";
+  static const studioSelect = "/studio/top-studio";
   static const search = "/movie/all-movies?search";
   static String getStudioDetails({required String id}) {
     return "/studio/get-studio/$id";

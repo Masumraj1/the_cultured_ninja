@@ -90,7 +90,7 @@ class AuthenticationController extends GetxController {
       // print(
       //     '======================User Token Saved::: ${response.body['accessToken']}');
 
-      Get.offAllNamed(AppRoute.selectStreamingScreen);
+      Get.offAllNamed(AppRoute.homeScreen);
       toastMessage(
         message: response.body["message"],
       );
