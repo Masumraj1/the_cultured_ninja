@@ -1,10 +1,4 @@
-
-
 import 'dart:convert';
-
-TermsModel termsModelFromJson(String str) => TermsModel.fromJson(json.decode(str));
-
-String termsModelToJson(TermsModel data) => json.encode(data.toJson());
 
 class TermsModel {
   bool? success;
@@ -14,6 +8,10 @@ class TermsModel {
     this.success,
     this.data,
   });
+
+  factory TermsModel.fromRawJson(String str) => TermsModel.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
 
   factory TermsModel.fromJson(Map<String, dynamic> json) => TermsModel(
     success: json["success"],
@@ -30,8 +28,8 @@ class TermsData {
   String? id;
   String? name;
   String? value;
-  DateTime? createdAt;
-  DateTime? updatedAt;
+  String? createdAt;
+  String? updatedAt;
   int? v;
 
   TermsData({
@@ -43,12 +41,16 @@ class TermsData {
     this.v,
   });
 
+  factory TermsData.fromRawJson(String str) => TermsData.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
   factory TermsData.fromJson(Map<String, dynamic> json) => TermsData(
     id: json["_id"],
     name: json["name"],
     value: json["value"],
-    createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-    updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+    createdAt: json["createdAt"],
+    updatedAt: json["updatedAt"],
     v: json["__v"],
   );
 
@@ -56,8 +58,8 @@ class TermsData {
     "_id": id,
     "name": name,
     "value": value,
-    "createdAt": createdAt?.toIso8601String(),
-    "updatedAt": updatedAt?.toIso8601String(),
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
     "__v": v,
   };
 }

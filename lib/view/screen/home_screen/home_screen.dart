@@ -41,10 +41,34 @@ class _HomeScreenState extends State<HomeScreen> {
   final FavoriteController favoriteController = Get.find<FavoriteController>();
   final AdmobController admobController = Get.find<AdmobController>();
 
+  // Separate banner ads for main content and bottom navigation
+  late final BannerAd _bottomBannerAd;
+
   @override
   void initState() {
-    admobController.loadBannerAd('ca-app-pub-3940256099942544/6300978111'); // Test Banner Ad ID
     super.initState();
+
+
+
+    // Load bottom banner ad for navigation bar
+    _bottomBannerAd = BannerAd(
+      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      size: AdSize.banner,
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) => setState(() {}),
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+          debugPrint('Failed to load bottom ad: $error');
+        },
+      ),
+    )..load();
+  }
+
+  @override
+  void dispose() {
+    _bottomBannerAd.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,7 +76,20 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       key: scaffoldKey,
-      bottomNavigationBar: const NavBar(currentIndex: 0),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Display the bottom banner ad in the bottom navigation bar if it's loaded
+          if (_bottomBannerAd != null)
+            Container(
+              alignment: Alignment.center,
+              width: _bottomBannerAd.size.width.toDouble(),
+              height: _bottomBannerAd.size.height.toDouble(),
+              child: AdWidget(ad: _bottomBannerAd),
+            ),
+          const NavBar(currentIndex: 0), // Your custom NavBar widget
+        ],
+      ),
       drawer: const SideDrawer(),
       body: Obx(() {
         // Handle loading, error, and completed states for the home data
@@ -88,23 +125,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         ///======================== Top Rating Movies Section =========================
                         _buildTopRatingMoviesSection(),
-
                         SizedBox(height: 10.h),
 
                         ///======================== My Favorites Section =========================
                         _buildMyFavoritesSection(),
-
                         SizedBox(height: 16.h),
 
                         ///============================ Studios Section ============================
                         _buildStudiosSection(),
 
-                        ///======================== Banner Ad (Optional) =========================
-                        _buildBannerAd(),
+
 
                         SizedBox(height: 20.h),
-
-
                       ],
                     ),
                   ),
@@ -278,24 +310,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ],
     );
-  }
-
-  /// Widget: Banner Ad Section
-  Widget _buildBannerAd() {
-    return Obx(() {
-      if (admobController.isBannerAdReady.value && admobController.bannerAd != null) {
-        return Padding(
-          padding: const EdgeInsets.all(15),
-          child: Container(
-            alignment: Alignment.center,
-            width: admobController.bannerAd!.size.width.toDouble(),
-            height: admobController.bannerAd!.size.height.toDouble(),
-            child: AdWidget(ad: admobController.bannerAd!),
-          ),
-        );
-      } else {
-        return const SizedBox.shrink();
-      }
-    });
   }
 }
