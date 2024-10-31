@@ -40,6 +40,7 @@ class HomeController extends GetxController {
 
   RxList<BannerData> bannerList = <BannerData>[].obs;
   var title = "Loading...".obs;
+  var imageUrl = "".obs; // Add imageUrl to store image data
   Timer? _timer;
   int currentIndex = 0;
 
@@ -53,19 +54,18 @@ class HomeController extends GetxController {
           response.body["data"].map((x) => BannerData.fromJson(x)));
       print('BannerList=========================="${bannerList.length}"');
 
-      // Timer সেটআপ করা, যাতে একে একে সব title দেখানো হয়
       if (bannerList.isNotEmpty) {
-        // প্রথম title দেখাবে
         currentIndex = 0;
         title.value = bannerList[currentIndex].title ?? "No Title";
-        updateWidgetTitle();
+        imageUrl.value = bannerList[currentIndex].poster ?? ""; // Store image URL
+        updateWidgetContent();
 
-        // Timer শুরু করা, যাতে প্রতিটি title নির্দিষ্ট সময় পরপর দেখানো হয়
-        _timer?.cancel(); // যদি পূর্বের কোনো timer চলে তখন সেটি বন্ধ করে নতুন timer সেট করুন
+        _timer?.cancel();
         _timer = Timer.periodic(Duration(minutes: 1), (timer) {
           currentIndex = (currentIndex + 1) % bannerList.length;
           title.value = bannerList[currentIndex].title ?? "No Title";
-          updateWidgetTitle();
+          imageUrl.value = bannerList[currentIndex].poster ?? ""; // Update image URL
+          updateWidgetContent();
         });
       }
 
@@ -81,9 +81,12 @@ class HomeController extends GetxController {
     }
   }
 
-// Title update করার ফাংশন
-  void updateWidgetTitle() async {
+  void updateWidgetContent() async {
+    print("==================Updating widget with title: ${title.value} "
+        " imageUrl:==================================== ${imageUrl.value}"); // Log title and image URL
+
     await HomeWidget.saveWidgetData<String>('api_title', title.value);
+    await HomeWidget.saveWidgetData<String>('api_image_url', imageUrl.value); // Save image URL
     await HomeWidget.updateWidget(
       name: 'HomeScreenWidgetProvider',
       iOSName: 'HomeScreenWidgetProvider',
