@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/model/calender_model/calender_model.dart';
@@ -5,6 +6,7 @@ import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:get/get.dart';
+import 'package:home_widget/home_widget.dart';
 import '../../services/api_client.dart';
 
 class CalendarController extends GetxController {
@@ -58,8 +60,12 @@ class CalendarController extends GetxController {
 
 
   ///======================== Method to fetch calendar data====================
+  var title = "Loading...".obs;
+  var imageUrl = "".obs; // Add imageUrl to store image data
+  Timer? _timer;
+  int currentIndex = 0;
+
   Rx<CalenderData> calenderModel = CalenderData().obs;
-  // RxList<CalenderData> calenderList = <CalenderData>[].obs;
 
   Future<void> getCalender() async {
     setRxRequestStatus(Status.loading); // Set loading status
@@ -67,11 +73,33 @@ class CalendarController extends GetxController {
     var response = await ApiClient.getData(ApiUrl.getCalenderMovie); // Fetch calendar data
 
     if (response.statusCode == 200) {
-      calenderModel.value = CalenderData.fromJson(response.body["data"]); // Parse data
+      calenderModel.value = CalenderData.fromJson(response.body["data"]);
+
+      // Assuming calenderModel.value.movies contains the list of banner data
+      if (calenderModel.value.movies != null && calenderModel.value.movies!.isNotEmpty) {
+        currentIndex = 0;
+
+        // Set initial title and image URL
+        title.value = calenderModel.value.movies![currentIndex].title ?? "No Title";
+        imageUrl.value = calenderModel.value.movies![currentIndex].poster ?? ""; // Store image URL
+        updateWidgetContent();
+
+        // Setup periodic timer to update title and image
+        _timer?.cancel(); // Cancel previous timer if any
+        _timer = Timer.periodic(Duration(seconds: 7), (timer) {
+          currentIndex = (currentIndex + 1) % calenderModel.value.movies!.length;
+          title.value = calenderModel.value.movies![currentIndex].title ?? "No Title";
+          imageUrl.value = calenderModel.value.movies![currentIndex].poster ?? ""; // Update image URL
+          updateWidgetContent();
+        });
+      }
+
+      // Log data for debugging
       print('CalenderMovieList=========================="${calenderModel.value.movies?.length}"');
       print('DateList=========================="${calenderModel.value.dates?.length}"');
       setRxRequestStatus(Status.completed); // Set completed status
     } else {
+      // Handle errors
       if (response.statusText == ApiClient.noInternetMessage) {
         setRxRequestStatus(Status.internetError); // Handle no internet error
       } else {
@@ -80,6 +108,19 @@ class CalendarController extends GetxController {
       ApiChecker.checkApi(response); // Check API response
     }
   }
+
+  void updateWidgetContent() async {
+    print("==================Updating widget with title: ${title.value} "
+        " imageUrl:==================================== ${imageUrl.value}"); // Log title and image URL
+
+    await HomeWidget.saveWidgetData<String>('api_title', title.value);
+    await HomeWidget.saveWidgetData<String>('api_image_url', imageUrl.value); // Save image URL
+    await HomeWidget.updateWidget(
+      name: 'HomeScreenWidgetProvider',
+      iOSName: 'HomeScreenWidgetProvider',
+    );
+  }
+
 
   // Method to set the status of the API request
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;

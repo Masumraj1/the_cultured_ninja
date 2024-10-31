@@ -39,10 +39,7 @@ class HomeController extends GetxController {
 
 
   RxList<BannerData> bannerList = <BannerData>[].obs;
-  var title = "Loading...".obs;
-  var imageUrl = "".obs; // Add imageUrl to store image data
-  Timer? _timer;
-  int currentIndex = 0;
+
 
   getBanner() async {
     setRxRequestStatus(Status.loading);
@@ -54,20 +51,7 @@ class HomeController extends GetxController {
           response.body["data"].map((x) => BannerData.fromJson(x)));
       print('BannerList=========================="${bannerList.length}"');
 
-      if (bannerList.isNotEmpty) {
-        currentIndex = 0;
-        title.value = bannerList[currentIndex].title ?? "No Title";
-        imageUrl.value = bannerList[currentIndex].poster ?? ""; // Store image URL
-        updateWidgetContent();
 
-        _timer?.cancel();
-        _timer = Timer.periodic(Duration(minutes: 1), (timer) {
-          currentIndex = (currentIndex + 1) % bannerList.length;
-          title.value = bannerList[currentIndex].title ?? "No Title";
-          imageUrl.value = bannerList[currentIndex].poster ?? ""; // Update image URL
-          updateWidgetContent();
-        });
-      }
 
       setRxRequestStatus(Status.completed);
       refresh();
@@ -81,17 +65,7 @@ class HomeController extends GetxController {
     }
   }
 
-  void updateWidgetContent() async {
-    print("==================Updating widget with title: ${title.value} "
-        " imageUrl:==================================== ${imageUrl.value}"); // Log title and image URL
 
-    await HomeWidget.saveWidgetData<String>('api_title', title.value);
-    await HomeWidget.saveWidgetData<String>('api_image_url', imageUrl.value); // Save image URL
-    await HomeWidget.updateWidget(
-      name: 'HomeScreenWidgetProvider',
-      iOSName: 'HomeScreenWidgetProvider',
-    );
-  }
 
 
 

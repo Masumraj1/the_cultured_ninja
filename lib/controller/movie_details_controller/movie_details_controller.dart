@@ -82,7 +82,7 @@ class MovieDetailsController extends GetxController {
 
   ///====================================Actor Details================
 
-  RxList<Movie> upcomingList = <Movie>[].obs;
+
 
   Rx<ActorDetailsData> actorDetails = ActorDetailsData().obs;
 
@@ -93,9 +93,6 @@ class MovieDetailsController extends GetxController {
 
     if (response.statusCode == 200) {
       actorDetails.value = ActorDetailsData.fromJson(response.body["data"]);
-      // upcomingList.value = List<Movie>.from(
-      //     response.body["data"]);
-      // print('upcomingList=========================="${upcomingList.length}"');
       isFollowed.value = actorDetails.value.isFollowed ?? false;
 
 
