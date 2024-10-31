@@ -191,16 +191,17 @@ class CustomWidgets {
     required String image,
     required String movieName,
     required String releaseDate,
-    required String button,
+    String? button, // Make button optional
     void Function()? onTap,
   }) {
     return Container(
       padding: const EdgeInsets.all(12),
       margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-          color: AppColors.fromRgb,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: AppColors.borderDrawer)),
+        color: AppColors.fromRgb,
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: AppColors.borderDrawer),
+      ),
       child: Row(
         children: [
           CustomNetworkImage(
@@ -231,13 +232,14 @@ class CustomWidgets {
                   fontSize: 14,
                   bottom: 10,
                 ),
-                CustomButton(
-                  onTap: onTap ?? () {},
-                  title: button,
-                  width: 134.w,
-                  height: 37.h,
-                  fillColor: AppColors.buttonColor,
-                )
+                if (button != null) // Show button only if `button` is not null
+                  CustomButton(
+                    onTap: onTap ?? () {},
+                    title: button,
+                    width: 134.w,
+                    height: 37.h,
+                    fillColor: AppColors.buttonColor,
+                  ),
               ],
             ),
           )
@@ -245,6 +247,7 @@ class CustomWidgets {
       ),
     );
   }
+
 
   ///============================custom Actor and director========================
   Widget customActorAndDirector({
