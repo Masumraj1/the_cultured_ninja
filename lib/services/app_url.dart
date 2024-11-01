@@ -36,6 +36,10 @@ class ApiUrl {
     return "/studio/get-studio/$id";
   }
 
+  static String multiSelectedApi({required String actorId,required String streamingId}) {
+    return "/movie/spin-data?actorId=$actorId&studio_id=$streamingId";
+  }
+
   static String filterMovie({required String id}) {
     return "/movie/all-movies?genre_id=$id";
   }

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
-import 'package:final_movie/model/studio/studio_model.dart';
 import 'package:final_movie/model/studio_details_model/studio_details_model.dart';
 import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/api_client.dart';

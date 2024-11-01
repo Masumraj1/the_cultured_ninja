@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/model/filter_model/filter_model.dart';
-import 'package:final_movie/model/streaming_model/all_streaming_model.dart';
+import 'package:final_movie/model/streaming_actor_model/streaming_actor_model.dart';
 import 'package:final_movie/model/streaming_model/movie_genre_model.dart';
 import 'package:final_movie/model/streaming_model/select_streaming_model.dart';
 import 'package:final_movie/services/api_check.dart';
@@ -13,13 +13,14 @@ import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class StreamingController extends GetxController{
-
+class StreamingController extends GetxController {
   final rxRequestStatus = Status.loading.obs;
+
   void setRxRequestStatus(Status value) => rxRequestStatus.value = value;
 
   ///====================================Get All Studio===========
   RxList<StreamingDataSelect> streamList = <StreamingDataSelect>[].obs;
+
   getAllStudio() async {
     setRxRequestStatus(Status.loading);
     refresh();
@@ -43,6 +44,7 @@ class StreamingController extends GetxController{
 
   ///====================================Get All Genre===========
   RxList<MovieGenreData> genreData = <MovieGenreData>[].obs;
+
   getAllGenre() async {
     setRxRequestStatus(Status.loading);
     refresh();
@@ -64,49 +66,48 @@ class StreamingController extends GetxController{
     }
   }
 
-
   ///===============================Genre Updated================
-  RxBool isUpdate = false.obs;
-
-  Future<void> genreUpdate({Map<String, String>? header,
-    required TextEditingController genreController}) async {
-    if (genreController.text.isEmpty) {
-      toastMessage(message: "Genre cannot be empty");
-      return; // Exit if genre is empty
-    }
-
-    isUpdate.value = true;
-    update(); // Notify listeners that state has changed
-
-    try {
-      var body = {
-        "genres": jsonEncode([genreController.text]),
-      };
-
-      var response = await ApiClient.patchMultipartData(
-        ApiUrl.editProfile,
-        body,
-        haveImage: false
-
-      );
-
-      if (response.statusCode == 200) {
-        // toastMessage(message: response.body["message"]);
-        Get.toNamed(AppRoute.homeScreen); // Navigate to home screen
-      } else {
-        ApiChecker.checkApi(response); // Handle other response codes
-      }
-    } catch (e) {
-      debugPrint("Error occurred: $e"); // Print the error for debugging
-    } finally {
-      isUpdate.value = false; // Reset loading state
-      update(); // Notify listeners that state has changed
-    }
-  }
-
+  // RxBool isUpdate = false.obs;
+  //
+  // Future<void> genreUpdate({Map<String, String>? header,
+  //   required TextEditingController genreController}) async {
+  //   if (genreController.text.isEmpty) {
+  //     toastMessage(message: "Genre cannot be empty");
+  //     return; // Exit if genre is empty
+  //   }
+  //
+  //   isUpdate.value = true;
+  //   update(); // Notify listeners that state has changed
+  //
+  //   try {
+  //     var body = {
+  //       "genres": jsonEncode([genreController.text]),
+  //     };
+  //
+  //     var response = await ApiClient.patchMultipartData(
+  //       ApiUrl.editProfile,
+  //       body,
+  //       haveImage: false
+  //
+  //     );
+  //
+  //     if (response.statusCode == 200) {
+  //       // toastMessage(message: response.body["message"]);
+  //       Get.toNamed(AppRoute.homeScreen); // Navigate to home screen
+  //     } else {
+  //       ApiChecker.checkApi(response); // Handle other response codes
+  //     }
+  //   } catch (e) {
+  //     debugPrint("Error occurred: $e"); // Print the error for debugging
+  //   } finally {
+  //     isUpdate.value = false; // Reset loading state
+  //     update(); // Notify listeners that state has changed
+  //   }
+  // }
 
   ///===================================Genre Filtering===================
-  RxString selectedGenre = ''.obs; // Use a reactive String to track selected genre
+  RxString selectedGenre =
+      ''.obs; // Use a reactive String to track selected genre
 
   void selectGenre(String genreId, String genreName) {
     if (selectedGenre.value == genreName) {
@@ -115,8 +116,6 @@ class StreamingController extends GetxController{
       selectedGenre.value = genreName; // Select the tapped genre
     }
   }
-
-
 
   RxList<FilterData> filterList = <FilterData>[].obs;
 
@@ -142,7 +141,59 @@ class StreamingController extends GetxController{
     }
   }
 
+  RxList<StreamingActorSelectList> streamingActorSelectList =
+      <StreamingActorSelectList>[].obs;
+  getMultiMovie({required String selectedActorId, required List<String> selectedProviderIds}) async {
+    setRxRequestStatus(Status.loading);
+    refresh();
 
+    // Join the list of provider IDs into a single string separated by commas
+    String providerIds = selectedProviderIds.join(',');
+
+    var response = await ApiClient.getData(
+        ApiUrl.multiSelectedApi(actorId: selectedActorId, streamingId: providerIds));
+
+    if (response.statusCode == 200) {
+      streamingActorSelectList.value = List<StreamingActorSelectList>.from(
+          response.body["data"].map((x) => StreamingActorSelectList.fromJson(x)));
+      print('StreamingActorSelectList=========================="${streamingActorSelectList.length}"');
+
+      setRxRequestStatus(Status.completed);
+      refresh();
+    } else {
+      if (response.statusText == ApiClient.noInternetMessage) {
+        setRxRequestStatus(Status.internetError);
+      } else {
+        setRxRequestStatus(Status.error);
+      }
+      ApiChecker.checkApi(response);
+    }
+  }
+
+  // getMultiMovie({required String selectedActorId , required String selectedProviderIds}) async {
+  //   setRxRequestStatus(Status.loading);
+  //   refresh();
+  //   var response = await ApiClient.getData(
+  //       ApiUrl.multiSelectedApi(actorId: selectedActorId , streamingId: selectedProviderIds));
+  //
+  //   if (response.statusCode == 200) {
+  //     streamingActorSelectList.value = List<StreamingActorSelectList>.from(
+  //         response.body["data"]
+  //             .map((x) => StreamingActorSelectList.fromJson(x)));
+  //     print(
+  //         'StreamingActorSelectList=========================="${streamingActorSelectList.length}"');
+  //
+  //     setRxRequestStatus(Status.completed);
+  //     refresh();
+  //   } else {
+  //     if (response.statusText == ApiClient.noInternetMessage) {
+  //       setRxRequestStatus(Status.internetError);
+  //     } else {
+  //       setRxRequestStatus(Status.error);
+  //     }
+  //     ApiChecker.checkApi(response);
+  //   }
+  // }
 
   @override
   void onInit() {

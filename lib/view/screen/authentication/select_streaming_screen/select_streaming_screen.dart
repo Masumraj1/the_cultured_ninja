@@ -22,7 +22,7 @@ class SelectStreamingScreen extends StatefulWidget {
 
 class _SelectStreamingScreenState extends State<SelectStreamingScreen> {
   final StreamingController streamingController = Get.find<StreamingController>();
-  List<int> selectedIndexes = []; // List to store selected streaming services' indexes
+  List<String> selectedProviderIds = []; // List to store selected providerIds
 
   @override
   Widget build(BuildContext context) {
@@ -82,18 +82,19 @@ class _SelectStreamingScreenState extends State<SelectStreamingScreen> {
                       itemCount: streamingController.streamList.length,
                       itemBuilder: (context, index) {
                         var data = streamingController.streamList[index];
-                        bool isSelected = selectedIndexes.contains(index); // Check if this item is selected
+                        var providerId = data.providerId.toString(); // Get providerId for current item
+                        bool isSelected = selectedProviderIds.contains(providerId); // Check if providerId is selected
 
                         return GestureDetector(
                           onTap: () {
                             setState(() {
                               if (isSelected) {
-                                selectedIndexes.remove(index); // Unselect if already selected
+                                selectedProviderIds.remove(providerId); // Unselect if already selected
                               } else {
-                                selectedIndexes.add(index); // Add to selected list
+                                selectedProviderIds.add(providerId); // Add providerId to selected list
                               }
                             });
-                            print('Selected===========================${selectedIndexes}');
+                            print('Selected Provider IDs===========================${selectedProviderIds}');
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -132,15 +133,19 @@ class _SelectStreamingScreenState extends State<SelectStreamingScreen> {
                 CustomButton(
                   width: MediaQuery.of(context).size.width / 1.1,
                   onTap: () {
-                    if (selectedIndexes.isEmpty) {
+                    if (selectedProviderIds.isEmpty) {
                       toastMessage(message: 'Please select at least one streaming service');
                     } else {
-                      // Prepare list of selected services (names and images)
-                      var selectedMovies = selectedIndexes.map((index) {
-                        var movie = streamingController.streamList[index];
+                      // Prepare list of selected services (names, images, and providerId)
+                      var selectedMovies = selectedProviderIds.map((providerId) {
+                        var movie = streamingController.streamList
+                            .firstWhere(
+                              (element) => element.providerId.toString() == providerId,
+                        );
                         return {
-                          "name": movie.name,
-                          "logo": "${ApiUrl.baseUrl}/${movie.logo?.replaceAll(r'\\', '/')}"
+                          "name": movie.name ?? "Unknown",
+                          "logo": movie.logo?.replaceAll(r'\\', '/') ?? '',
+                          "providerId": providerId // Include providerId
                         };
                       }).toList();
 
