@@ -17,6 +17,7 @@ import 'package:final_movie/view/screen/home_screen/home_screen.dart';
 import 'package:final_movie/view/screen/movie_details/movie_details.dart';
 import 'package:final_movie/view/screen/notification_screen/notification_screen.dart';
 import 'package:final_movie/view/screen/onbording_screen/onbording_screen.dart';
+import 'package:final_movie/view/screen/payment_screen/payment_screen.dart';
 import 'package:final_movie/view/screen/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:final_movie/view/screen/profile_screen/edit_profile_screen/edit_profile_screen.dart';
 import 'package:final_movie/view/screen/profile_screen/profile_screen.dart';
@@ -74,6 +75,7 @@ static const String termsAndCondition = '/TermsAndCondition';
 static const String selectStreamingScreen = '/SelectStreamingScreen';
 static const String spinScreen = '/SpinScreen';
 static const String historyScreen = '/HistoryScreen';
+static const String paymentScreen = '/PaymentScreen';
 
 
 
@@ -97,7 +99,7 @@ static const String historyScreen = '/HistoryScreen';
     GetPage(name: successfullyScreen, page: () =>  const SuccessfullyScreen()),
 
     ///=============================HomeScreen===================
-    GetPage(name: homeScreen, page: () =>    HomeScreen()),
+    GetPage(name: homeScreen, page: () =>    const HomeScreen()),
     GetPage(name: settingScreen, page: () =>     SettingScreen()),
     GetPage(name: changePasswordScreen, page: () =>     ChangePasswordScreen()),
     GetPage(name: notificationScreen, page: () =>     NotificationScreen()),
@@ -115,16 +117,17 @@ static const String historyScreen = '/HistoryScreen';
     GetPage(name: searchScreen, page: () =>      SearchScreen()),
     GetPage(name: favoriteScreen, page: () =>      FavoriteScreen()),
     GetPage(name: topRatingMovies, page: () =>      TopRatingMovies()),
-    GetPage(name: filterScreen, page: () =>      FilterScreen()),
+    GetPage(name: filterScreen, page: () =>      const FilterScreen()),
     GetPage(name: studiosScreen, page: () =>      StudiosScreen()),
-    GetPage(name: studiosDetailsScreen, page: () =>      StudiosDetailsScreen()),
-    GetPage(name: movieDetails, page: () =>      MovieDetails()),
+    GetPage(name: studiosDetailsScreen, page: () =>      const StudiosDetailsScreen()),
+    GetPage(name: movieDetails, page: () =>      const MovieDetails()),
     GetPage(name: allMovies, page: () =>       AllMovies()),
-    GetPage(name: actorDetails, page: () =>       ActorDetails()),
+    GetPage(name: actorDetails, page: () =>       const ActorDetails()),
     GetPage(name: actorMovie, page: () =>        ActorMovie()),
     GetPage(name: profileScreen, page: () =>         ProfileScreen()),
     GetPage(name: filterSelectedGenresScreen, page: () =>  FilterSelectedGenresScreen()),
-    GetPage(name: selectStreamingScreen, page: () =>  SelectStreamingScreen()),
-    GetPage(name: spinScreen, page: () =>   SpinScreen()),
+    GetPage(name: selectStreamingScreen, page: () =>  const SelectStreamingScreen()),
+    GetPage(name: spinScreen, page: () =>   const SpinScreen()),
+    GetPage(name: paymentScreen, page: () =>   const PaymentScreen()),
   ];
 }

@@ -55,28 +55,22 @@ class _SpinScreenState extends State<SpinScreen> {
           color: AppColors.lightWhite,
         ),
         backgroundColor: AppColors.blackDeep,
-        centerTitle: true,
-        title: const CustomText(
-          text: 'Select Genre',
-          color: AppColors.lightWhite,
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
-        ),
+
       ),
       backgroundColor: AppColors.spinBackgroundColor,
       body: Obx(
         () => SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(right: 8,left: 8),
             child: Column(
+
               children: [
-                CustomText(
-                  top: 10,
+                const CustomText(
                   text: 'Select Streaming',
                   color: AppColors.lightWhite,
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
-                  bottom: 10,
+                  bottom: 7,
                 ),
 
                 ///========================== Selected Studios ==========
@@ -126,7 +120,7 @@ class _SpinScreenState extends State<SpinScreen> {
                                   text: selectedMovies[index]['name'] ??
                                       'No Movie Selected',
                                   color: AppColors.lightWhite,
-                                  fontSize: 14,
+                                  fontSize: 10,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ],
@@ -138,15 +132,14 @@ class _SpinScreenState extends State<SpinScreen> {
                   ),
                 ),
 
-                SizedBox(height: 15.h),
+                SizedBox(height: 8.h),
                 CustomText(
-                  top: 10,
                   text: 'Your Favorite Actor',
                   color: AppColors.lightWhite,
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
-                SizedBox(height: 25.h),
+                SizedBox(height: 8.h),
 
                 ///============================All Actors====================
                 if (followingController.flowData.value.actors == null ||
@@ -199,7 +192,7 @@ class _SpinScreenState extends State<SpinScreen> {
                                   CustomText(
                                     text: data.name ?? "",
                                     color: AppColors.lightWhite,
-                                    fontSize: 14,
+                                    fontSize: 10,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ],
@@ -211,14 +204,14 @@ class _SpinScreenState extends State<SpinScreen> {
                     ),
                   ),
 
-                SizedBox(height: 20.h),
+                SizedBox(height: 8.h),
 
                 ///==================== Display Selected Movie Title ============
                 if (streamingController.streamingActorSelectList.isNotEmpty)
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
+                      const Expanded(
                         flex: 4,
                         child: CustomText(
                           text:' Movie Name :',

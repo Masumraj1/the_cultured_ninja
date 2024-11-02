@@ -127,7 +127,9 @@ class SideDrawer extends StatelessWidget {
                     customRow(
                         image: AppIcons.premium,
                         title: "Go Premium",
-                        onTap: () {}),
+                        onTap: () {
+                          Get.toNamed(AppRoute.paymentScreen);
+                        }),
 
                     ///======================Spin===============
                     customRow(

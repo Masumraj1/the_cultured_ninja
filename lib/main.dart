@@ -1,6 +1,8 @@
 import 'package:final_movie/controller/movie_details_controller/movie_details_controller.dart';
+import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:home_widget/home_widget.dart';
@@ -15,6 +17,7 @@ void main() {
   DeviceUtils.lockDevicePortrait();
   DependencyInjection di = DependencyInjection();
   di.dependencies();
+  Stripe.publishableKey = AppConstants.stripePublishableKey;
   MobileAds.instance.initialize();
   var deviceId = ["296f4308-6401-4ccb-b76b-a6410c65cb88"];
   RequestConfiguration requestConfiguration =

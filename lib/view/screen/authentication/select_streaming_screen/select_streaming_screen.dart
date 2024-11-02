@@ -1,7 +1,6 @@
 import 'package:final_movie/controller/streaming_controller/streaming_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
-import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
