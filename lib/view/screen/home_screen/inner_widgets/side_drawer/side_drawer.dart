@@ -143,7 +143,7 @@ class SideDrawer extends StatelessWidget {
                     ),
 
 
-                    ///======================Spin===============
+                  ///======================Spin===============
                     customRow(
                         image: AppIcons.spin,
                         title: "Spin",
