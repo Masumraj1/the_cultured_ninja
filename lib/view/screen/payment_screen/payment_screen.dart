@@ -1,21 +1,19 @@
+import 'package:final_movie/controller/payment_controller/payment_controller.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 class PaymentScreen extends StatelessWidget {
-  const PaymentScreen({super.key});
+  PaymentScreen({super.key});
 
-
+  final PaymentController paymentController = Get.find<PaymentController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-
-      ///======================Search Appbar===============
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
@@ -32,8 +30,6 @@ class PaymentScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-
-      ///======================Payment Body===============
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -48,7 +44,8 @@ class PaymentScreen extends StatelessWidget {
                     color: AppColors.yesButtonColor,
                     fontSize: 22,
                   ),
-                ),Expanded(
+                ),
+                Expanded(
                   flex: 7,
                   child: CustomText(
                     textAlign: TextAlign.start,
@@ -58,17 +55,22 @@ class PaymentScreen extends StatelessWidget {
                     maxLines: 3,
                   ),
                 ),
-
               ],
             ),
-
             const SizedBox(height: 260),
             Center(
               child: CustomButton(
                 fillColor: AppColors.buttonColor,
                 onTap: () {
-
-              },title: 'Pay Now \$5',),
+                  paymentController.makePayment(amount: 5);
+                  // paymentController.createPaymentIntent(amount: 5);
+                  // paymentController.makePayment(
+                  //   amount: 500, // Pass amount in cents, so $5 becomes 500
+                  //   transactionId: 'dynamic-transaction-id', // Replace with actual transaction logic
+                  // );
+                },
+                title: 'Pay Now \$5',
+              ),
             )
           ],
         ),

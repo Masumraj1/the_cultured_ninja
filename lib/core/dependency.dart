@@ -8,6 +8,7 @@ import 'package:final_movie/controller/genarel_controller/genarel_controller.dar
 import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/controller/movie_details_controller/movie_details_controller.dart';
 import 'package:final_movie/controller/notification_controller/notification_controller.dart';
+import 'package:final_movie/controller/payment_controller/payment_controller.dart';
 import 'package:final_movie/controller/profile_controller/profile_controller.dart';
 import 'package:final_movie/controller/streaming_controller/streaming_controller.dart';
 import 'package:final_movie/controller/studios_controller/studios_controller.dart';
@@ -30,6 +31,7 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => MovieDetailsController(), fenix: true);
     Get.lazyPut(() => NotificationController(), fenix: true);
     Get.lazyPut(() => AdmobController(), fenix: true);
+    Get.lazyPut(() => PaymentController(), fenix: true);
 
   }
 }

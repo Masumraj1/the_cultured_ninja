@@ -75,6 +75,7 @@ class ApiUrl {
 
   ///==========================Payment=================
   static const createPaymentIntent = "/payment/create-payment-intent";
+  static const savePayment = "/payment/save-payment";
 
 
 }

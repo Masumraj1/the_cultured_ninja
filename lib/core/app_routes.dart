@@ -128,6 +128,6 @@ static const String paymentScreen = '/PaymentScreen';
     GetPage(name: filterSelectedGenresScreen, page: () =>  FilterSelectedGenresScreen()),
     GetPage(name: selectStreamingScreen, page: () =>  const SelectStreamingScreen()),
     GetPage(name: spinScreen, page: () =>   const SpinScreen()),
-    GetPage(name: paymentScreen, page: () =>   const PaymentScreen()),
+    GetPage(name: paymentScreen, page: () =>    PaymentScreen()),
   ];
 }
