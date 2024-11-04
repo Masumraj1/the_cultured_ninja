@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:final_movie/controller/admob_controller/admob_controller.dart';
 import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
 import 'package:final_movie/controller/home_controller/home_controller.dart';
+import 'package:final_movie/controller/payment_controller/payment_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
@@ -40,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final HomeController homeController = Get.find<HomeController>();
   final FavoriteController favoriteController = Get.find<FavoriteController>();
   final AdmobController admobController = Get.find<AdmobController>();
+  final PaymentController paymentController = Get.find<PaymentController>();
 
   // Separate banner ads for main content and bottom navigation
   late final BannerAd _bottomBannerAd;
@@ -79,18 +81,30 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Display the bottom banner ad in the bottom navigation bar if it's loaded
-          if (_bottomBannerAd != null)
-            Container(
+          // Conditionally display AdWidget based on payment status
+          Obx(() {
+            return paymentController.isPaymentSuccessful.value
+                ? const SizedBox.shrink()
+                : Container(
               alignment: Alignment.center,
               width: _bottomBannerAd.size.width.toDouble(),
               height: _bottomBannerAd.size.height.toDouble(),
               child: AdWidget(ad: _bottomBannerAd),
-            ),
-          const NavBar(currentIndex: 0), // Your custom NavBar widget
+            );
+          }),
+          const NavBar(currentIndex: 0),
+          // // Display the bottom banner ad in the bottom navigation bar if it's loaded
+          // if (_bottomBannerAd != null)
+          //   Container(
+          //     alignment: Alignment.center,
+          //     width: _bottomBannerAd.size.width.toDouble(),
+          //     height: _bottomBannerAd.size.height.toDouble(),
+          //     child: AdWidget(ad: _bottomBannerAd),
+          //   ),
+          // const NavBar(currentIndex: 0), // Your custom NavBar widget
         ],
       ),
-      drawer: const SideDrawer(),
+      drawer:  SideDrawer(),
       body: Obx(() {
         // Handle loading, error, and completed states for the home data
         switch (homeController.rxRequestStatus.value) {

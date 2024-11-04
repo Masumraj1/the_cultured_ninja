@@ -18,7 +18,6 @@ class SignInScreen extends StatelessWidget {
   final AuthenticationController authenticationController =
       Get.find<AuthenticationController>();
   final formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -129,24 +128,25 @@ class SignInScreen extends StatelessWidget {
                                 const TextStyle(color: AppColors.buttonColor),
                           ),
 
-                          ///===================================Remember me=========================
-                          Row(
-                            children: [
-                              Checkbox(
-                                value: authenticationController.isRemember.value,
-                                checkColor: AppColors.lightWhite,
-                                activeColor: AppColors.buttonColor,
-                                onChanged: (value) {
-                                  authenticationController.toggleRemember();
-                                },
-                              ),
-                              const CustomText(
-                                text: AppStrings.rememberMe,
-                                color: AppColors.lightWhite,
-                              ),
-                            ],
-                          ),
-
+                          // ///===================================Remember me=========================
+                          // Row(
+                          //   children: [
+                          //     Checkbox(
+                          //       value: authenticationController.isRemember.value,
+                          //       checkColor: AppColors.lightWhite,
+                          //       activeColor: AppColors.buttonColor,
+                          //       onChanged: (value) {
+                          //         authenticationController.toggleRemember();
+                          //       },
+                          //     ),
+                          //     const CustomText(
+                          //       text: AppStrings.rememberMe,
+                          //       color: AppColors.lightWhite,
+                          //     ),
+                          //   ],
+                          // ),
+                         SizedBox(height: 20.h
+                           ,),
                           ///======================================Sign In Button==================
 
                           authenticationController.isSignInLoading.value

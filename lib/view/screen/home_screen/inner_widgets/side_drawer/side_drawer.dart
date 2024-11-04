@@ -1,5 +1,7 @@
+import 'package:final_movie/controller/payment_controller/payment_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
+import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_icons/app_icons.dart';
@@ -13,7 +15,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class SideDrawer extends StatelessWidget {
-  const SideDrawer({super.key});
+  SideDrawer({super.key});
 
   Widget customRow(
           {required String image,
@@ -50,6 +52,8 @@ class SideDrawer extends StatelessWidget {
           ),
         ),
       );
+
+  final PaymentController paymentController = Get.find<PaymentController>();
 
   @override
   Widget build(BuildContext context) {
@@ -125,11 +129,19 @@ class SideDrawer extends StatelessWidget {
 
                     ///======================Payment===============
                     customRow(
-                        image: AppIcons.premium,
-                        title: "Go Premium",
-                        onTap: () {
+                      image: AppIcons.premium,
+                      title: paymentController.isPaymentSuccessful.value == false
+                          ? "Go Premium"
+                          : "Premium Activated",
+                      onTap: () {
+                        if (paymentController.isPaymentSuccessful.value == false) {
                           Get.toNamed(AppRoute.paymentScreen);
-                        }),
+                        } else {
+                          toastMessage(message: 'Payment Already Completed');
+                        }
+                      },
+                    ),
+
 
                     ///======================Spin===============
                     customRow(
