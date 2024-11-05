@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:final_movie/controller/admob_controller/admob_controller.dart';
-import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
 import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
+import 'package:final_movie/controller/global_controller/global_controller.dart';
 import 'package:final_movie/controller/home_controller/home_controller.dart';
-import 'package:final_movie/controller/payment_controller/payment_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
@@ -42,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final HomeController homeController = Get.find<HomeController>();
   final FavoriteController favoriteController = Get.find<FavoriteController>();
   final AdmobController admobController = Get.find<AdmobController>();
-  final AuthenticationController authenticationController = Get.find<AuthenticationController>();
+  final GlobalController globalController = Get.find<GlobalController>();
 
   // Separate banner ads for main content and bottom navigation
   late final BannerAd _bottomBannerAd;
@@ -82,18 +81,18 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Conditionally display AdWidget based on payment status
-          // Obx(() {
-          //   return authenticationController.isSubscription.value
-          //       ? const SizedBox.shrink()
-          //       : Container(
-          //     alignment: Alignment.center,
-          //     width: _bottomBannerAd.size.width.toDouble(),
-          //     height: _bottomBannerAd.size.height.toDouble(),
-          //     child: AdWidget(ad: _bottomBannerAd),
-          //   );
-          // }),
-          const NavBar(currentIndex: 0),
+
+          Obx(() {
+            return globalController.isPayment.value==true
+                ?  const SizedBox.shrink()
+                : Container(
+              alignment: Alignment.center,
+              width: _bottomBannerAd.size.width.toDouble(),
+              height: _bottomBannerAd.size.height.toDouble(),
+              child: AdWidget(ad: _bottomBannerAd),
+            );
+          }),
+           const NavBar(currentIndex: 0),
         ],
       ),
       drawer:  SideDrawer(),

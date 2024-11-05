@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
-import 'package:final_movie/controller/genarel_controller/genarel_controller.dart';
+import 'package:final_movie/controller/global_controller/global_controller.dart';
 import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/services/api_check.dart';
@@ -14,7 +14,8 @@ import 'package:get/get.dart';
 class PaymentController extends GetxController {
   final AuthenticationController authenticationController =
       Get.find<AuthenticationController>();
-  final GeneralController generalController = Get.find<GeneralController>();
+  final GlobalController globalController = Get.find<GlobalController>();
+
 
   ///========================= Create Payment Intent =========================
   Map<String, dynamic> value = {};
@@ -106,8 +107,8 @@ class PaymentController extends GetxController {
         ApiUrl.savePayment, jsonEncode(body),
         headers: mainHeaders);
     if (response.statusCode == 200) {
-      SharePrefsHelper.setBool(AppConstants.isPayment, true);
-      generalController.paymentInfo();
+      globalController.updatePaymentStatus(true);
+      Get.back();
       Get.back();
       toastMessage(message: response.body["message"]);
     } else {

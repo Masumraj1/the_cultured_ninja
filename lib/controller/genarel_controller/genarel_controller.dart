@@ -45,14 +45,7 @@ class GeneralController extends GetxController {
     isChangeLoading.value = false;
   }
 
-  RxBool isPayment = false.obs;
 
-  paymentInfo()async{
-   isPayment.value=await SharePrefsHelper.getBool(AppConstants.isPayment)??false;
-
-   debugPrint("Subscription Info =======================>>>>>>>>>>>>> $isPayment");
-    isPayment.refresh();
-  }
 
   ///================================Terms And privacy==================
   final rxRequestStatus = Status.loading.obs;

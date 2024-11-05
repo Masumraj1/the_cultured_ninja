@@ -1,6 +1,4 @@
-import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
-import 'package:final_movie/controller/genarel_controller/genarel_controller.dart';
-import 'package:final_movie/controller/payment_controller/payment_controller.dart';
+import 'package:final_movie/controller/global_controller/global_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
@@ -19,49 +17,11 @@ import 'package:get/get.dart';
 class SideDrawer extends StatelessWidget {
   SideDrawer({super.key});
 
-  Widget customRow(
-          {required String image,
-          required String title,
-          required VoidCallback onTap}) =>
-      GestureDetector(
-        onTap: () {
-          onTap();
-        },
-        child: Container(
-          decoration: const BoxDecoration(
-            border: Border(
-                top: BorderSide(color: AppColors.borderDrawer),
-                bottom: BorderSide(color: AppColors.borderDrawer),
-                right: BorderSide(color: AppColors.borderDrawer)),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 39),
-            child: Row(
-              children: [
-                CustomImage(
-                  size: 18.r,
-                  imageSrc: image,
-                ),
-                CustomText(
-                  color: AppColors.lightWhite,
-                  left: 16.w,
-                  text: title,
-                  fontWeight: FontWeight.w400,
-                  fontSize: 14.w,
-                )
-              ],
-            ),
-          ),
-        ),
-      );
 
-  final AuthenticationController authenticationController = Get.find<AuthenticationController>();
-  final GeneralController generalController = Get.find<GeneralController>();
 
-  bool? isSubscription;
-  Future<void> loadSubscriptionStatus() async {
-    isSubscription = await SharePrefsHelper.getBool(AppConstants.isPayment) ?? false;
-  }
+  final GlobalController globalController = Get.find<GlobalController>();
+
+
 
 
   @override
@@ -141,12 +101,10 @@ class SideDrawer extends StatelessWidget {
                        () {
                         return customRow(
                           image: AppIcons.premium,
-                          title: !generalController.isPayment.value
-                              ? "Go Premium"
-                              : "Premium Activated",
+                          title: globalController.isPayment.value ? "Premium Activated" : "Go Premium",
                           onTap: () async {
 
-                            if (generalController.isPayment.value==false) {
+                            if (globalController.isPayment.value==false) {
                               Get.toNamed(AppRoute.paymentScreen);
                             } else {
                               toastMessage(message: 'Payment Already Completed');
@@ -208,4 +166,40 @@ class SideDrawer extends StatelessWidget {
       ),
     );
   }
+
+  Widget customRow(
+      {required String image,
+        required String title,
+        required VoidCallback onTap}) =>
+      GestureDetector(
+        onTap: () {
+          onTap();
+        },
+        child: Container(
+          decoration: const BoxDecoration(
+            border: Border(
+                top: BorderSide(color: AppColors.borderDrawer),
+                bottom: BorderSide(color: AppColors.borderDrawer),
+                right: BorderSide(color: AppColors.borderDrawer)),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 39),
+            child: Row(
+              children: [
+                CustomImage(
+                  size: 18.r,
+                  imageSrc: image,
+                ),
+                CustomText(
+                  color: AppColors.lightWhite,
+                  left: 16.w,
+                  text: title,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.w,
+                )
+              ],
+            ),
+          ),
+        ),
+      );
 }

@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'package:final_movie/controller/genarel_controller/genarel_controller.dart';
+import 'package:final_movie/controller/global_controller/global_controller.dart';
+import 'package:final_movie/controller/payment_controller/payment_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
@@ -31,7 +33,7 @@ class AuthenticationController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController pinCodeController = TextEditingController();
-final GeneralController generalController = Get.find<GeneralController>();
+final GlobalController globalController = Get.find<GlobalController>();
   ///==========================Authentication All api here ===========================
 
   ///=================================SignUp ========================
@@ -86,12 +88,9 @@ final GeneralController generalController = Get.find<GeneralController>();
 
       SharePrefsHelper.setString(
           AppConstants.bearerToken, response.body["token"]);
-      // print(
-      //     '======================This is  User Name ${response.body["data"]['name']}');
-      // print(
-      //     '======================User Token Saved::: ${response.body['accessToken']}');
+
       SharePrefsHelper.setBool(AppConstants.isPayment,false);
-      generalController.paymentInfo();
+      globalController.updatePaymentStatus(false);
       Get.offAllNamed(AppRoute.homeScreen);
       toastMessage(
         message: response.body["message"],
@@ -266,9 +265,8 @@ final GeneralController generalController = Get.find<GeneralController>();
 
 
 
-
-      SharePrefsHelper.setBool(AppConstants.isPayment,response.body["data"]["subscription"]);
-      generalController.paymentInfo();
+      bool subscriptionStatus = response.body["data"]["subscription"];
+      globalController.updatePaymentStatus(subscriptionStatus);
       Get.toNamed(AppRoute.homeScreen);
       toastMessage(
         message: response.body["message"],
@@ -298,8 +296,8 @@ final GeneralController generalController = Get.find<GeneralController>();
     isDeleteLoading.value = false;
     refresh();
     if (response.statusCode == 200) {
-       SharePrefsHelper.remove(
-          AppConstants.isPayment);
+      globalController.updatePaymentStatus(false); // Reset subscription status
+
       toastMessage(message: response.body["message"]);
 
       Get.toNamed(AppRoute.signInScreen);
@@ -310,8 +308,5 @@ final GeneralController generalController = Get.find<GeneralController>();
     refresh();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
+
 }
