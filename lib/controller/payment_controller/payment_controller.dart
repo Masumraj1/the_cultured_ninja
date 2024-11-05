@@ -109,7 +109,6 @@ class PaymentController extends GetxController {
     if (response.statusCode == 200) {
       globalController.updatePaymentStatus(true);
       Get.back();
-      Get.back();
       toastMessage(message: response.body["message"]);
     } else {
       ApiChecker.checkApi(response);

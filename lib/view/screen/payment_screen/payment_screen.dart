@@ -34,7 +34,7 @@ class PaymentScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Row(
+            const Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
@@ -63,11 +63,7 @@ class PaymentScreen extends StatelessWidget {
                 fillColor: AppColors.buttonColor,
                 onTap: () {
                   paymentController.makePayment(amount: 5);
-                  // paymentController.createPaymentIntent(amount: 5);
-                  // paymentController.makePayment(
-                  //   amount: 500, // Pass amount in cents, so $5 becomes 500
-                  //   transactionId: 'dynamic-transaction-id', // Replace with actual transaction logic
-                  // );
+
                 },
                 title: 'Pay Now \$5',
               ),

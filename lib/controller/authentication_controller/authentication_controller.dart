@@ -88,8 +88,6 @@ final GlobalController globalController = Get.find<GlobalController>();
 
       SharePrefsHelper.setString(
           AppConstants.bearerToken, response.body["token"]);
-
-      SharePrefsHelper.setBool(AppConstants.isPayment,false);
       globalController.updatePaymentStatus(false);
       Get.offAllNamed(AppRoute.homeScreen);
       toastMessage(
@@ -296,7 +294,13 @@ final GlobalController globalController = Get.find<GlobalController>();
     isDeleteLoading.value = false;
     refresh();
     if (response.statusCode == 200) {
-      globalController.updatePaymentStatus(false); // Reset subscription status
+      await SharePrefsHelper.remove(
+          AppConstants.bearerToken);
+      await SharePrefsHelper.remove(
+          AppConstants.profileID);
+
+      await SharePrefsHelper.remove(
+          AppConstants.isPayment);
 
       toastMessage(message: response.body["message"]);
 
