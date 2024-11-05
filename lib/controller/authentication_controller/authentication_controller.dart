@@ -27,9 +27,9 @@ class AuthenticationController extends GetxController {
 
   ///======================================controller====================
   TextEditingController emailController =
-      TextEditingController(text: kDebugMode ? "masumrna927@gmail.com" : "");
+      TextEditingController(text: kDebugMode ? "" : "");
   TextEditingController passwordController =
-      TextEditingController(text: kDebugMode ? "Masum017" : "");
+      TextEditingController(text: kDebugMode ? "" : "");
   TextEditingController nameController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController pinCodeController = TextEditingController();
@@ -303,8 +303,7 @@ final GlobalController globalController = Get.find<GlobalController>();
           AppConstants.isPayment);
 
       toastMessage(message: response.body["message"]);
-
-      Get.toNamed(AppRoute.signInScreen);
+      Get.offAllNamed(AppRoute.signInScreen);
     } else {
       ApiChecker.checkApi(response);
     }
