@@ -83,16 +83,16 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Conditionally display AdWidget based on payment status
-          Obx(() {
-            return authenticationController.isSubscription.value
-                ? const SizedBox.shrink()
-                : Container(
-              alignment: Alignment.center,
-              width: _bottomBannerAd.size.width.toDouble(),
-              height: _bottomBannerAd.size.height.toDouble(),
-              child: AdWidget(ad: _bottomBannerAd),
-            );
-          }),
+          // Obx(() {
+          //   return authenticationController.isSubscription.value
+          //       ? const SizedBox.shrink()
+          //       : Container(
+          //     alignment: Alignment.center,
+          //     width: _bottomBannerAd.size.width.toDouble(),
+          //     height: _bottomBannerAd.size.height.toDouble(),
+          //     child: AdWidget(ad: _bottomBannerAd),
+          //   );
+          // }),
           const NavBar(currentIndex: 0),
         ],
       ),

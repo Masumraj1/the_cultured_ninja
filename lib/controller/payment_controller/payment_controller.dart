@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
+import 'package:final_movie/controller/genarel_controller/genarel_controller.dart';
 import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/services/api_check.dart';
@@ -11,11 +12,9 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 
 class PaymentController extends GetxController {
-
-
-
-final AuthenticationController authenticationController = Get.find<AuthenticationController>();
-
+  final AuthenticationController authenticationController =
+      Get.find<AuthenticationController>();
+  final GeneralController generalController = Get.find<GeneralController>();
 
   ///========================= Create Payment Intent =========================
   Map<String, dynamic> value = {};
@@ -23,7 +22,8 @@ final AuthenticationController authenticationController = Get.find<Authenticatio
   Future<Map<String, dynamic>> createPaymentIntent({
     required int amount,
   }) async {
-    var bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
+    var bearerToken =
+        await SharePrefsHelper.getString(AppConstants.bearerToken);
 
     var mainHeaders = {
       'Content-Type': 'application/json',
@@ -36,7 +36,8 @@ final AuthenticationController authenticationController = Get.find<Authenticatio
       var response = await ApiClient.postData(
           ApiUrl.createPaymentIntent, jsonEncode(body),
           headers: mainHeaders);
-      debugPrint("==============Payment Intent body ===========${response.body}");
+      debugPrint(
+          "==============Payment Intent body ===========${response.body}");
 
       if (response.statusCode == 200) {
         value = response.body["data"];
@@ -58,16 +59,16 @@ final AuthenticationController authenticationController = Get.find<Authenticatio
   }) async {
     try {
       Map<String, dynamic> paymentIntentData =
-      await createPaymentIntent(amount: amount);
+          await createPaymentIntent(amount: amount);
 
       if (paymentIntentData.isNotEmpty) {
         await Stripe.instance.initPaymentSheet(
             paymentSheetParameters: SetupPaymentSheetParameters(
-              merchantDisplayName: 'Masum',
-              paymentIntentClientSecret: paymentIntentData['clientSecret'],
-              allowsDelayedPaymentMethods: true,
-              style: ThemeMode.light,
-            ));
+          merchantDisplayName: 'Masum',
+          paymentIntentClientSecret: paymentIntentData['clientSecret'],
+          allowsDelayedPaymentMethods: true,
+          style: ThemeMode.light,
+        ));
         await Stripe.instance.presentPaymentSheet();
 
         // Send payment status to the server
@@ -89,7 +90,8 @@ final AuthenticationController authenticationController = Get.find<Authenticatio
     required String transactionId,
     required String clientSecret,
   }) async {
-    var bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
+    var bearerToken =
+        await SharePrefsHelper.getString(AppConstants.bearerToken);
 
     var mainHeaders = {
       'Content-Type': 'application/json',
@@ -104,8 +106,9 @@ final AuthenticationController authenticationController = Get.find<Authenticatio
         ApiUrl.savePayment, jsonEncode(body),
         headers: mainHeaders);
     if (response.statusCode == 200) {
-    authenticationController.signInUser();
-    Get.back(result: true);
+      SharePrefsHelper.setBool(AppConstants.isPayment, true);
+      generalController.paymentInfo();
+      Get.back();
       toastMessage(message: response.body["message"]);
     } else {
       ApiChecker.checkApi(response);

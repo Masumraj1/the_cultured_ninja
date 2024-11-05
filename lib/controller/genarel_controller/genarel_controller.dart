@@ -1,7 +1,7 @@
 import 'dart:convert';
+import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/model/history_model/history_model.dart';
-import 'package:final_movie/model/notification_model/notification_model.dart';
 import 'package:final_movie/model/privacy_model/privacy_model.dart';
 import 'package:final_movie/model/terms_model/terms_model.dart';
 import 'package:final_movie/services/api_check.dart';
@@ -43,6 +43,15 @@ class GeneralController extends GetxController {
       ApiChecker.checkApi(response);
     }
     isChangeLoading.value = false;
+  }
+
+  RxBool isPayment = false.obs;
+
+  paymentInfo()async{
+   isPayment.value=await SharePrefsHelper.getBool(AppConstants.isPayment)??false;
+
+   debugPrint("Subscription Info =======================>>>>>>>>>>>>> $isPayment");
+    isPayment.refresh();
   }
 
   ///================================Terms And privacy==================

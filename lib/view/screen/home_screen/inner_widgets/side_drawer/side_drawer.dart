@@ -1,4 +1,5 @@
 import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
+import 'package:final_movie/controller/genarel_controller/genarel_controller.dart';
 import 'package:final_movie/controller/payment_controller/payment_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
@@ -55,6 +56,13 @@ class SideDrawer extends StatelessWidget {
       );
 
   final AuthenticationController authenticationController = Get.find<AuthenticationController>();
+  final GeneralController generalController = Get.find<GeneralController>();
+
+  bool? isSubscription;
+  Future<void> loadSubscriptionStatus() async {
+    isSubscription = await SharePrefsHelper.getBool(AppConstants.isPayment) ?? false;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -129,18 +137,23 @@ class SideDrawer extends StatelessWidget {
                         }),
 
                     ///======================Payment===============
-                    customRow(
-                      image: AppIcons.premium,
-                      title: authenticationController.isSubscription.value == false
-                          ? "Go Premium"
-                          : "Premium Activated",
-                      onTap: () {
-                        if (authenticationController.isSubscription.value == false) {
-                          Get.toNamed(AppRoute.paymentScreen);
-                        } else {
-                          toastMessage(message: 'Payment Already Completed');
-                        }
-                      },
+                    Obx(
+                       () {
+                        return customRow(
+                          image: AppIcons.premium,
+                          title: !generalController.isPayment.value
+                              ? "Go Premium"
+                              : "Premium Activated",
+                          onTap: () async {
+
+                            if (generalController.isPayment.value==false) {
+                              Get.toNamed(AppRoute.paymentScreen);
+                            } else {
+                              toastMessage(message: 'Payment Already Completed');
+                            }
+                          },
+                        );
+                      }
                     ),
 
 

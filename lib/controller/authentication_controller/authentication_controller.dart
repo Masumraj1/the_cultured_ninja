@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:final_movie/controller/genarel_controller/genarel_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
@@ -30,7 +31,7 @@ class AuthenticationController extends GetxController {
   TextEditingController nameController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController pinCodeController = TextEditingController();
-
+final GeneralController generalController = Get.find<GeneralController>();
   ///==========================Authentication All api here ===========================
 
   ///=================================SignUp ========================
@@ -89,7 +90,8 @@ class AuthenticationController extends GetxController {
       //     '======================This is  User Name ${response.body["data"]['name']}');
       // print(
       //     '======================User Token Saved::: ${response.body['accessToken']}');
-
+      SharePrefsHelper.setBool(AppConstants.isPayment,false);
+      generalController.paymentInfo();
       Get.offAllNamed(AppRoute.homeScreen);
       toastMessage(
         message: response.body["message"],
@@ -199,8 +201,7 @@ class AuthenticationController extends GetxController {
       isResetLoading.value = true;
 
       // Retrieve the saved token from shared preferences (make sure to use 'await' as it's asynchronous)
-      String? passwordResetToken =
-          await SharePrefsHelper.getString(AppConstants.resetToken);
+      String? passwordResetToken = await SharePrefsHelper.getString(AppConstants.resetToken);
 
       if (passwordResetToken.isEmpty) {
         toastMessage(
@@ -247,7 +248,7 @@ class AuthenticationController extends GetxController {
 
   ///============================== LogIn ================================
   RxBool isSignInLoading = false.obs;
-  RxBool isSubscription = false.obs;
+
   signInUser() async {
     isSignInLoading.value = true;
     refresh();
@@ -260,13 +261,14 @@ class AuthenticationController extends GetxController {
       jsonEncode(body),
     );
     if (response.statusCode == 200) {
-      SharePrefsHelper.setString(
-          AppConstants.bearerToken, response.body["token"]);
+      SharePrefsHelper.setString(AppConstants.bearerToken, response.body["token"]);
 
-      isSubscription.value=response.body["data"]["subscription"];
-      print("IsSubscription===========================${isSubscription.value}");
-      print(
-          '======================This is User Token ${response.body['token']}');
+
+
+
+
+      SharePrefsHelper.setBool(AppConstants.isPayment,response.body["data"]["subscription"]);
+      generalController.paymentInfo();
       Get.toNamed(AppRoute.homeScreen);
       toastMessage(
         message: response.body["message"],
@@ -296,7 +298,10 @@ class AuthenticationController extends GetxController {
     isDeleteLoading.value = false;
     refresh();
     if (response.statusCode == 200) {
+       SharePrefsHelper.remove(
+          AppConstants.isPayment);
       toastMessage(message: response.body["message"]);
+
       Get.toNamed(AppRoute.signInScreen);
     } else {
       ApiChecker.checkApi(response);
