@@ -94,15 +94,6 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }),
           const NavBar(currentIndex: 0),
-          // Display the bottom banner ad in the bottom navigation bar if it's loaded
-          // if (_bottomBannerAd != null)
-          //   Container(
-          //     alignment: Alignment.center,
-          //     width: _bottomBannerAd.size.width.toDouble(),
-          //     height: _bottomBannerAd.size.height.toDouble(),
-          //     child: AdWidget(ad: _bottomBannerAd),
-          //   ),
-          // const NavBar(currentIndex: 0), // Your custom NavBar widget
         ],
       ),
       drawer:  SideDrawer(),

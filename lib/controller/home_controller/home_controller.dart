@@ -8,7 +8,6 @@ import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_widget/home_widget.dart';
 import 'dart:async';
 
 class HomeController extends GetxController {

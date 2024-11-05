@@ -264,7 +264,7 @@ class AuthenticationController extends GetxController {
           AppConstants.bearerToken, response.body["token"]);
 
       isSubscription.value=response.body["data"]["subscription"];
-      print("===========================${isSubscription.value}");
+      print("IsSubscription===========================${isSubscription.value}");
       print(
           '======================This is User Token ${response.body['token']}');
       Get.toNamed(AppRoute.homeScreen);

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
 import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
 import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/services/api_check.dart';
@@ -13,7 +14,7 @@ class PaymentController extends GetxController {
 
 
 
-
+final AuthenticationController authenticationController = Get.find<AuthenticationController>();
 
 
   ///========================= Create Payment Intent =========================
@@ -103,6 +104,8 @@ class PaymentController extends GetxController {
         ApiUrl.savePayment, jsonEncode(body),
         headers: mainHeaders);
     if (response.statusCode == 200) {
+    authenticationController.signInUser();
+    Get.back(result: true);
       toastMessage(message: response.body["message"]);
     } else {
       ApiChecker.checkApi(response);
