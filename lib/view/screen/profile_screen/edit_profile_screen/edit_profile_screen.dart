@@ -150,8 +150,7 @@ class EditProfileScreen extends StatelessWidget {
                       ),
                       CustomTextField(
                         textEditingController:
-                            profileController.phoneController =
-                                TextEditingController(text: ''),
+                            profileController.phoneController ,
                         inputTextStyle:
                             const TextStyle(color: AppColors.lightWhite),
                         fillColor: AppColors.fromRgb,
