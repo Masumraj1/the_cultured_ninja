@@ -25,8 +25,8 @@ class _MovieDetailsState extends State<MovieDetails> {
   ///============================CustomWidgets========================
   final CustomWidgets customWidget = CustomWidgets();
 
-  final MovieDetailsController movieDetailsController = Get.find<
-      MovieDetailsController>();
+  final MovieDetailsController movieDetailsController =
+      Get.find<MovieDetailsController>();
 
   final id = Get.arguments[0]; // The movie ID
   final rating = Get.arguments[1]; // The movie ID
@@ -87,13 +87,12 @@ class _MovieDetailsState extends State<MovieDetails> {
 
             case Status.completed:
               var data = movieDetailsController.moviesDetailsModel;
-              var dataDetails = movieDetailsController.moviesDetailsModel.value
-                  .details;
+              var dataDetails =
+                  movieDetailsController.moviesDetailsModel.value.details;
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     ///==============================Poster Image=============
                     CustomNetworkImage(
                       borderRadius: BorderRadius.circular(14),
@@ -202,19 +201,18 @@ class _MovieDetailsState extends State<MovieDetails> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     CustomText(
-                                      text: movieDetailsController.isWatched
-                                          .value
-                                          ? 'Watched'
-                                          : 'Watched',
-                                      color: movieDetailsController.isWatched
-                                          .value
-                                          ? AppColors.buttonColor
-                                          : AppColors.lightWhite,
+                                      text:
+                                          movieDetailsController.isWatched.value
+                                              ? 'Watched'
+                                              : 'Watched',
+                                      color:
+                                          movieDetailsController.isWatched.value
+                                              ? AppColors.buttonColor
+                                              : AppColors.lightWhite,
                                       fontWeight: FontWeight.w400,
                                       fontSize: 16.sp,
                                       right: 10,
                                     ),
-
                                   ],
                                 ),
                               ),
@@ -235,7 +233,6 @@ class _MovieDetailsState extends State<MovieDetails> {
                     ),
                     Row(
                       children: [
-
                         ///============================ReleaseDate==========
                         CustomText(
                           text: DateConverter.formatDate(
@@ -262,7 +259,7 @@ class _MovieDetailsState extends State<MovieDetails> {
                         children: List.generate(
                           dataDetails?.genres?.length ?? 0,
                           // Ensure genres is a list
-                              (index) {
+                          (index) {
                             return Container(
                               margin: const EdgeInsets.all(15),
                               decoration: BoxDecoration(
@@ -311,30 +308,33 @@ class _MovieDetailsState extends State<MovieDetails> {
                       color: AppColors.lightWhite,
                       bottom: 16,
                     ),
-                    data.value.platform!.isEmpty ?  Center(
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height/5,
-                        child: const Center(
-                          child: CustomText(
-                            text: 'No Available Platform',
-                            color: AppColors.lightWhite,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,),
-                        ),
-                      ),
-                    ):
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(
-                            data.value.platform?.length ?? 0, (index) {
-                          var platformList = data.value.platform?[index];
-                          return CustomImageText(
-                              image: platformList?.logoPath ?? "",
-                              movieName: platformList?.providerName ?? "");
-                        }),
-                      ),
-                    ),
+                    data.value.platform!.isEmpty
+                        ? Center(
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height / 5,
+                              child: const Center(
+                                child: CustomText(
+                                  text: 'No Available Platform',
+                                  color: AppColors.lightWhite,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          )
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: List.generate(
+                                  data.value.platform?.length ?? 0, (index) {
+                                var platformList = data.value.platform?[index];
+                                return CustomImageText(
+                                    image: platformList?.logoPath ?? "",
+                                    movieName:
+                                        platformList?.providerName ?? "");
+                              }),
+                            ),
+                          ),
                     SizedBox(height: 15.h),
 
                     ///================Actor and Director================
@@ -345,41 +345,47 @@ class _MovieDetailsState extends State<MovieDetails> {
                       color: AppColors.lightWhite,
                       bottom: 16,
                     ),
-                     data.value.actors!.isEmpty?Center(
-                       child: SizedBox(
-                         height: MediaQuery.of(context).size.height/5,
-                         child: const Center(
-                           child: CustomText(
-                             text: 'No Available Actor',
-                             color: AppColors.lightWhite,
-                             fontWeight: FontWeight.w500,
-                             fontSize: 16,),
-                         ),
-                       ),
-                     ):
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: List.generate(
-                          data.value.actors?.length ?? 0,
-                          // Ensure it's not null
-                              (index) {
-                            var actorList = data.value.actors?[index];
-                            return GestureDetector(
-                              onTap: () {
-                                Get.toNamed(AppRoute.actorDetails,
-                                    arguments: actorList?.id);
-                              },
-                              child: customWidget.customActorAndDirector(
-                                image: data.value.actors?[index].profilePath ??
-                                    "", // Safely handle profilePath being null
-                                title: data.value.actors?[index].name ??
-                                    "", // Use a default if name is null
+                    data.value.actors!.isEmpty
+                        ? Center(
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height / 5,
+                              child: const Center(
+                                child: CustomText(
+                                  text: 'No Available Actor',
+                                  color: AppColors.lightWhite,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 16,
+                                ),
                               ),
-                            );
-                          },
-                        ),
-                      ),
+                            ),
+                          )
+                        : SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: List.generate(
+                                data.value.actors?.length ?? 0,
+                                // Ensure it's not null
+                                (index) {
+                                  var actorList = data.value.actors?[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(AppRoute.actorDetails,
+                                          arguments: actorList?.id);
+                                    },
+                                    child: customWidget.customActorAndDirector(
+                                      image: data.value.actors?[index]
+                                              .profilePath ??
+                                          "", // Safely handle profilePath being null
+                                      title: data.value.actors?[index].name ??
+                                          "", // Use a default if name is null
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                    SizedBox(
+                      height: 10.h,
                     ),
 
                     ///================Related Movies================
@@ -390,14 +396,19 @@ class _MovieDetailsState extends State<MovieDetails> {
                         Get.toNamed(AppRoute.allMovies);
                       },
                     ),
+
+
+
+
                     SizedBox(height: 16.h),
+
 
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: List.generate(data.value.similarMovies
-                            ?.length ?? 0, (index) {
+                        children: List.generate(
+                            data.value.similarMovies?.length ?? 0, (index) {
                           var similarMovies = data.value.similarMovies?[index];
                           return CustomImageText(
                               image: similarMovies?.posterPath ?? "",

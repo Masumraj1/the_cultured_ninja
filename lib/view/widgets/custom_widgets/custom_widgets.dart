@@ -257,6 +257,8 @@ class CustomWidgets {
     return Padding(
       padding: const EdgeInsets.only(left: 13,right: 13),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           CustomNetworkImage(
             boxShape: BoxShape.circle,
@@ -267,7 +269,7 @@ class CustomWidgets {
           SizedBox(
             width: 56.w,
             child: CustomText(
-                maxLines: 5,
+                maxLines: 1,
                 text: title,
                 top: 16,
                 fontSize: 12.sp,
