@@ -8,32 +8,13 @@ import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentController extends GetxController {
-  ///========================= Payment Status =========================
-  var isPaymentSuccessful = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    loadPaymentStatus();
-  }
 
-  ///========================= Load Payment Status =========================
-  Future<void> loadPaymentStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    isPaymentSuccessful.value = prefs.getBool('isPaymentSuccessful') ?? false;
-  }
 
-  ///========================= Save Payment Status =========================
-  Future<void> savePaymentStatus(bool status) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isPaymentSuccessful', status);
-    isPaymentSuccessful.value = status;
-    print("==============================Saved isPaymentSuccessful ================================ ${isPaymentSuccessful.value}");
 
-  }
+
 
   ///========================= Create Payment Intent =========================
   Map<String, dynamic> value = {};
@@ -95,12 +76,10 @@ class PaymentController extends GetxController {
         );
 
         toastMessage(message: "Payment Successful");
-        savePaymentStatus(true); // Mark payment as successful and save
       }
     } catch (e) {
       debugPrint("Error ================>>>>>>>>>>>>>${e.toString()}");
       toastMessage(message: "Error $e");
-      savePaymentStatus(false); // Payment failed, ad will be shown
     }
   }
 

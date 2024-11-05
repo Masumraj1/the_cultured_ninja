@@ -1,4 +1,5 @@
 import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
+import 'package:final_movie/controller/payment_controller/payment_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_images/app_images.dart';
@@ -17,6 +18,8 @@ class SignInScreen extends StatelessWidget {
 
   final AuthenticationController authenticationController =
       Get.find<AuthenticationController>();
+
+  final PaymentController paymentController = Get.find<PaymentController>();
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -155,6 +158,7 @@ class SignInScreen extends StatelessWidget {
                                   onTap: () {
                                     if (formKey.currentState!.validate()) {
                                       authenticationController.signInUser();
+
                                     }
                                   },
                                   title: AppStrings.signIn,

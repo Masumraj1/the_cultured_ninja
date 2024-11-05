@@ -4,7 +4,6 @@ import 'package:final_movie/helpar/date_converter/date_converter.dart';
 import 'package:final_movie/utils/app_colors/app_colors.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
 import 'package:final_movie/utils/app_strings/app_strings.dart';
-import 'package:final_movie/view/widgets/custom_button/custom_button.dart';
 import 'package:final_movie/view/widgets/custom_image_text/custom_image_text.dart';
 import 'package:final_movie/view/widgets/custom_loader/custom_loader.dart';
 import 'package:final_movie/view/widgets/custom_network_image/custom_network_image.dart';

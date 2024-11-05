@@ -22,35 +22,7 @@ class MovieDetailsController extends GetxController {
 
   ///====================================Movie Details================
 
-  // movieDetails({required String id}) async {
-  //   setRxRequestStatus(Status.loading);
-  //   refresh();
-  //   var response = await ApiClient.getData(ApiUrl.movieDetails(id: id));
-  //
-  //   if (response.statusCode == 200) {
-  //     moviesDetailsModel.value = DetailsData.fromJson(response.body["data"]);
-  //
-  //     print('data fetch==================="${response.body["data"]}"');
-  //     print(
-  //         'backdrop_path==================="${response.body["data"]['details']["backdrop_path"]}"');
-  //     print(
-  //         'actorList==================="${moviesDetailsModel.value.actors?.length}');
-  //     print(
-  //         'SimilarMovies==================="${moviesDetailsModel.value.similarMovies?.length}');
-  //
-  //     // print('Length================="${actorList.length}"');
-  //
-  //     setRxRequestStatus(Status.completed);
-  //     refresh();
-  //   } else {
-  //     if (response.statusText == ApiClient.noInternetMessage) {
-  //       setRxRequestStatus(Status.internetError);
-  //     } else {
-  //       setRxRequestStatus(Status.error);
-  //     }
-  //     ApiChecker.checkApi(response);
-  //   }
-  // }
+
   Rx<DetailsData> moviesDetailsModel = DetailsData().obs;
 
   Future<void> movieDetails({required String id}) async {

@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:final_movie/controller/admob_controller/admob_controller.dart';
+import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
 import 'package:final_movie/controller/favorite_controller/favorite_controller.dart';
 import 'package:final_movie/controller/home_controller/home_controller.dart';
 import 'package:final_movie/controller/payment_controller/payment_controller.dart';
@@ -41,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final HomeController homeController = Get.find<HomeController>();
   final FavoriteController favoriteController = Get.find<FavoriteController>();
   final AdmobController admobController = Get.find<AdmobController>();
-  final PaymentController paymentController = Get.find<PaymentController>();
+  final AuthenticationController authenticationController = Get.find<AuthenticationController>();
 
   // Separate banner ads for main content and bottom navigation
   late final BannerAd _bottomBannerAd;
@@ -83,7 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           // Conditionally display AdWidget based on payment status
           Obx(() {
-            return paymentController.isPaymentSuccessful.value
+            return authenticationController.isSubscription.value
                 ? const SizedBox.shrink()
                 : Container(
               alignment: Alignment.center,

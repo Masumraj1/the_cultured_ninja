@@ -1,3 +1,4 @@
+import 'package:final_movie/controller/authentication_controller/authentication_controller.dart';
 import 'package:final_movie/controller/payment_controller/payment_controller.dart';
 import 'package:final_movie/core/app_routes.dart';
 import 'package:final_movie/helpar/shared_prefe/shared_prefe.dart';
@@ -53,7 +54,7 @@ class SideDrawer extends StatelessWidget {
         ),
       );
 
-  final PaymentController paymentController = Get.find<PaymentController>();
+  final AuthenticationController authenticationController = Get.find<AuthenticationController>();
 
   @override
   Widget build(BuildContext context) {
@@ -130,11 +131,11 @@ class SideDrawer extends StatelessWidget {
                     ///======================Payment===============
                     customRow(
                       image: AppIcons.premium,
-                      title: paymentController.isPaymentSuccessful.value == false
+                      title: authenticationController.isSubscription.value == false
                           ? "Go Premium"
                           : "Premium Activated",
                       onTap: () {
-                        if (paymentController.isPaymentSuccessful.value == false) {
+                        if (authenticationController.isSubscription.value == false) {
                           Get.toNamed(AppRoute.paymentScreen);
                         } else {
                           toastMessage(message: 'Payment Already Completed');
@@ -172,8 +173,15 @@ class SideDrawer extends StatelessWidget {
                                 await SharePrefsHelper.remove(
                                     AppConstants.profileID);
 
+                                await SharePrefsHelper.remove(
+                                    AppConstants.isPayment);
+
                                 print(
                                     'remove token========================"${AppConstants.bearerToken}"');
+                                print(
+                                    'remove profileId========================"${AppConstants.profileID}"');
+                                print(
+                                    'remove IsPayment========================"${AppConstants.isPayment}"');
 
                                 Get.toNamed(AppRoute.signInScreen);
                               });

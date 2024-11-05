@@ -247,7 +247,7 @@ class AuthenticationController extends GetxController {
 
   ///============================== LogIn ================================
   RxBool isSignInLoading = false.obs;
-
+  RxBool isSubscription = false.obs;
   signInUser() async {
     isSignInLoading.value = true;
     refresh();
@@ -262,6 +262,9 @@ class AuthenticationController extends GetxController {
     if (response.statusCode == 200) {
       SharePrefsHelper.setString(
           AppConstants.bearerToken, response.body["token"]);
+
+      isSubscription.value=response.body["data"]["subscription"];
+      print("===========================${isSubscription.value}");
       print(
           '======================This is User Token ${response.body['token']}');
       Get.toNamed(AppRoute.homeScreen);
