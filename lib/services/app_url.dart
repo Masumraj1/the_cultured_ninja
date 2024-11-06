@@ -1,7 +1,9 @@
 class ApiUrl {
   ///=================================This is baseUrl==============================================>
-  static const baseUrl = "http://192.168.10.25:7000";
-  static const networkImageUrl = "http://192.168.10.25:7000/";
+  // static const baseUrl = "http://192.168.10.25:7000";
+  // static const networkImageUrl = "http://192.168.10.25:7000/";
+  static const baseUrl = "http://134.209.35.249:7000";
+  static const networkImageUrl = "http://134.209.35.249:7000/";
 
   ///================================= User Authentication url==========================
   static const signupAuth = "/auth/sign-up";
