@@ -26,7 +26,6 @@ void main() {
   runApp(const MyApp());
 }
 
-
 // Callback function to handle HomeWidget interactivity
 Future<void> interactivityCallback(Uri? uri) async {
   if (uri?.host == 'fetchTitle') {

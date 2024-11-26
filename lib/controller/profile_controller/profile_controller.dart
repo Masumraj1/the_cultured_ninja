@@ -102,6 +102,7 @@ class ProfileController extends GetxController {
     addressController.text=profileModel.value.address??"";
   }
 
+
   @override
   void onInit() {
     getProfile();
