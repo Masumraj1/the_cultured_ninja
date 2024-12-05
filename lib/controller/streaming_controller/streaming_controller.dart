@@ -1,7 +1,4 @@
-import 'dart:convert';
 
-import 'package:final_movie/core/app_routes.dart';
-import 'package:final_movie/helpar/toast_message/toast_message.dart';
 import 'package:final_movie/model/filter_model/filter_model.dart';
 import 'package:final_movie/model/streaming_actor_model/streaming_actor_model.dart';
 import 'package:final_movie/model/streaming_model/movie_genre_model.dart';
@@ -10,7 +7,6 @@ import 'package:final_movie/services/api_check.dart';
 import 'package:final_movie/services/api_client.dart';
 import 'package:final_movie/services/app_url.dart';
 import 'package:final_movie/utils/app_const/app_const.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class StreamingController extends GetxController {

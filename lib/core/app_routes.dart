@@ -1,3 +1,4 @@
+import 'package:final_movie/controller/prectice/prectice.dart';
 import 'package:final_movie/view/screen/actor_details/actor_details.dart';
 import 'package:final_movie/view/screen/actor_movie/actor_movie.dart';
 import 'package:final_movie/view/screen/all_movies/all_movies.dart';
