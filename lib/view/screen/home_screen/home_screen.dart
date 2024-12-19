@@ -298,6 +298,18 @@ class _HomeScreenState extends State<HomeScreen> {
           onTap: () => Get.toNamed(AppRoute.studiosScreen),
         ),
         SizedBox(height: 16.h),
+        if (homeController.studioDataList.isEmpty)
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 3.5,
+            child: const Center(
+              child: CustomText(
+                text: 'No Studios Data Founded',
+                color: AppColors.lightWhite,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          )
+        else
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(

@@ -27,9 +27,9 @@ class AuthenticationController extends GetxController {
 
   ///======================================controller====================
   TextEditingController emailController =
-      TextEditingController(text: kDebugMode ? "" : "");
+      TextEditingController();
   TextEditingController passwordController =
-      TextEditingController(text: kDebugMode ? "" : "");
+      TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController pinCodeController = TextEditingController();
