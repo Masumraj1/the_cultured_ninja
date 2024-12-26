@@ -11,6 +11,9 @@ import 'core/dependency.dart';
 import 'helpar/device_utils/device_utils.dart';
 
 void main() {
+
+
+
   WidgetsFlutterBinding.ensureInitialized();
   HomeWidget.registerInteractivityCallback(interactivityCallback);
   DeviceUtils.lockDevicePortrait();
