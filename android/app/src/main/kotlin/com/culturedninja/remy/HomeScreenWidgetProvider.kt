@@ -1,11 +1,10 @@
-package com.example.final_movie
+package com.culturedninja.remy
 
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.AsyncTask
-import android.util.Log
 import android.widget.RemoteViews
 import com.squareup.picasso.Picasso
 import es.antonborri.home_widget.HomeWidgetProvider

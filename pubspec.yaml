@@ -61,6 +61,7 @@ dependencies:
   googleapis_auth:
   home_widget: ^0.7.0
   flutter_stripe: ^11.2.0
+  change_app_package_name: ^1.4.0
 
 dev_dependencies:
   flutter_test:

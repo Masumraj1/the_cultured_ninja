@@ -1,4 +1,4 @@
-package com.example.final_movie
+package com.culturedninja.remy
 
 import io.flutter.embedding.android.FlutterActivity
 
