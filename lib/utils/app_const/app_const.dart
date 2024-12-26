@@ -7,8 +7,9 @@ class AppConstants {
   // static String userId = "UserId";
   static String onBoard = "Onboard";
   static String isRememberMe = "isRememberMe";
+
   static String stripePublishableKey =
-      "pk_test_51POthLRvVQ0C2mQsfgSDWtXVQOtisKTZTCP46fiZjULEyyB0ff08Ny9JfZGnw9fM8ZhURwpdTOyA69dxp0bDNr6U00NVCfO3ak";
+      "pk_live_51QIXknGONnvsOeRhZOZwQVXulKG7HB1rf81qHrb6TDfl7PiwFedEWs1h04xHZNX9vj27UrLEDmpM5H5nk0dxy4EK00Fw99OMa3";
   /// <====================== All Response Message Static==============================>
   static String bannerAdsId = Platform.isAndroid
       ? 'ca-app-pub-9098800682156327/5573978693'

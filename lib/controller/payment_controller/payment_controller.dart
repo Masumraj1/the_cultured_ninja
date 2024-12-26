@@ -82,7 +82,7 @@ class PaymentController extends GetxController {
       }
     } catch (e) {
       debugPrint("Error ================>>>>>>>>>>>>>${e.toString()}");
-      toastMessage(message: "Error $e");
+      toastMessage(message: "Payment Not Complete");
     }
   }
 
